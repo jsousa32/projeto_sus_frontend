@@ -1,0 +1,55 @@
+<div class="image">
+    <img src="./../../../assets/img/sus.png" />
+    <h1>Um sistema simplificado</h1>
+</div>
+<form [formGroup]="form" (submit)="register()">
+    <div class="form">
+        <div class="container-form">
+            <div class="container-form-tittle">Cadastra-se</div>
+            <div class="container-form-signup">
+                <div class="content-form-signup">
+                    @for (item of $formStructureLeft; track $index ) {
+                    <mat-form-field [appearance]="item.appearance">
+                        <mat-label>{{ item.label }}</mat-label>
+                        <input
+                            matInput
+                            [mask]="item.mask == null ? '' : item.mask"
+                            [type]="item.type == null ? 'text' : item.type"
+                            [formControlName]="item.formControlName"
+                            [placeholder]="item.placeholder"
+                            [required]="item.required"
+                        />
+                        @if (form.get(item.formControlName)?.invalid) {
+                        <mat-error>{{ item.errorMessage }}</mat-error>
+                        }
+                    </mat-form-field>
+                    }
+                </div>
+                <div class="content-form-signup">
+                    @for (item of $formStructureRight; track $index ) {
+                        <mat-form-field [appearance]="item.appearance">
+                            <mat-label>{{ item.label }}</mat-label>
+                            <input
+                                matInput
+                                [mask]="item.mask == null ? '' : item.mask"
+                                [type]="item.type == null ? 'text' : item.type"
+                                [formControlName]="item.formControlName"
+                                [placeholder]="item.placeholder"
+                                [required]="item.required"
+                            />
+                            @if (form.get(item.formControlName)?.invalid) {
+                            <mat-error>{{ item.errorMessage }}</mat-error>
+                            }
+                        </mat-form-field>
+                        }
+                </div>
+            </div>
+            <div class="actions">
+                <button class="singup" (click)="register()" mat-fab extended>
+                    Cadatrar
+                </button>
+                <button class="back" mat-fab extended>Voltar</button>
+            </div>
+        </div>
+    </div>
+</form>

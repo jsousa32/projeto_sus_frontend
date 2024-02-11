@@ -1,0 +1,31 @@
+<div class="image">
+    <img src="./../../../assets/img/sus.png">
+    <h1>Um sistema simplificado</h1>
+</div>
+<div class="form">
+    <div class="container-form">
+        <div class="container-form-tittle">Login</div>
+        <div class="container-form-input">
+            <mat-form-field appearance="outline">
+                <mat-label>Número do SUS</mat-label>
+                <input matInput placeholder="Número do SUS" />
+            </mat-form-field>
+            <mat-form-field appearance="outline">
+                <mat-label>Senha</mat-label>
+                <input
+                    matInput
+                    placeholder="Senha"
+                    [type]="visibility ? 'text' : 'password'"
+                />
+                <mat-icon matSuffix (click)="visibility = !visibility">{{
+                    visibility ? "visibility_off" : "visibility"
+                }}</mat-icon>
+            </mat-form-field>
+            <a href="https://www.google.com.br">Esqueceu a senha?</a>
+            <div class="actions">
+                <button class="login" mat-fab extended>Login</button>
+                <button (click)="redirectToSign()" class="signup" mat-fab extended>Cadastra-se</button>
+            </div>
+        </div>
+    </div>
+</div>
