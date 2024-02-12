@@ -10,3 +10,38 @@ body {
         font-family: "Dosis", sans-serif;
     }
 }
+
+.custom {
+    border: 1px solid #2754a7 !important;
+    border-radius: 50px !important;
+    width: 8rem;
+}
+
+.confirm-button {
+    color: #fff;
+    background-color: #2754a7 !important;
+
+
+    &:hover {
+        background: #2754a7 !important;
+    }
+}
+
+.cancel-button {
+    color: #2754a7 !important;
+    background-color: #fff !important;
+
+
+    &:hover {
+        background: none !important;
+    }
+}
+
+.title {
+    color: #2754a7 !important;
+    font-size: 2rem !important;
+}
+
+.html {
+    font-size: 1.5rem !important;
+}
