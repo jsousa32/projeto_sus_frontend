@@ -129,6 +129,11 @@
 
                 .login {
                     background-color: $primary;
+                    color: white;
+
+                    &:disabled {
+                        background-color: $disabled;
+                    }
                 }
 
                 .signup {

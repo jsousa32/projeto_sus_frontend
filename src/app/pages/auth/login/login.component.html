@@ -23,7 +23,7 @@
             </mat-form-field>
             <a href="https://www.google.com.br">Esqueceu a senha?</a>
             <div class="actions">
-                <button class="login" mat-fab extended>Login</button>
+                <button class="login" [disabled]="form.invalid" mat-fab extended>Login</button>
                 <button (click)="redirectToSign()" class="signup" mat-fab extended>Cadastra-se</button>
             </div>
         </div>
