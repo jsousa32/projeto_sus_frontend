@@ -40,7 +40,7 @@ export default class SignupComponent {
 
     protected $formStructureRight = FormStructureRight;
 
-    form = this.fb.group({
+    protected form = this.fb.group({
         firstName: ['', Validators.required],
         cpf: ['', [Validators.required, Validators.pattern('^[0-9]{11}$')]],
         email: ['', [Validators.required, Validators.email]],
