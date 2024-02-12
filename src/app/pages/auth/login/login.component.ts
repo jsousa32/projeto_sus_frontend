@@ -1,11 +1,13 @@
 import { CommonModule } from '@angular/common';
 import { Component, inject } from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
+import { FormBuilder, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { Router } from '@angular/router';
+import { NgxMaskDirective, provideNgxMask } from 'ngx-mask';
+import { FormAuth } from './form.structure';
 
 @Component({
     selector: 'app-login',
@@ -16,7 +18,11 @@ import { Router } from '@angular/router';
         MatInputModule,
         MatIconModule,
         MatButtonModule,
+        FormsModule,
+        ReactiveFormsModule,
+        NgxMaskDirective,
     ],
+    providers: [provideNgxMask()],
     templateUrl: './login.component.html',
     styleUrl: './login.component.scss',
 })
@@ -26,9 +32,11 @@ export class LoginComponent {
 
     protected visibility: boolean = false;
 
+    protected $formAuth = FormAuth;
+
     form = this.fb.group({
         sus: ['', [Validators.required, Validators.pattern('^[0-9]{15}$')]],
-        senha: ['', [Validators.required]],
+        password: ['', [Validators.required]],
     });
 
     redirectToSign() {

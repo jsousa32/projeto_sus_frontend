@@ -1,31 +1,56 @@
 <div class="image">
-    <img src="./../../../assets/img/sus.png">
+    <img src="./../../../assets/img/sus.png" />
     <h1>Um sistema simplificado</h1>
 </div>
-<div class="form">
-    <div class="container-form">
-        <div class="container-form-tittle">Login</div>
-        <div class="container-form-input">
-            <mat-form-field appearance="outline">
-                <mat-label>Número do SUS</mat-label>
-                <input matInput placeholder="Número do SUS" />
-            </mat-form-field>
-            <mat-form-field appearance="outline">
-                <mat-label>Senha</mat-label>
-                <input
-                    matInput
-                    placeholder="Senha"
-                    [type]="visibility ? 'text' : 'password'"
-                />
-                <mat-icon matSuffix (click)="visibility = !visibility">{{
-                    visibility ? "visibility_off" : "visibility"
-                }}</mat-icon>
-            </mat-form-field>
-            <a href="https://www.google.com.br">Esqueceu a senha?</a>
-            <div class="actions">
-                <button class="login" [disabled]="form.invalid" mat-fab extended>Login</button>
-                <button (click)="redirectToSign()" class="signup" mat-fab extended>Cadastra-se</button>
+<form [formGroup]="form">
+    <div class="form">
+        <div class="container-form">
+            <div class="container-form-tittle">Login</div>
+            <div class="container-form-input">
+                @for (item of $formAuth; track $index ) {
+                <mat-form-field [appearance]="item.appearance">
+                    <mat-label>{{ item.label }}</mat-label>
+                    <input
+                        matInput
+                        [mask]="item.mask == null ? '' : item.mask"
+                        [type]="
+                            item.type === 'password' && visibility
+                                ? 'text'
+                                : item.type || ''
+                        "
+                        [formControlName]="item.formControlName"
+                        [placeholder]="item.placeholder"
+                        [required]="item.required"
+                    />
+                    @if (item.icon) {
+                    <mat-icon matSuffix (click)="visibility = !visibility">{{
+                        visibility ? "visibility" : "visibility_off"
+                    }}</mat-icon>
+                    } @if (form.get(item.formControlName)?.invalid) {
+                    <mat-error>{{ item.errorMessage }}</mat-error>
+                    }
+                </mat-form-field>
+                }
+                <a href="https://www.google.com.br">Esqueceu a senha?</a>
+                <div class="actions">
+                    <button
+                        class="login"
+                        [disabled]="form.invalid"
+                        mat-fab
+                        extended
+                    >
+                        Login
+                    </button>
+                    <button
+                        (click)="redirectToSign()"
+                        class="signup"
+                        mat-fab
+                        extended
+                    >
+                        Cadastra-se
+                    </button>
+                </div>
             </div>
         </div>
     </div>
-</div>
+</form>
