@@ -11,8 +11,19 @@ export const routes: Routes = [
         path: 'login',
         component: LoginComponent,
     },
+
     {
         path: 'signup',
-        loadComponent: () => import("./pages/auth/signup/signup.component")
+        loadComponent: () => import('./pages/auth/signup/signup.component'),
+    },
+    {
+        path: 'confirm-email',
+        loadComponent: () =>
+            import('./pages/auth/confirm-email/confirm-email.component'),
+    },
+    {
+        path: 'forget-password',
+        loadComponent: () =>
+            import('./pages/auth/forget-password/forget-password.component'),
     },
 ];
