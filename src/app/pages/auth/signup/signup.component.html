@@ -27,28 +27,33 @@
                 </div>
                 <div class="content-form-signup">
                     @for (item of $formStructureRight; track $index ) {
-                        <mat-form-field [appearance]="item.appearance">
-                            <mat-label>{{ item.label }}</mat-label>
-                            <input
-                                matInput
-                                [mask]="item.mask == null ? '' : item.mask"
-                                [type]="item.type == null ? 'text' : item.type"
-                                [formControlName]="item.formControlName"
-                                [placeholder]="item.placeholder"
-                                [required]="item.required"
-                            />
-                            @if (form.get(item.formControlName)?.invalid) {
-                            <mat-error>{{ item.errorMessage }}</mat-error>
-                            }
-                        </mat-form-field>
+                    <mat-form-field [appearance]="item.appearance">
+                        <mat-label>{{ item.label }}</mat-label>
+                        <input
+                            matInput
+                            [mask]="item.mask == null ? '' : item.mask"
+                            [type]="item.type == null ? 'text' : item.type"
+                            [formControlName]="item.formControlName"
+                            [placeholder]="item.placeholder"
+                            [required]="item.required"
+                        />
+                        @if (form.get(item.formControlName)?.invalid) {
+                        <mat-error>{{ item.errorMessage }}</mat-error>
                         }
+                    </mat-form-field>
+                    }
                 </div>
             </div>
             <div class="actions">
-                <button class="singup" (click)="register()" mat-fab extended>
-                    Cadatrar
+                <button class="singup" mat-fab extended>Cadatrar</button>
+                <button
+                    class="back"
+                    (click)="redirectToLogin()"
+                    mat-fab
+                    extended
+                >
+                    Voltar
                 </button>
-                <button class="back" mat-fab extended>Voltar</button>
             </div>
         </div>
     </div>

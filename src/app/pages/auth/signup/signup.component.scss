@@ -118,13 +118,19 @@
             }
 
             .singup {
-                background-color: transparent;
-                border: 1px solid $primary;
-                color: $primary;
+                background-color: $primary;
+                color: #fff;
+
+                &:disabled {
+                    background-color: $disabled;
+
+                }
             }
 
             .back {
-                background-color: $primary;
+                background-color: transparent;
+                border: 1px solid $primary;
+                color: $primary;
             }
         }
     }

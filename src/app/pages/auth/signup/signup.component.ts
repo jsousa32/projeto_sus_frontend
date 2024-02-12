@@ -9,8 +9,9 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
+import { Router } from '@angular/router';
 import { NgxMaskDirective, provideNgxMask } from 'ngx-mask';
-import Swal from 'sweetalert2';
+import { DialogsAlertService } from '../../../core/services/dialogs-alert.service';
 import { FormStructureLeft, FormStructureRight } from './form.structure';
 
 @Component({
@@ -30,6 +31,8 @@ import { FormStructureLeft, FormStructureRight } from './form.structure';
 })
 export default class SignupComponent {
     private fb = inject(FormBuilder);
+    private router = inject(Router);
+    private dialogService = inject(DialogsAlertService);
 
     protected $formStructureLeft = FormStructureLeft;
 
@@ -50,16 +53,27 @@ export default class SignupComponent {
     });
 
     register() {
-        if (!this.validatedPassword()) {
-            Swal.fire('Error', 'As senhas não coincidem', 'error');
-        }
+        const values = this.form.value;
 
-        console.log('teste');
+        if (this.validatedPassword()) {
+            this.dialogService
+                .openDialog(
+                    'Senhas Incompatíveis',
+                    `<body> Teste </br> Teste dois</body>`,
+                    'error',
+                    true
+                )
+                .subscribe(console.log);
+        }
     }
 
     private validatedPassword() {
         const formValues = this.form.value;
 
         return formValues.password == formValues.confirmPassword;
+    }
+
+    redirectToLogin() {
+        this.router.navigateByUrl('login');
     }
 }
