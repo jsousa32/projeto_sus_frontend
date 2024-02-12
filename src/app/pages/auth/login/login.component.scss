@@ -60,23 +60,23 @@
 
     .container-form {
         display: grid;
-        height: 60vh;
+        height: 70vh;
         width: 30vw;
         grid-template-rows: 0.5fr 2fr;
         border: 1px solid $primary !important;
 
         @media (min-width: $lg) and (max-width: $xl) {
-            height: 55vh;
+            height: 70vh;
             width: 35vw;
         }
 
         @media (max-width: $lg) {
-            height: 60vh;
+            height: 70vh;
             width: 45vw;
         }
 
         @media (max-width: $md) {
-            height: 70vh;
+            height: 75vh;
             width: 45vw;
         }
 
