@@ -14,12 +14,24 @@
                         <input
                             matInput
                             [mask]="item.mask == null ? '' : item.mask"
-                            [type]="item.type == null ? 'text' : item.type"
+                            [type]="
+                                item.type === 'password' && visibility
+                                    ? 'text'
+                                    : item.type || ''
+                            "
                             [formControlName]="item.formControlName"
                             [placeholder]="item.placeholder"
                             [required]="item.required"
                         />
-                        @if (form.get(item.formControlName)?.invalid) {
+                        @if (item.icon) {
+                        <mat-icon
+                            matSuffix
+                            (click)="visibility = !visibility"
+                            >{{
+                                visibility ? "visibility" : "visibility_off"
+                            }}</mat-icon
+                        >
+                        } @if (form.get(item.formControlName)?.invalid) {
                         <mat-error>{{ item.errorMessage }}</mat-error>
                         }
                     </mat-form-field>
@@ -32,12 +44,24 @@
                         <input
                             matInput
                             [mask]="item.mask == null ? '' : item.mask"
-                            [type]="item.type == null ? 'text' : item.type"
+                            [type]="
+                                item.type === 'password' && visibility
+                                    ? 'text'
+                                    : item.type || ''
+                            "
                             [formControlName]="item.formControlName"
                             [placeholder]="item.placeholder"
                             [required]="item.required"
                         />
-                        @if (form.get(item.formControlName)?.invalid) {
+                        @if (item.icon) {
+                        <mat-icon
+                            matSuffix
+                            (click)="visibility = !visibility"
+                            >{{
+                                visibility ? "visibility" : "visibility_off"
+                            }}</mat-icon
+                        >
+                        } @if (form.get(item.formControlName)?.invalid) {
                         <mat-error>{{ item.errorMessage }}</mat-error>
                         }
                     </mat-form-field>
@@ -45,7 +69,14 @@
                 </div>
             </div>
             <div class="actions">
-                <button class="singup" mat-fab extended>Cadatrar</button>
+                <button
+                    class="singup"
+                    [disabled]="form.invalid"
+                    mat-fab
+                    extended
+                >
+                    Cadatrar
+                </button>
                 <button
                     class="back"
                     (click)="redirectToLogin()"

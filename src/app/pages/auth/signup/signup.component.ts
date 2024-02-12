@@ -34,6 +34,8 @@ export default class SignupComponent {
     private router = inject(Router);
     private dialogService = inject(DialogsAlertService);
 
+    protected visibility: boolean = false;
+
     protected $formStructureLeft = FormStructureLeft;
 
     protected $formStructureRight = FormStructureRight;
@@ -53,8 +55,6 @@ export default class SignupComponent {
     });
 
     register() {
-        const values = this.form.value;
-
         if (this.validatedPassword()) {
             this.dialogService
                 .openDialog(

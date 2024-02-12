@@ -94,6 +94,11 @@
 
                 mat-form-field {
                     width: 90%;
+
+                    mat-label,
+                    mat-icon {
+                        color: black;
+                    }
                 }
             }
         }
@@ -123,7 +128,6 @@
 
                 &:disabled {
                     background-color: $disabled;
-
                 }
             }
 
