@@ -32,7 +32,7 @@ export class LoginComponent {
 
     protected visibility: boolean = false;
 
-    protected $formAuth = FormAuth;
+    protected formAuth$ = FormAuth;
 
     protected form = this.fb.group({
         sus: ['', [Validators.required, Validators.pattern('^[0-9]{15}$')]],

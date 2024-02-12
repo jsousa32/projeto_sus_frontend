@@ -8,7 +8,7 @@
             <div class="container-form-title">Cadastra-se</div>
             <div class="container-form-signup">
                 <div class="content-form-signup">
-                    @for (item of $formStructureLeft; track $index ) {
+                    @for (item of formStructureLeft$; track $index ) {
                     <mat-form-field [appearance]="item.appearance">
                         <mat-label>{{ item.label }}</mat-label>
                         <input
@@ -38,7 +38,7 @@
                     }
                 </div>
                 <div class="content-form-signup">
-                    @for (item of $formStructureRight; track $index ) {
+                    @for (item of formStructureRight$; track $index ) {
                     <mat-form-field [appearance]="item.appearance">
                         <mat-label>{{ item.label }}</mat-label>
                         <input

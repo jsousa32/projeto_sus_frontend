@@ -30,7 +30,7 @@ export default class ForgetPasswordComponent {
     private fb = inject(FormBuilder);
     private router = inject(Router);
 
-    protected $formForget = FormForget;
+    protected formForget$ = FormForget;
 
     protected form = this.fb.group({
         sus: ['', [Validators.required, Validators.pattern('^[0-9]{15}$')]],

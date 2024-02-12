@@ -36,9 +36,9 @@ export default class SignupComponent {
 
     protected visibility: boolean = false;
 
-    protected $formStructureLeft = FormStructureLeft;
+    protected formStructureLeft$ = FormStructureLeft;
 
-    protected $formStructureRight = FormStructureRight;
+    protected formStructureRight$ = FormStructureRight;
 
     protected form = this.fb.group({
         firstName: ['', Validators.required],
@@ -63,7 +63,6 @@ export default class SignupComponent {
                     'error',
                     true
                 )
-                .subscribe(console.log);
         }
     }
 

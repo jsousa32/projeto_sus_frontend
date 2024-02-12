@@ -7,7 +7,7 @@
         <div class="container-form">
             <div class="container-form-title">Login</div>
             <div class="container-form-input">
-                @for (item of $formAuth; track $index ) {
+                @for (item of formAuth$; track $index ) {
                 <mat-form-field [appearance]="item.appearance">
                     <mat-label>{{ item.label }}</mat-label>
                     <input

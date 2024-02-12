@@ -7,7 +7,7 @@
         <div class="container-form">
             <div class="container-form-title">Confirmar Email</div>
             <div class="container-form-input">
-                @for (item of $formConfirm; track $index ) {
+                @for (item of formConfirm$; track $index ) {
                 <mat-form-field [appearance]="item.appearance">
                     <mat-label>{{ item.label }}</mat-label>
                     <input

@@ -35,7 +35,7 @@ export default class ConfirmEmailComponent {
     private fb = inject(FormBuilder);
     private router = inject(Router);
 
-    protected $formConfirm = FormConfirm;
+    protected formConfirm$ = FormConfirm;
 
     protected form = this.fb.group({
         tokenEmail: [
