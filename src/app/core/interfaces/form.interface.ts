@@ -7,6 +7,7 @@ export interface FormInterface {
     required: boolean;
     errorMessage: string;
     label: string;
+    icon?: boolean;
     type?: string;
     mask?: string;
 }
