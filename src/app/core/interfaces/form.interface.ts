@@ -10,11 +10,4 @@ export interface FormInterface {
     icon?: boolean;
     type?: string;
     mask?: string;
-    select?: boolean;
-    optionsSelect?: SelectedOptions[];
-}
-
-interface SelectedOptions {
-    value: string;
-    viewValue: string;
 }

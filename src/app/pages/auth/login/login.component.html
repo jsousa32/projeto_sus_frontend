@@ -7,7 +7,7 @@
         <div class="container-form">
             <div class="container-form-title">Login</div>
             <div class="container-form-input">
-                @for (item of formAuth$; track $index ) { @if(!item.select) {
+                @for (item of formAuth$; track $index ) {
                 <mat-form-field [appearance]="item.appearance">
                     <mat-label>{{ item.label }}</mat-label>
                     <input
@@ -30,26 +30,14 @@
                     <mat-error>{{ item.errorMessage }}</mat-error>
                     }
                 </mat-form-field>
-                } @else if (item.select) {
-                <mat-form-field [appearance]="item.appearance">
-                    <mat-label>{{ item.label }}</mat-label>
-                    <mat-select [formControl]="form.controls.role">
-                        @for (select of item.optionsSelect; track select) {
-                        <mat-option [value]="select.value">{{
-                            select.viewValue
-                        }}</mat-option>
-                        }
-                    </mat-select>
-                </mat-form-field>
-                } }
-                <a href="{{url}}forget-password">Esqueceu a senha?</a>
+                }
+                <a href="https://www.google.com.br">Esqueceu a senha?</a>
                 <div class="actions">
                     <button
                         class="login"
                         [disabled]="form.invalid"
                         mat-fab
                         extended
-                        (click)="login()"
                     >
                         Login
                     </button>
