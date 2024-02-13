@@ -1,6 +1,11 @@
 import { CommonModule } from '@angular/common';
 import { Component, inject } from '@angular/core';
-import { FormBuilder, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import {
+    FormBuilder,
+    FormsModule,
+    ReactiveFormsModule,
+    Validators,
+} from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
@@ -33,12 +38,11 @@ export default class ForgetPasswordComponent {
     protected formForget$ = FormForget;
 
     protected form = this.fb.group({
-        sus: ['', [Validators.required, Validators.pattern('^[0-9]{15}$')]],
         email: ['', [Validators.required, Validators.email]],
     });
 
     forgetPassword() {
-        console.log(this.form.value.sus);
+        console.log(this.form.value.email);
     }
 
     redirectToLogin() {
