@@ -104,8 +104,12 @@
         }
 
         .actions {
-            display: grid;
-            place-items: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            margin: 1rem 0rem;
+            gap: 30px;
 
             @media (max-width: $sm) {
                 gap: 10px;
