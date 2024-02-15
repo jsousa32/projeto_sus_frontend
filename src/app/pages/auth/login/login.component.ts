@@ -12,6 +12,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { Router } from '@angular/router';
 import { NgxMaskDirective, provideNgxMask } from 'ngx-mask';
+import { AuthService } from '../../../core/services/auth.service';
 import { FormAuth } from './form.structure';
 
 @Component({
@@ -33,7 +34,10 @@ import { FormAuth } from './form.structure';
 })
 export class LoginComponent {
     private router = inject(Router);
+
     private fb = inject(FormBuilder);
+
+    private authService = inject(AuthService);
 
     protected visibility: boolean = false;
 
@@ -45,6 +49,21 @@ export class LoginComponent {
         email: ['', [Validators.required, Validators.email]],
         password: ['', [Validators.required]],
     });
+
+    login() {
+        const formValues = this.form.value;
+
+        this.authService
+            .login(formValues.email!, formValues.password!)
+            .pipe()
+            .subscribe((value) => {
+                if (value != null) {
+                    localStorage.setItem('access_token', value.accessToken);
+                } else {
+                    this.router.navigateByUrl('confirm-email');
+                }
+            });
+    }
 
     redirectToSign() {
         this.router.navigateByUrl('signup');

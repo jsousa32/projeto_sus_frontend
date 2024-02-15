@@ -12,6 +12,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { Router } from '@angular/router';
 import { NgxMaskDirective, provideNgxMask } from 'ngx-mask';
+import { AuthService } from '../../../core/services/auth.service';
 import { FormConfirm } from './form.structure';
 
 @Component({
@@ -33,7 +34,10 @@ import { FormConfirm } from './form.structure';
 })
 export default class ConfirmEmailComponent {
     private fb = inject(FormBuilder);
+
     private router = inject(Router);
+
+    private authService = inject(AuthService);
 
     protected formConfirm$ = FormConfirm;
 
@@ -45,7 +49,18 @@ export default class ConfirmEmailComponent {
     });
 
     confirmEmail() {
-        console.log(this.form.value.tokenEmail);
+        const formValues = this.form.value;
+
+        this.authService
+            .confirm(formValues.tokenEmail!)
+            .pipe()
+            .subscribe((value) => {
+                if (value != null) {
+                    localStorage.setItem('access_token', value.accessToken);
+                } else {
+                    console.log('Token inválido');
+                }
+            });
     }
 
     redirectToLogin() {
