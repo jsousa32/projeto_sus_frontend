@@ -1,11 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, inject } from '@angular/core';
-import {
-    FormBuilder,
-    FormsModule,
-    ReactiveFormsModule,
-    Validators,
-} from '@angular/forms';
+import { FormBuilder, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
@@ -42,17 +37,14 @@ export default class ConfirmEmailComponent {
     protected formConfirm$ = FormConfirm;
 
     protected form = this.fb.group({
-        tokenEmail: [
-            '',
-            [Validators.required, Validators.pattern('^[0-9]{6}$')],
-        ],
+        tokenEmail: ['', [Validators.required, Validators.pattern('^[0-9]{6}$')]],
     });
 
     confirmEmail() {
         const formValues = this.form.value;
 
         this.authService
-            .confirm(formValues.tokenEmail!)
+            .confirmEmail(formValues.tokenEmail!)
             .pipe()
             .subscribe((value) => {
                 if (value != null) {

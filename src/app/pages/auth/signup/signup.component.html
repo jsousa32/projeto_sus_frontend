@@ -29,7 +29,7 @@
             }
         </form>
         <div class="actions">
-            <button class="primary" [disabled]="form.invalid" mat-fab extended>Cadastrar</button>
+            <button (click)="register()" class="primary" [disabled]="form.invalid" mat-fab extended>Cadastrar</button>
             <button (click)="redirectToLogin()" class="secondary" mat-fab extended>Voltar</button>
         </div>
     </div>
