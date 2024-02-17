@@ -1,6 +1,6 @@
 import { FormInterface } from './../../../core/interfaces/form.interface';
 
-export const FormStructureLeft: FormInterface[] = [
+export const FormSignup: FormInterface[] = [
     {
         appearance: 'outline',
         placeholder: 'João',
@@ -11,12 +11,29 @@ export const FormStructureLeft: FormInterface[] = [
     },
     {
         appearance: 'outline',
+        placeholder: 'Sousa',
+        formControlName: 'lastName',
+        required: true,
+        errorMessage: 'O sobrenome está inválido',
+        label: 'Sobrenome',
+    },
+    {
+        appearance: 'outline',
         placeholder: '123.456.789-40',
         formControlName: 'cpf',
         required: true,
         errorMessage: 'O CPF está inválido',
         label: 'CPF',
-        mask: '000.000.000-00'
+        mask: '000.000.000-00',
+    },
+    {
+        appearance: 'outline',
+        placeholder: '123456789012345',
+        formControlName: 'sus',
+        required: true,
+        errorMessage: 'O SUS está inválido',
+        label: 'SUS',
+        mask: '000000000000000',
     },
     {
         appearance: 'outline',
@@ -28,6 +45,15 @@ export const FormStructureLeft: FormInterface[] = [
     },
     {
         appearance: 'outline',
+        placeholder: '(35) 9 9191-8644',
+        formControlName: 'telephone',
+        required: true,
+        errorMessage: 'O telefone está inválido',
+        label: 'Telefone',
+        mask: '(00) 0 0000-0000',
+    },
+    {
+        appearance: 'outline',
         placeholder: 'Senha',
         formControlName: 'password',
         required: true,
@@ -35,36 +61,6 @@ export const FormStructureLeft: FormInterface[] = [
         icon: true,
         label: 'Senha',
         type: 'password',
-    },
-];
-
-
-export const FormStructureRight: FormInterface[] = [
-    {
-        appearance: 'outline',
-        placeholder: 'Sousa',
-        formControlName: 'lastName',
-        required: true,
-        errorMessage: 'O sobrenome está inválido',
-        label: 'Sobrenome',
-    },
-    {
-        appearance: 'outline',
-        placeholder: '123456789012345',
-        formControlName: 'sus',
-        required: true,
-        errorMessage: 'O SUS está inválido',
-        label: 'SUS',
-        mask: '000000000000000'
-    },
-    {
-        appearance: 'outline',
-        placeholder: '(35) 9 9191-8644',
-        formControlName: 'telephone',
-        required: true,
-        errorMessage: 'O telefone está inválido',
-        label: 'Telefone',
-        mask: '(00) 0 0000-0000'
     },
     {
         appearance: 'outline',

@@ -2,39 +2,30 @@
     <img src="./../../../assets/img/sus.png" />
     <h1>Um sistema simplificado</h1>
 </div>
-<form [formGroup]="form">
-    <div class="form">
-        <div class="container-form">
-            <div class="container-form-title">Confirmar Email</div>
-            <div class="container-form-input">
-                @for (item of formConfirm$; track $index ) {
-                <mat-form-field [appearance]="item.appearance">
-                    <mat-label>{{ item.label }}</mat-label>
-                    <input
-                        matInput
-                        [mask]="item.mask"
-                        [formControlName]="item.formControlName"
-                        [placeholder]="item.placeholder"
-                        [required]="item.required"
-                    />
-                    @if (form.get(item.formControlName)?.invalid) {
-                    <mat-error>{{ item.errorMessage }}</mat-error>
-                    }
-                </mat-form-field>
+
+<div class="container">
+    <div class="sub-container">
+        <span class="title">Confirmar E-mail</span>
+        <form [formGroup]="form" class="form-container">
+            @for (item of formConfirm$; track $index ) {
+            <mat-form-field [appearance]="item.appearance">
+                <mat-label>{{ item.label }}</mat-label>
+                <input
+                    matInput
+                    [mask]="item.mask == null ? '' : item.mask"
+                    [formControlName]="item.formControlName"
+                    [placeholder]="item.placeholder"
+                    [required]="item.required"
+                />
+                @if (form.get(item.formControlName)?.invalid) {
+                <mat-error>{{ item.errorMessage }}</mat-error>
                 }
-                <div class="actions">
-                    <button
-                        class="confirm"
-                        [disabled]="form.invalid"
-                        mat-fab
-                        extended
-                        (click)="confirmEmail()"
-                    >
-                        Confirmar
-                    </button>
-                    <button class="back" mat-fab extended (click)="redirectToLogin()">Voltar</button>
-                </div>
-            </div>
+            </mat-form-field>
+            }
+        </form>
+        <div class="actions">
+            <button class="primary" [disabled]="form.invalid" mat-fab extended>Confirmar</button>
+            <button (click)="redirectToLogin()" class="secondary" mat-fab extended>Voltar</button>
         </div>
     </div>
-</form>
+</div>

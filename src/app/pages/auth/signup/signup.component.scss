@@ -4,7 +4,7 @@
 :host {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    color: white;
+    height: 100vh;
 
     @media (max-width: $md) {
         grid-template-columns: 1fr;
@@ -12,29 +12,21 @@
 }
 
 .image {
-    width: 50vw;
-    height: 100vh;
+    background-color: $secondary;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    gap: 3rem;
-    background-color: $secondary;
+    gap: 2rem;
 
     img {
-        width: 75%;
-        height: 35%;
+        height: 45vh;
+        width: 35vw;
     }
 
-    @media (max-width: $xl) {
-        img {
-            width: 55%;
-            height: 20%;
-        }
-
-        h1 {
-            font-size: 2rem;
-        }
+    h1 {
+        font-size: 2rem;
+        color: white;
     }
 
     @media (max-width: $md) {
@@ -42,100 +34,67 @@
     }
 }
 
-.form {
-    width: 50vw;
-    height: 100vh;
-    display: grid;
-    place-items: center;
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
 
-    @media (max-width: $md) {
-        height: 100vh;
-        width: 100vw;
-    }
-
-    .container-form {
-        display: grid;
-        height: 75vh;
-        overflow-y: auto;
-        width: 45vw;
-        grid-template-rows: 0.5fr 1.5fr 0.5fr;
-        border: 1px solid $primary !important;
+    .sub-container {
+        height: 90%;
+        width: 80%;
+        border: 1px solid $primary;
+        display: flex;
+        flex-direction: column;
+        padding: 1rem;
+        align-items: center;
+        justify-content: space-between;
 
         @media (max-width: $lg) {
-            height: 80vh;
-            width: 45vw;
+            overflow-y: auto;
         }
 
-        @media (max-width: $md) {
-            height: 90vh;
-            width: 80vw;
-        }
-
-        .container-form-title {
-            display: grid;
-            place-items: center;
-            font-size: 50px;
+        .title {
             color: $primary;
+            font-size: 3rem !important;
+            margin-bottom: 0.5rem;
         }
 
-        .container-form-signup {
+        .form-container {
             display: grid;
+            width: 100%;
             grid-template-columns: 1fr 1fr;
-            place-items: center;
+            gap: 1rem;
 
-            @media (max-width: $sm) {
+            @media (max-width: $lg) {
                 grid-template-columns: 1fr;
+                gap: 0;
             }
 
-            .content-form-signup {
-                display: grid;
+            mat-form-field {
                 width: 100%;
-                place-items: center;
-
-                mat-form-field {
-                    width: 90%;
-
-                    mat-label,
-                    mat-icon {
-                        color: black;
-                    }
-                }
             }
         }
 
         .actions {
+            width: 85%;
             display: flex;
             flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            margin: 1rem 0rem;
-            gap: 30px;
-
-            @media (max-width: $sm) {
-                gap: 10px;
-                margin-bottom: 0.5rem;
-            }
+            gap: 1rem;
 
             button {
-                font-size: 20px;
+                font-size: 1.25rem;
                 box-shadow: none;
-                width: 50%;
-
-                @media (max-width: $lg) {
-                    width: 75%;
-                }
             }
 
-            .singup {
+            .primary {
                 background-color: $primary;
-                color: #fff;
 
                 &:disabled {
                     background-color: $disabled;
                 }
             }
 
-            .back {
+            .secondary {
                 background-color: transparent;
                 border: 1px solid $primary;
                 color: $primary;
