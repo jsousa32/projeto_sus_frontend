@@ -12,7 +12,7 @@ import { MatInputModule } from '@angular/material/input';
 import { Router } from '@angular/router';
 import { NgxMaskDirective, provideNgxMask } from 'ngx-mask';
 import { DialogsAlertService } from '../../../core/services/dialogs-alert.service';
-import { FormSignup } from './form.structure';
+import { FormStructureLeft, FormStructureRight } from './form.structure';
 
 @Component({
     standalone: true,
@@ -36,7 +36,9 @@ export default class SignupComponent {
 
     protected visibility: boolean = false;
 
-    protected formSignup$ = FormSignup;
+    protected formStructureLeft$ = FormStructureLeft;
+
+    protected formStructureRight$ = FormStructureRight;
 
     protected form = this.fb.group({
         firstName: ['', Validators.required],

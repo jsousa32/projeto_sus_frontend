@@ -1,26 +1,145 @@
 @use "colors" as *;
+@use "dimensions" as *;
 
-mat-form-field {
-    width: 90%;
-}
-
-button {
-    width: 80%;
-    font-size: 1rem;
-    box-shadow: none;
-}
-
-.primary {
-    background-color: $primary;
+:host {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
     color: white;
 
-    &:disabled {
-        background-color: $disabled;
+    @media (max-width: $md) {
+        grid-template-columns: 1fr;
     }
 }
 
-.secondary {
-    background-color: transparent;
-    border: 1px solid $primary;
-    color: $primary;
+.image {
+    width: 50vw;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 3rem;
+    background-color: $secondary;
+
+    img {
+        width: 75%;
+        height: 35%;
+    }
+
+    @media (max-width: $xl) {
+        img {
+            width: 55%;
+            height: 20%;
+        }
+
+        h1 {
+            font-size: 2rem;
+        }
+    }
+
+    @media (max-width: $md) {
+        display: none;
+    }
+}
+
+.form {
+    width: 50vw;
+    height: 100vh;
+    display: grid;
+    place-items: center;
+
+    @media (max-width: $md) {
+        height: 100vh;
+        width: 100vw;
+    }
+
+    .container-form {
+        display: grid;
+        height: 75vh;
+        overflow-y: auto;
+        width: 45vw;
+        grid-template-rows: 0.5fr 1.5fr 0.5fr;
+        border: 1px solid $primary !important;
+
+        @media (max-width: $lg) {
+            height: 80vh;
+            width: 45vw;
+        }
+
+        @media (max-width: $md) {
+            height: 90vh;
+            width: 80vw;
+        }
+
+        .container-form-title {
+            display: grid;
+            place-items: center;
+            font-size: 50px;
+            color: $primary;
+        }
+
+        .container-form-signup {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            place-items: center;
+
+            @media (max-width: $sm) {
+                grid-template-columns: 1fr;
+            }
+
+            .content-form-signup {
+                display: grid;
+                width: 100%;
+                place-items: center;
+
+                mat-form-field {
+                    width: 90%;
+
+                    mat-label,
+                    mat-icon {
+                        color: black;
+                    }
+                }
+            }
+        }
+
+        .actions {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            margin: 1rem 0rem;
+            gap: 30px;
+
+            @media (max-width: $sm) {
+                gap: 10px;
+                margin-bottom: 0.5rem;
+            }
+
+            button {
+                font-size: 20px;
+                box-shadow: none;
+                width: 50%;
+
+                @media (max-width: $lg) {
+                    width: 75%;
+                }
+            }
+
+            .singup {
+                background-color: $primary;
+                color: #fff;
+
+                &:disabled {
+                    background-color: $disabled;
+                }
+            }
+
+            .back {
+                background-color: transparent;
+                border: 1px solid $primary;
+                color: $primary;
+            }
+        }
+    }
 }
