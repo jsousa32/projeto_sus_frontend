@@ -1,3 +1,7 @@
+@import "tailwindcss/base";
+@import "tailwindcss/components";
+@import "tailwindcss/utilities";
+
 @import url("https://fonts.googleapis.com/css2?family=Dosis:wght@400;500;600;700&display=swap");
 
 body {
@@ -11,6 +15,10 @@ body {
     }
 }
 
+.mdc-notched-outline__notch {
+    border-right-style: hidden;
+}
+
 .custom {
     border: 1px solid #2754a7 !important;
     border-radius: 50px !important;
@@ -21,7 +29,6 @@ body {
     color: #fff;
     background-color: #2754a7 !important;
 
-
     &:hover {
         background: #2754a7 !important;
     }
@@ -30,7 +37,6 @@ body {
 .cancel-button {
     color: #2754a7 !important;
     background-color: #fff !important;
-
 
     &:hover {
         background: none !important;

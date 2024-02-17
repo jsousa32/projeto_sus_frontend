@@ -1,14 +1,25 @@
-<div class="image">
-    <img src="./../../../assets/img/sus.png" />
-    <h1>Um sistema simplificado</h1>
-</div>
-<form [formGroup]="form" (submit)="register()">
-    <div class="form">
-        <div class="container-form">
-            <div class="container-form-title">Cadastra-se</div>
-            <div class="container-form-signup">
-                <div class="content-form-signup">
-                    @for (item of formStructureLeft$; track $index ) {
+<form [formGroup]="form" (ngSubmit)="register()">
+    <div class="grid grid-cols-1 md:grid-cols-2 w-screen h-screen">
+        <div
+            class="bg-secondary hidden md:flex flex-col justify-center items-center"
+        >
+            <img
+                class="lg:h-2/5 w-9/12 md:h-1/5 mb-10"
+                src="./../../../assets/img/sus.png"
+            />
+            <h1 class="lg:text-5xl md:text-4xl text-white">
+                Um sistema simplificado
+            </h1>
+        </div>
+        <div class="grid place-items-center p-6">
+            <div
+                class="h-full w-11/12 flex flex-col p-3 justify-between items-center border-primary border border-solid"
+            >
+                <div class="text-6xl text-primary">Cadastre-se</div>
+                <div
+                    class="h-full w-full p-3 grid-cols-1 grid sm:grid-cols-2 place-items-center"
+                >
+                    @for (item of formSignup$; track $index ) {
                     <mat-form-field [appearance]="item.appearance">
                         <mat-label>{{ item.label }}</mat-label>
                         <input
@@ -37,54 +48,26 @@
                     </mat-form-field>
                     }
                 </div>
-                <div class="content-form-signup">
-                    @for (item of formStructureRight$; track $index ) {
-                    <mat-form-field [appearance]="item.appearance">
-                        <mat-label>{{ item.label }}</mat-label>
-                        <input
-                            matInput
-                            [mask]="item.mask == null ? '' : item.mask"
-                            [type]="
-                                item.type === 'password' && visibility
-                                    ? 'text'
-                                    : item.type || ''
-                            "
-                            [formControlName]="item.formControlName"
-                            [placeholder]="item.placeholder"
-                            [required]="item.required"
-                        />
-                        @if (item.icon) {
-                        <mat-icon
-                            matSuffix
-                            (click)="visibility = !visibility"
-                            >{{
-                                visibility ? "visibility" : "visibility_off"
-                            }}</mat-icon
-                        >
-                        } @if (form.get(item.formControlName)?.invalid) {
-                        <mat-error>{{ item.errorMessage }}</mat-error>
-                        }
-                    </mat-form-field>
-                    }
+                <div
+                    class="w-full h-32 flex flex-col gap-6 justify-center items-center"
+                >
+                    <button
+                        class="primary"
+                        [disabled]="form.invalid"
+                        mat-fab
+                        extended
+                    >
+                        Cadastrar
+                    </button>
+                    <button
+                        (click)="redirectToLogin()"
+                        class="secondary"
+                        mat-fab
+                        extended
+                    >
+                        Voltar
+                    </button>
                 </div>
-            </div>
-            <div class="actions">
-                <button
-                    class="singup"
-                    [disabled]="form.invalid"
-                    mat-fab
-                    extended
-                >
-                    Cadatrar
-                </button>
-                <button
-                    class="back"
-                    (click)="redirectToLogin()"
-                    mat-fab
-                    extended
-                >
-                    Voltar
-                </button>
             </div>
         </div>
     </div>
