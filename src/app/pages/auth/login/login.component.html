@@ -30,7 +30,7 @@
             <a href="{{ url }}forget-password">Esqueceu a senha?</a>
         </form>
         <div class="actions">
-            <button class="primary" [disabled]="form.invalid" mat-fab extended>Login</button>
+            <button (click)="login()" class="primary" [disabled]="form.invalid" mat-fab extended>Login</button>
             <button (click)="redirectToSign()" class="secondary" mat-fab extended>Cadastra-se</button>
         </div>
     </div>

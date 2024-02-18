@@ -6,12 +6,12 @@ import { PacientModel } from '../models/user.dto.model';
 @Injectable({
     providedIn: 'root',
 })
-export class UserService {
-    private url = 'http://localhost:8080/user/';
+export class PacientService {
+    private url = 'http://localhost:8080/pacient/';
 
     protected httpClient = inject(HttpClient);
 
     signup(pacient: PacientModel) {
-        this.httpClient.post(this.url + RoutesUserEnum.SIGNUP, pacient);
+        return this.httpClient.post(this.url + RoutesUserEnum.SIGNUP, pacient);
     }
 }

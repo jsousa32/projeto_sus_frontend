@@ -24,7 +24,9 @@
             }
         </form>
         <div class="actions">
-            <button class="primary" [disabled]="form.invalid" mat-fab extended>Confirmar</button>
+            <button (click)="confirmEmail()" class="primary" [disabled]="form.invalid" mat-fab extended>
+                Confirmar
+            </button>
             <button (click)="redirectToLogin()" class="secondary" mat-fab extended>Voltar</button>
         </div>
     </div>

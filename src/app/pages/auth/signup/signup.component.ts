@@ -1,3 +1,4 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { Component, inject } from '@angular/core';
 import { FormBuilder, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
@@ -6,9 +7,10 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { Router } from '@angular/router';
 import { NgxMaskDirective, provideNgxMask } from 'ngx-mask';
+import Swal from 'sweetalert2';
 import { PacientModel } from '../../../core/models/user.dto.model';
 import { DialogsAlertService } from '../../../core/services/dialogs-alert.service';
-import { UserService } from '../../../core/services/user.service';
+import { PacientService } from '../../../core/services/pacient.service';
 import { FormSignup } from './form.structure';
 
 @Component({
@@ -31,7 +33,7 @@ export default class SignupComponent {
     private router = inject(Router);
 
     private dialogService = inject(DialogsAlertService);
-    private userService = inject(UserService);
+    private pacientService = inject(PacientService);
 
     protected visibility: boolean = false;
 
@@ -49,26 +51,49 @@ export default class SignupComponent {
     });
 
     register() {
-        if (this.validatedPassword()) {
+        const formValues = this.form.value;
+
+        if (formValues.password != formValues.confirmPassword) {
             this.dialogService.openDialog(
                 'Senhas Incompatíveis',
-                `<body> Teste </br> Teste dois</body>`,
+                `<body>Por favor, tente novamente.</body>`,
                 'error',
-                true
+                false
             );
 
             return;
         }
 
-        const pacient: PacientModel = this.form.value as PacientModel;
+        this.dialogService.openDialogLoading(
+            'Aguarde',
+            `Estamos finalizando o seu cadastro. </br> Em instantes você será redirecionado!`,
+            'info'
+        );
 
-        console.log(pacient);
-    }
+        this.pacientService.signup(formValues as PacientModel).subscribe({
+            next: () => {
+                Swal.close();
 
-    private validatedPassword() {
-        const formValues = this.form.value;
+                this.dialogService.openDialog(
+                    'Seja Bem-vindo(a)!',
+                    `<body>O seu usuário foi cadastrado na plataforma.</body>`,
+                    'success',
+                    false
+                );
 
-        return formValues.password != formValues.confirmPassword;
+                this.router.navigateByUrl('login');
+            },
+            error: (e: HttpErrorResponse) => {
+                Swal.close();
+
+                this.dialogService.openDialog(
+                    'Não foi possível cadastrar usuário',
+                    `<body>${e.error.message}</body>`,
+                    'error',
+                    false
+                );
+            },
+        });
     }
 
     redirectToLogin() {

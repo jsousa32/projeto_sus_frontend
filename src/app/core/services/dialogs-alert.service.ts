@@ -4,18 +4,12 @@ import { from } from 'rxjs';
 import Swal, { SweetAlertIcon } from 'sweetalert2';
 
 @Injectable({
-  providedIn: 'root'
+    providedIn: 'root',
 })
 export class DialogsAlertService {
-
     private dialog = inject(MatDialog);
 
-    openDialog(
-        title: string,
-        body: string,
-        icon: SweetAlertIcon,
-        hasConfirmButton: boolean
-    ) {
+    openDialog(title: string, body: string, icon: SweetAlertIcon, hasConfirmButton: boolean) {
         return from(
             Swal.fire({
                 title: title,
@@ -36,5 +30,25 @@ export class DialogsAlertService {
                 return value.isConfirmed && hasConfirmButton ? true : false;
             })
         );
+    }
+
+    openDialogLoading(title: string, body: string, icon: SweetAlertIcon) {
+        Swal.fire({
+            title: title,
+            html: body,
+            icon: icon,
+            allowOutsideClick: false,
+            allowEscapeKey: false,
+            showConfirmButton: false,
+            customClass: {
+                confirmButton: 'custom confirm-button',
+                cancelButton: 'custom cancel-button',
+                title: 'title',
+                htmlContainer: 'html',
+            },
+            didOpen: () => {
+                Swal.showLoading();
+            },
+        });
     }
 }

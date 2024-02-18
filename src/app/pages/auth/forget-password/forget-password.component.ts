@@ -1,17 +1,14 @@
 import { CommonModule } from '@angular/common';
 import { Component, inject } from '@angular/core';
-import {
-    FormBuilder,
-    FormsModule,
-    ReactiveFormsModule,
-    Validators,
-} from '@angular/forms';
+import { FormBuilder, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { Router } from '@angular/router';
 import { NgxMaskDirective, provideNgxMask } from 'ngx-mask';
+import { AuthService } from '../../../core/services/auth.service';
+import { DialogsAlertService } from '../../../core/services/dialogs-alert.service';
 import { FormForget } from './form.structure';
 
 @Component({
@@ -33,6 +30,11 @@ import { FormForget } from './form.structure';
 })
 export default class ForgetPasswordComponent {
     private fb = inject(FormBuilder);
+
+    private authService = inject(AuthService);
+
+    private dialogService = inject(DialogsAlertService);
+
     private router = inject(Router);
 
     protected formForget$ = FormForget;
@@ -42,7 +44,13 @@ export default class ForgetPasswordComponent {
     });
 
     forgetPassword() {
-        console.log(this.form.value.email);
+        const formValues = this.form.value;
+
+        this.authService.forgetPassword(formValues.email!).subscribe();
+
+        this.dialogService
+            .openDialog('Recuperação de senha solicitada.', `Um link foi enviado ao seu e-mail`, 'success', false)
+            .subscribe(() => this.router.navigateByUrl('login'));
     }
 
     redirectToLogin() {

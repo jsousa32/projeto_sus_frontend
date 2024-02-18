@@ -18,17 +18,18 @@ export const routes: Routes = [
     },
     {
         path: 'confirm-email',
-        loadComponent: () =>
-            import('./pages/auth/confirm-email/confirm-email.component'),
+        loadComponent: () => import('./pages/auth/confirm-email/confirm-email.component'),
     },
     {
         path: 'forget-password',
-        loadComponent: () =>
-            import('./pages/auth/forget-password/forget-password.component'),
+        loadComponent: () => import('./pages/auth/forget-password/forget-password.component'),
     },
     {
         path: 'reset-password/:token',
-        loadComponent: () =>
-            import('./pages/auth/reset-password/reset-password.component'),
+        loadComponent: () => import('./pages/auth/reset-password/reset-password.component'),
+    },
+    {
+        path: 'dashboard',
+        loadComponent: () => import('./pages/internal/dashboard/dashboard.component'),
     },
 ];
