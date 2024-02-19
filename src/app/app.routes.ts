@@ -11,7 +11,6 @@ export const routes: Routes = [
         path: 'login',
         component: LoginComponent,
     },
-
     {
         path: 'signup',
         loadComponent: () => import('./pages/auth/signup/signup.component'),
@@ -29,7 +28,26 @@ export const routes: Routes = [
         loadComponent: () => import('./pages/auth/reset-password/reset-password.component'),
     },
     {
-        path: 'dashboard',
-        loadComponent: () => import('./pages/internal/dashboard/dashboard.component'),
+        path: 'home',
+        loadComponent: () => import('./pages/layout/home/home.component'),
+        children: [
+            {
+                path: '',
+                pathMatch: 'full',
+                redirectTo: 'dashboard',
+            },
+            {
+                path: 'dashboard',
+                loadComponent: () => import('./pages/internal/dashboard/dashboard.component'),
+            },
+            {
+                path: 'doctors',
+                loadComponent: () => import('./pages/internal/doctor/doctor-info/doctor-info.component'),
+            },
+            {
+                path: 'pacients',
+                loadComponent: () => import('./pages/internal/pacient/pacient-info/pacient-info.component'),
+            },
+        ],
     },
 ];

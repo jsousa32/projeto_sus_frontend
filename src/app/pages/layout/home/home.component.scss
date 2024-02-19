@@ -1,0 +1,93 @@
+@use "colors" as *;
+
+.container {
+    display: grid;
+    grid-template-columns: 0.25fr 1fr;
+
+    .sidebar {
+        height: 100vh;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 2rem;
+        box-shadow: rgba(100, 100, 111, 0.2) 0px 0px 10px 0px;
+
+        .image {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+
+            img {
+                margin-top: 2rem;
+                height: 15vh;
+                width: 15vw;
+            }
+
+            span {
+                color: $primary;
+            }
+        }
+
+        hr {
+            width: 90%;
+            background-color: black;
+        }
+
+        .sidebar-nav {
+            width: 100%;
+            height: 10vh;
+            background-color: $primary;
+            gap: 1rem;
+            border-radius: 1rem;
+
+            .sidebar-item {
+                padding: 0.5rem;
+                text-decoration: none;
+                display: flex;
+                align-items: center;
+                color: #fff;
+                width: 100%;
+                height: 100%;
+
+                mat-icon {
+                    margin-right: 2rem;
+                }
+            }
+
+            &:hover {
+                .sidebar-item:not(.active) {
+                    border-radius: 1rem;
+                    background-color: #fff;
+                    border: 1px solid $primary;
+                    color: $primary;
+                }
+            }
+        }
+    }
+
+    .content {
+        display: grid;
+        height: 100vh;
+        grid-template-rows: 0.15fr 1fr;
+
+        .navbar {
+            padding: 1rem;
+            display: flex;
+            justify-content: end;
+            align-items: center;
+            gap: 1rem;
+            box-shadow: rgba(100, 100, 111, 0.2) 0px 2px 0px 0px;
+        }
+
+        .body {
+            padding: 2rem;
+        }
+    }
+}
+
+.sidebar-item.active {
+    border-radius: 1rem;
+    background-color: #fff;
+    border: 1px solid $primary;
+    color: $primary !important;
+}

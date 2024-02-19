@@ -1,0 +1,29 @@
+<div class="container">
+    <div class="sidebar">
+        <div class="image">
+            <img src="../../../../assets/img/sus_azul.png" />
+            <span>Um sistema simplificado</span>
+        </div>
+        <hr />
+        @for (route of routes$; track $index) {
+        <div class="sidebar-nav">
+            <a
+                *ngIf="route.userRole === admin"
+                class="sidebar-item"
+                [routerLink]="route.routerLink"
+                routerLinkActive="active"
+                [routerLinkActiveOptions]="{ exact: true }"
+            >
+                <mat-icon>{{ route.icon }}</mat-icon>
+                <span>{{ route.label }}</span>
+            </a>
+        </div>
+        }
+    </div>
+    <div class="content">
+        <div class="navbar"></div>
+        <div class="body">
+            <router-outlet />
+        </div>
+    </div>
+</div>
