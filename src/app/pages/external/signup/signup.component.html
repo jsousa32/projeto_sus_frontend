@@ -11,28 +11,32 @@
           (keydown.enter)="forms.valid && signup()"
           class="grid grid-cols-2 overflow-auto gap-[2.25rem] md:gap-[1rem]"
         >
-          <div *ngFor="let input of formsLeftSide" class="grid col-span-2 md:col-span-1 gap-[2.25rem]">
-            <app-inputs
-              [case]="input.case"
-              [formControlName]="input.formControlName"
-              [form]="forms"
-              [placeholder]="input.placeholder"
-            />
+          <div class="grid col-span-2 md:col-span-1 gap-[2.25rem]">
+            <div *ngFor="let input of formsLeftSide">
+              <app-inputs
+                [case]="input.case"
+                [formControlName]="input.formControlName"
+                [form]="forms"
+                [placeholder]="input.placeholder"
+              />
+            </div>
           </div>
-          <div *ngFor="let input of formsRightSide" class="grid col-span-2 md:col-span-1 gap-[2.25rem]">
-            <app-inputs
-              [case]="input.case"
-              [formControlName]="input.formControlName"
-              [form]="forms"
-              [placeholder]="input.placeholder"
-            />
+          <div class="grid col-span-2 md:col-span-1 gap-[2.25rem]">
+            <div *ngFor="let input of formsRightSide">
+              <app-inputs
+                [case]="input.case"
+                [formControlName]="input.formControlName"
+                [form]="forms"
+                [placeholder]="input.placeholder"
+              />
+            </div>
           </div>
         </form>
       </div>
       <div class="w-[80%]">
         <div class="flex flex-col w-full gap-[1rem]">
           <app-buttons label="Cadastrar" [rounded]="true" case="primary" type="submit" (click)="signup()" />
-          <app-buttons label="Voltar" [rounded]="true" case="secondary" type="button" [routerLink]="['/signup']" />
+          <app-buttons label="Voltar" [rounded]="true" case="secondary" type="button" [routerLink]="['/login']" />
         </div>
       </div>
     </div>
