@@ -14,14 +14,11 @@ body {
   opacity: 0;
   animation: fadeIn 1.5s forwards;
 }
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-  }
 
-  to {
-    opacity: 1;
-  }
+.slide-right {
+  position: relative;
+  right: 100%;
+  animation: slide 2s ease forwards;
 }
 
 .p-button {
@@ -33,4 +30,24 @@ input {
   border-radius: 30px;
   width: 100%;
   box-shadow: none;
+}
+
+/* KEYFRAMES */
+@keyframes slide {
+  0% {
+    right: 100%;
+  }
+  100% {
+    right: 0;
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
 }

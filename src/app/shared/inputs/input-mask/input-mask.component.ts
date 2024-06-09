@@ -1,23 +1,23 @@
 import { CommonModule } from '@angular/common';
 import { Component, Input, forwardRef } from '@angular/core';
 import { ControlValueAccessor, FormGroup, NG_VALUE_ACCESSOR, ReactiveFormsModule } from '@angular/forms';
-import { InputTextModule } from 'primeng/inputtext';
+import { InputMaskModule } from 'primeng/inputmask';
 
 @Component({
-  selector: 'app-input-text',
+  selector: 'app-input-mask',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, InputTextModule],
-  templateUrl: './input-text.component.html',
-  styleUrl: './input-text.component.scss',
+  imports: [CommonModule, ReactiveFormsModule, InputMaskModule],
+  templateUrl: './input-mask.component.html',
+  styleUrl: './input-mask.component.scss',
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,
-      useExisting: forwardRef(() => InputTextComponent),
+      useExisting: forwardRef(() => InputMaskComponent),
       multi: true,
     },
   ],
 })
-export class InputTextComponent implements ControlValueAccessor {
+export class InputMaskComponent implements ControlValueAccessor {
   @Input({ required: true })
   form!: FormGroup;
 
@@ -33,7 +33,7 @@ export class InputTextComponent implements ControlValueAccessor {
   @Input({ required: false })
   readonly: boolean = false;
 
-  @Input({required: false})
+  @Input({required: true})
   mask: string = '';
 
   writeValue(obj: any): void {}

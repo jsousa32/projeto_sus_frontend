@@ -17,4 +17,34 @@
       [required]="required"
     />
   </div>
+  <div *ngSwitchCase="'document'">
+    <app-input-mask
+      [form]="form"
+      [formControlName]="formControlName"
+      mask="999.999.999-99"
+      [placeholder]="placeholder"
+      [readonly]="readonly"
+      [required]="required"
+    />
+  </div>
+  <div *ngSwitchCase="'telephone'">
+    <app-input-mask
+      [form]="form"
+      [formControlName]="formControlName"
+      mask="(99) 9 9999-9999"
+      [placeholder]="placeholder"
+      [readonly]="readonly"
+      [required]="required"
+    />
+  </div>
+  <div *ngSwitchCase="'susNumber'">
+    <app-input-mask
+      [form]="form"
+      [formControlName]="formControlName"
+      mask="999999999999999"
+      [placeholder]="placeholder"
+      [readonly]="readonly"
+      [required]="required"
+    />
+  </div>
 </form>
