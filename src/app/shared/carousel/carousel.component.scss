@@ -1,0 +1,12 @@
+::ng-deep .p-carousel {
+
+  .p-carousel-indicators {
+    gap: 2rem;
+
+    .p-carousel-indicator button {
+      height: 1rem;
+      width: 1rem;
+      border-radius: 50%;
+    }
+  }
+}

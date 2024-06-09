@@ -1,0 +1,21 @@
+<div class="flex w-full">
+  <p-carousel
+    [value]="carouselData"
+    [circular]="true"
+    [autoplayInterval]="5000"
+    [showIndicators]="true"
+    [showNavigators]="false"
+  >
+    <ng-template let-carousel pTemplate="item">
+      <div
+        class="grid grid-cols-1 place-items-center justify-evenly gap-[5rem]"
+      >
+        <h1 class="text-white text-4xl">{{ carousel.title }}</h1>
+
+        <img class="w-[30rem] h-[15rem]" [src]="[carousel.pathImg]"/>
+
+        <h2 class="text-white w-[80%] text-center text-2xl">{{ carousel.description }}</h2>
+      </div>
+    </ng-template>
+  </p-carousel>
+</div>

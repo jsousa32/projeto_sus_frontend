@@ -1,0 +1,20 @@
+<form [formGroup]="form" [ngSwitch]="case">
+  <div *ngSwitchCase="'text'">
+    <app-input-text
+      [form]="form"
+      [formControlName]="formControlName"
+      [placeholder]="placeholder"
+      [readonly]="readonly"
+      [required]="required"
+    />
+  </div>
+  <div *ngSwitchCase="'password'">
+    <app-input-password
+      [form]="form"
+      [formControlName]="formControlName"
+      [placeholder]="placeholder"
+      [readonly]="readonly"
+      [required]="required"
+    />
+  </div>
+</form>

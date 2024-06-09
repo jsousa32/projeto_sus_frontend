@@ -1,10 +1,36 @@
 @tailwind components;
 @tailwind utilities;
+@tailwind base;
 
 @import "primeng/resources/themes/lara-light-blue/theme.css";
 @import "primeng/resources/primeng.css";
 
-
-* {
+body {
   margin: 0;
+  height: 100vh;
+}
+
+.animation {
+  opacity: 0;
+  animation: fadeIn 1.5s forwards;
+}
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+.p-button {
+  width: 100%;
+  font-size: 1.25rem;
+}
+
+input {
+  border-radius: 30px;
+  width: 100%;
+  box-shadow: none;
 }
