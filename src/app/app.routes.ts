@@ -20,4 +20,8 @@ export const routes: Routes = [
     path: 'confirmation',
     loadComponent: () => import('../app/pages/external/email-confirmation/email-confirmation.component'),
   },
+  {
+    path: 'forgot',
+    loadComponent: () => import('../app/pages/external/forgot/forgot.component'),
+  },
 ];
