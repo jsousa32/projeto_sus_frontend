@@ -24,4 +24,8 @@ export const routes: Routes = [
     path: 'forgot',
     loadComponent: () => import('../app/pages/external/forgot/forgot.component'),
   },
+  {
+    path: 'reset',
+    loadComponent: () => import('../app/pages/external/reset/reset.component'),
+  },
 ];

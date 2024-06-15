@@ -1,0 +1,32 @@
+<div class="flex h-screen bg-gradient-to-l from-primary to-blue-300 animation">
+  <div class="hidden xl:flex xl:w-[50%] justify-center items-center">
+    <div class="w-[80%]">
+      <app-carousel />
+    </div>
+  </div>
+  <div class="flex w-full xl:w-[50%] justify-center items-center">
+    <div class="flex flex-col h-[85%] w-[75%] items-center justify-around bg-white/70 rounded-3xl shadow-xl">
+      <h1 class="text-primary text-center text-[1.75rem] sm:text-[2.25rem] lg:text-[4rem] xl:text-[2.75rem]">
+        Resetar Senha
+      </h1>
+      <div class="flex flex-col w-[80%] gap-[1rem]">
+        <div class="flex flex-col gap-[2.25rem]">
+          <form [formGroup]="forms" *ngFor="let input of resetForm" (keydown.enter)="forms.valid && reset()">
+            <app-inputs
+              [case]="input.case"
+              [formControlName]="input.formControlName"
+              [form]="forms"
+              [placeholder]="input.placeholder"
+            />
+          </form>
+        </div>
+      </div>
+      <div class="w-[80%]">
+        <div class="flex flex-col w-full gap-[1rem]">
+          <app-buttons label="Resetar" [rounded]="true" case="primary" type="submit" (click)="reset()" />
+          <app-buttons label="Sair" [rounded]="true" case="secondary" type="button" [routerLink]="['/login']" />
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
