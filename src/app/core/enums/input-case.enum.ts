@@ -4,4 +4,5 @@ export enum InputCase {
   SUS = 'susNumber',
   TELEPHONE = 'telephone',
   DOCUMENT = 'document',
+  TOKEN = 'token'
 }

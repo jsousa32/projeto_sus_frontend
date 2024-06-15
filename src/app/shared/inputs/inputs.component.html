@@ -47,4 +47,13 @@
       [required]="required"
     />
   </div>
+  <div *ngSwitchCase="'token'">
+    <app-input-otp
+      [form]="form"
+      [formControlName]="formControlName"
+      [placeholder]="placeholder"
+      [readonly]="readonly"
+      [required]="required"
+    />
+  </div>
 </form>

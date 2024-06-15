@@ -16,4 +16,8 @@ export const routes: Routes = [
     path: 'signup',
     component: SignupComponent,
   },
+  {
+    path: 'confirmation',
+    loadComponent: () => import('../app/pages/external/email-confirmation/email-confirmation.component'),
+  },
 ];

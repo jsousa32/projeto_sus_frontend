@@ -1,0 +1,24 @@
+<form [formGroup]="form">
+  <span class="p-float-label">
+    <p-inputOtp
+      id="{{ formControlName }}"
+      pInputText
+      ngDefaultControl
+      [required]="required"
+      [length]="6"
+      [formControlName]="formControlName"
+      class="flex flex-col sm:flex-row"
+      [ngClass]="{
+        'ng-invalid ng-dirty ':
+          form.get(formControlName)?.errors && (form.get(formControlName)?.touched || form.get(formControlName)?.dirty)
+      }"
+    />
+  </span>
+  <small
+    *ngIf="
+      form.get(formControlName)?.errors && (form.get(formControlName)?.touched || form.get(formControlName)?.dirty)
+    "
+    class="p-error absolute"
+    >{{ placeholder }} não pode ser vazio.</small
+  >
+</form>

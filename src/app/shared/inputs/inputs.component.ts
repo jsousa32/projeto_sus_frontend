@@ -2,13 +2,14 @@ import { CommonModule } from '@angular/common';
 import { Component, Input, ViewEncapsulation } from '@angular/core';
 import { ControlValueAccessor, FormGroup, NG_VALUE_ACCESSOR, ReactiveFormsModule } from '@angular/forms';
 import { InputMaskComponent } from './input-mask/input-mask.component';
+import { InputOtpComponent } from './input-otp/input-otp.component';
 import { InputPasswordComponent } from './input-password/input-password.component';
 import { InputTextComponent } from './input-text/input-text.component';
 
 @Component({
   selector: 'app-inputs',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, InputTextComponent, InputPasswordComponent, InputMaskComponent],
+  imports: [CommonModule, ReactiveFormsModule, InputTextComponent, InputPasswordComponent, InputMaskComponent, InputOtpComponent],
   templateUrl: './inputs.component.html',
   styleUrl: './inputs.component.scss',
   providers: [
