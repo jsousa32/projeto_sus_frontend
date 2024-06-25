@@ -10,11 +10,14 @@ import { SidebarComponent } from './sidebar/sidebar.component';
   imports: [CommonModule, NavbarComponent, SidebarComponent, RouterOutlet],
   template: `
     <div class="flex flex-col h-screen bg-primary/30">
-      <app-navbar (toggled)="toggledSidebar = $event"/>
+      <app-navbar (toggled)="toggledSidebar = $event" />
 
       <div class="flex h-full p-[1rem] gap-[1rem]">
         <app-sidebar [toggledSidebar]="toggledSidebar" />
-        <router-outlet />
+
+        <div class="w-full">
+          <router-outlet />
+        </div>
       </div>
     </div>
   `,
