@@ -30,7 +30,18 @@ export const routes: Routes = [
     loadComponent: () => import('../app/pages/external/reset/reset.component'),
   },
   {
-    path: 'dashboard',
+    path: '',
     component: LayoutComponent,
+    children: [
+      {
+        path: '',
+        pathMatch: 'full',
+        redirectTo: 'dashboard'
+      },
+      {
+        path: 'dashboard',
+        loadComponent: () => import("../app/pages/internal/dashboard/dashboard.component")
+      }
+    ]
   },
 ];
