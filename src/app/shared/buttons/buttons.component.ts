@@ -21,6 +21,9 @@ export class ButtonsComponent {
   rounded: boolean = false;
 
   @Input({required: false})
+  disabled: boolean = false;
+
+  @Input({required: false})
   ngClass: string = '';
 
   @Input({required: true})

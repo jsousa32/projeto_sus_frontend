@@ -3,10 +3,14 @@
     *ngSwitchCase="'primary'"
     pButton
     class="text-white bg-primary"
+    [disabled]="disabled"
     [type]="type"
     [label]="label"
     [ngClass]="ngClass"
     [rounded]="rounded"
+    [ngClass]="{
+      'opacity-50': disabled
+    }"
   ></button>
 
   <button
