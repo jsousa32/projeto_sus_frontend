@@ -1,6 +1,7 @@
 import { Routes } from '@angular/router';
 import { LoginComponent } from './pages/external/login/login.component';
 import SignupComponent from './pages/external/signup/signup.component';
+import { LayoutComponent } from './pages/internal/layout/layout.component';
 
 export const routes: Routes = [
   {
@@ -27,5 +28,9 @@ export const routes: Routes = [
   {
     path: 'reset',
     loadComponent: () => import('../app/pages/external/reset/reset.component'),
+  },
+  {
+    path: 'dashboard',
+    component: LayoutComponent,
   },
 ];

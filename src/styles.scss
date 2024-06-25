@@ -32,6 +32,18 @@ input {
   box-shadow: none;
 }
 
+.p-menu .p-menuitem-link {
+  gap: 0.5rem;
+
+  .p-menuitem-icon {
+    font-size: 1.5rem;
+  }
+
+  .p-menuitem-text {
+    font-size: 1.25rem;
+  }
+}
+
 /* KEYFRAMES */
 @keyframes slide {
   0% {
