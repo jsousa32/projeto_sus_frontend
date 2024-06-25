@@ -36,16 +36,20 @@ export const routes: Routes = [
       {
         path: '',
         pathMatch: 'full',
-        redirectTo: 'dashboard'
+        redirectTo: 'dashboard',
       },
       {
         path: 'dashboard',
-        loadComponent: () => import("../app/pages/internal/dashboard/dashboard.component")
+        loadComponent: () => import('../app/pages/internal/dashboard/dashboard.component'),
       },
       {
         path: 'pacients',
-        loadComponent: () => import("../app/pages/internal/pacients/listing-pacients/listing-pacients.component")
-      }
-    ]
+        loadComponent: () => import('../app/pages/internal/pacients/listing-pacients/listing-pacients.component'),
+      },
+      {
+        path: 'pacients/new',
+        loadComponent: () => import('../app/pages/internal/pacients/create-pacients/create-pacients.component'),
+      },
+    ],
   },
 ];
