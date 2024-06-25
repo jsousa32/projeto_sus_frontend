@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 import { MenuItem } from 'primeng/api';
 import { MenuModule } from 'primeng/menu';
 import { InitialsPipe } from '../../../../core/pipes/initials.pipe';
@@ -12,6 +12,10 @@ import { InitialsPipe } from '../../../../core/pipes/initials.pipe';
   styleUrl: './navbar.component.scss',
 })
 export class NavbarComponent {
+  @Output()
+  toggled = new EventEmitter<boolean>();
+
+  protected toggledSidebar = false;
   protected name = 'João Lucas';
 
   protected items: MenuItem[] = [
@@ -21,7 +25,7 @@ export class NavbarComponent {
     },
     {
       label: 'Sair',
-      icon: 'ph-sign-out'
+      icon: 'ph-sign-out',
     },
   ];
 }

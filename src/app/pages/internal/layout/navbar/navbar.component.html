@@ -1,6 +1,9 @@
 <div class="flex p-[1rem]">
   <div class="flex w-full h-[5rem] justify-between items-center rounded-3xl py-[1rem] px-[2rem] bg-white/80">
-    <i class="ph-list text-[1.75rem] cursor-pointer"></i>
+    <i
+      class="ph-list text-[1.75rem] cursor-pointer"
+      (click)="toggled.emit(this.toggledSidebar); this.toggledSidebar = !this.toggledSidebar"
+    ></i>
     <div class="flex items-center gap-[1.25rem]">
       <span
         class="flex items-center justify-center text-[1.5rem] font-bold rounded-full h-[45px] w-[45px] sm:h-[55px] sm:w-[55px] text-white bg-primary"
