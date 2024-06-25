@@ -1,13 +1,14 @@
 <div class="flex flex-col justify-between h-full rounded-3xl w-full bg-white/80 p-[1rem]">
   <div class="flex w-full justify-center">
-    <h1 class="text-primary">Pacientes</h1>
+    <h1 class="text-primary text-[1.75rem] sm:text-[2rem]">Pacientes</h1>
   </div>
   <div class="flex flex-col h-[85%] gap-[5rem]">
     <div class="flex justify-center">
-      <div class="flex w-8/12 items-center gap-[1.5rem]">
-        <form class="w-full" [formGroup]="form">
+      <div class="flex w-full items-center justify-evenly">
+        <form class="w-8/12" [formGroup]="form">
           <app-inputs case="text" [form]="form" formControlName="filter" placeholder="Filtrar" [required]="false" />
         </form>
+        <app-buttons case="primary" label="Novo Paciente" type="button" [rounded]="true" [routerLink]="['new']"/>
       </div>
     </div>
     <div class="custom-table flex-shrink-0">
