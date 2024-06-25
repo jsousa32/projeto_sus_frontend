@@ -32,6 +32,10 @@ input {
   box-shadow: none;
 }
 
+.p-paginator {
+  justify-content: end;
+}
+
 .p-menu .p-menuitem-link {
   gap: 0.5rem;
 
@@ -41,6 +45,33 @@ input {
 
   .p-menuitem-text {
     font-size: 1.25rem;
+  }
+}
+
+.custom-table {
+  background: var(--surface-card);
+  padding: 0.5rem;
+  border-radius: 1.5rem;
+
+  .icon {
+    font-size: 24px;
+  }
+
+  .p-datatable {
+    .p-datatable-thead > tr > th {
+      font-size: 1rem !important;
+      text-align: left;
+      padding: 1rem 1rem;
+      border-width: 0 0 1px 0;
+      font-weight: 700;
+      color: #404040;
+      background: none;
+      transition: box-shadow 0.2s;
+    }
+  }
+
+  .p-paginator {
+    border: none;
   }
 }
 

@@ -41,6 +41,10 @@ export const routes: Routes = [
       {
         path: 'dashboard',
         loadComponent: () => import("../app/pages/internal/dashboard/dashboard.component")
+      },
+      {
+        path: 'pacients',
+        loadComponent: () => import("../app/pages/internal/pacients/listing-pacients/listing-pacients.component")
       }
     ]
   },

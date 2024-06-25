@@ -1,0 +1,49 @@
+<div class="flex flex-col justify-between h-full rounded-3xl w-full bg-white/80 p-[1rem]">
+  <div class="flex w-full justify-center">
+    <h1 class="text-primary">Pacientes</h1>
+  </div>
+  <div class="flex flex-col h-[85%] gap-[5rem]">
+    <div class="flex justify-center">
+      <div class="flex w-8/12 items-center gap-[1.5rem]">
+        <form class="w-full" [formGroup]="form">
+          <app-inputs case="text" [form]="form" formControlName="filter" placeholder="Filtrar" [required]="false" />
+        </form>
+      </div>
+    </div>
+    <div class="custom-table flex-shrink-0">
+      <p-table
+        [value]="pacients()"
+        [paginator]="true"
+        [rows]="5"
+        [showCurrentPageReport]="true"
+        [responsive]="true"
+        [scrollable]="true"
+        scrollHeight="350px"
+        currentPageReportTemplate="Mostrando {first} de {last} no total {totalRecords} pacientes"
+        [rowsPerPageOptions]="[5, 15, 50]"
+      >
+        <ng-template pTemplate="header">
+          <tr>
+            <th style="width: 25%">Nome</th>
+            <th style="width: 25%">Nº SUS</th>
+            <th style="width: 25%">Email</th>
+            <th style="width: 25%">Telefone</th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-pacients>
+          <tr>
+            <td>{{ pacients.name }}</td>
+            <td>{{ pacients.susNumber }}</td>
+            <td>{{ pacients.email }}</td>
+            <td>{{ pacients.telephone }}</td>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="emptymessage">
+          <tr>
+            <td colspan="4"><div class="flex w-full justify-center">Nenhum paciente cadastrado.</div></td>
+          </tr>
+        </ng-template>
+      </p-table>
+    </div>
+  </div>
+</div>
