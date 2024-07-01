@@ -57,6 +57,10 @@ export const routes: Routes = [
       {
         path: 'doctors/new',
         loadComponent: () => import("../app/pages/internal/doctors/create-doctors/create-doctors.component")
+      },
+      {
+        path: 'appointments',
+        loadComponent: () => import("../app/pages/internal/appointments/listing-appointments/listing-appointments.component")
       }
     ],
   },

@@ -1,0 +1,54 @@
+<div class="flex flex-col justify-between h-full rounded-3xl w-full bg-white/80 p-[1rem]">
+  <div class="flex w-full justify-center">
+    <h1 class="text-primary text-[1.75rem] sm:text-[2rem]">Consultas</h1>
+  </div>
+  <div class="flex flex-col h-[85%] gap-[5rem]">
+    <div class="flex justify-center">
+      <div class="flex w-full items-center justify-evenly">
+        <form class="w-8/12" [formGroup]="form">
+          <app-inputs case="text" [form]="form" formControlName="filter" placeholder="Filtrar" [required]="false" />
+        </form>
+        <app-buttons case="primary" label="Nova Consulta" type="button" [rounded]="true" [routerLink]="['new']" />
+      </div>
+    </div>
+    <div class="custom-table flex-shrink-0">
+      <p-table
+        [value]="appointments()"
+        [paginator]="true"
+        [rows]="5"
+        [showCurrentPageReport]="true"
+        [responsive]="true"
+        [scrollable]="true"
+        scrollHeight="350px"
+        currentPageReportTemplate="Mostrando {first} de {last} no total {totalRecords} consultas"
+        [rowsPerPageOptions]="[5, 15, 50]"
+      >
+        <ng-template pTemplate="header">
+          <tr>
+            <th style="width: 5%"></th>
+            <th style="width: 25%">Data</th>
+            <th style="width: 20%">Hora</th>
+            <th style="width: 25%">Médico</th>
+            <th style="width: 25%">Paciente</th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-appointments>
+          <tr>
+            <!-- Adicionar Menu -->
+            <td></td>
+            <!-- Adicionar Menu -->
+            <td>{{ appointments.date | date : "dd/MM/yyyy" }}</td>
+            <td>{{ appointments.hour }}</td>
+            <td>{{ appointments.doctor.name }}</td>
+            <td>{{ appointments.pacient.name }}</td>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="emptymessage">
+          <tr>
+            <td colspan="5"><div class="flex w-full justify-center">Nenhuma consulta cadastrada.</div></td>
+          </tr>
+        </ng-template>
+      </p-table>
+    </div>
+  </div>
+</div>
