@@ -50,6 +50,10 @@ export const routes: Routes = [
         path: 'pacients/new',
         loadComponent: () => import('../app/pages/internal/pacients/create-pacients/create-pacients.component'),
       },
+      {
+        path: 'doctors',
+        loadComponent: () => import("../app/pages/internal/doctors/listing-doctors/listing-doctors.component")
+      }
     ],
   },
 ];
