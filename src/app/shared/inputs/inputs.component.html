@@ -47,6 +47,16 @@
       [required]="required"
     />
   </div>
+  <div *ngSwitchCase="'crm'">
+    <app-input-mask
+      [form]="form"
+      [formControlName]="formControlName"
+      mask="999999"
+      [placeholder]="placeholder"
+      [readonly]="readonly"
+      [required]="required"
+    />
+  </div>
   <div *ngSwitchCase="'token'">
     <app-input-otp
       [form]="form"
