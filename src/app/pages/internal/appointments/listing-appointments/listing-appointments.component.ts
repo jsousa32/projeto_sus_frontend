@@ -3,7 +3,7 @@ import { Component, inject, signal } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
 import { TableModule } from 'primeng/table';
-import { Appointments } from '../../../../core/models/appointments.model';
+import { Appointments } from '../../../../core/models/appointments.model.dto';
 import { ButtonsComponent } from '../../../../shared/buttons/buttons.component';
 import { InputsComponent } from '../../../../shared/inputs/inputs.component';
 

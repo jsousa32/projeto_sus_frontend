@@ -1,4 +1,4 @@
-import { Appointment } from './appointments.model';
+import { Appointment } from './appointments.model.dto';
 
 export interface Pacient {
   id?: string;

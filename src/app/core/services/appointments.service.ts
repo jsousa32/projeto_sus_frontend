@@ -6,7 +6,7 @@ import {
   AppointmentCreate,
   AppointmentEditableFields,
   AppointmentPage,
-} from '../models/appointments.model';
+} from '../models/appointments.model.dto';
 import { Page } from '../utils/page.utils';
 import { CatchErrorHandler } from './catch-error.handler';
 import { Routes } from './routes-back';
