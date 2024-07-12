@@ -1,7 +1,7 @@
 import { environment } from './../../../environments/environment';
 
 export class Routes {
-  static url = environment.apiUrl + '/v1';
+  static url = environment.apiUrl + 'v1';
 
   static RoutesAuthentications = class {
     private static BASE = Routes.url + '/auth';
