@@ -3,7 +3,7 @@ import { environment } from './../../../environments/environment';
 export class Routes {
   static url = environment.apiUrl + '/v1';
 
-  static RoutesAutentications = class {
+  static RoutesAuthentications = class {
     private static BASE = Routes.url + '/auth';
     public static LOGIN = this.BASE;
     public static EMAIL_CONFIRMATION = this.BASE + '/email-confirmation';
