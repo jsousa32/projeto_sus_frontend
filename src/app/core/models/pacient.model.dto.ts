@@ -1,3 +1,5 @@
+import { Appointment } from './appointments.model';
+
 export interface Pacient {
   id?: string;
   firstName: string;
@@ -11,6 +13,8 @@ export interface Pacient {
 
 export interface PacientPage extends Omit<Pacient, 'password'> {}
 
-export interface PacientResume extends Omit<Pacient, 'password'> {}
+export interface PacientResume extends Omit<Pacient, 'password'> {
+  appointments: Appointment[];
+}
 
 export interface PacientEditableFields extends Omit<Pacient, 'id' | 'password' | 'document' | 'susNumber'> {}
