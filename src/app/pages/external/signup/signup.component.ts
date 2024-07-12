@@ -1,9 +1,15 @@
 import { CommonModule } from '@angular/common';
 import { Component, inject } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
+import { switchMap, tap } from 'rxjs';
 import { signupFormsLeftSide, signupFormsRightSide } from '../../../core/forms/signup.forms.model';
+import { Pacient } from '../../../core/models/pacient.model.dto';
+import { AuthService } from '../../../core/services/auth.service';
+import { PacientService } from '../../../core/services/pacient.service';
+import { SwalertUtils } from '../../../core/utils/swalert.utils';
 import { TimerUtils } from '../../../core/utils/timer.utils';
+import { PasswordValidator } from '../../../core/validators/password.validator';
 import { CarouselComponent } from '../../../shared/carousel/carousel.component';
 import { ButtonsComponent } from './../../../shared/buttons/buttons.component';
 import { InputsComponent } from './../../../shared/inputs/inputs.component';
@@ -17,25 +23,45 @@ import { InputsComponent } from './../../../shared/inputs/inputs.component';
 })
 export default class SignupComponent {
   private fb = inject(FormBuilder);
+  private pacientService = inject(PacientService);
+  private authService = inject(AuthService);
+  private router = inject(Router);
 
   protected transition: boolean = true;
   protected formsRightSide = signupFormsRightSide;
   protected formsLeftSide = signupFormsLeftSide;
 
-  protected forms = this.fb.group({
-    firstName: ['', [Validators.required]],
-    lastName: ['', [Validators.required]],
-    email: ['', [Validators.required, Validators.email]],
-    telephone: ['', [Validators.required]],
-    susNumber: ['', [Validators.required]],
-    document: ['', [Validators.required]],
-    password: ['', [Validators.required]],
-    confirmPassword: ['', [Validators.required]],
-  });
+  protected forms = this.fb.group(
+    {
+      firstName: ['', [Validators.required]],
+      lastName: ['', [Validators.required]],
+      email: ['', [Validators.required, Validators.email]],
+      telephone: ['', [Validators.required]],
+      susNumber: ['', [Validators.required]],
+      document: ['', [Validators.required]],
+      password: ['', [Validators.required]],
+      confirmPassword: ['', [Validators.required]],
+    },
+    { validators: [PasswordValidator] }
+  );
 
   constructor() {
-    TimerUtils.check(2000).then((value) => this.transition = value);
+    TimerUtils.check(2000).then((value) => (this.transition = value));
   }
 
-  signup() {}
+  signup() {
+    this.pacientService
+      .save(this.forms.value as Pacient)
+      .pipe(
+        switchMap((_) => this.authService.login(this.forms.value.email!, this.forms.value.password!)),
+        tap((_) => {
+          SwalertUtils.swalertSuccessWithoutOptions('Parabéns', 'Usuario cadastrado com sucesso').then((confirm) => {
+            if (confirm) {
+              this.router.navigate(['/dashboard']);
+            }
+          });
+        })
+      )
+      .subscribe();
+  }
 }
