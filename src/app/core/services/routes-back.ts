@@ -15,7 +15,7 @@ export class Routes {
     private static BASE = Routes.url + '/appointments';
     public static SAVE = this.BASE;
     public static ALL_APPOINTMENTS = this.BASE + '/all';
-    public static APPOINTMENTS = this.BASE;
+    public static APPOINTMENT = this.BASE;
     public static UPDATE_APPOINTMENTS = this.BASE;
     public static DELETE_APPOINTMENTS = this.BASE;
   };
