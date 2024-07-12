@@ -3,8 +3,8 @@
     <p-inputMask
       id="{{ formControlName }}"
       pInputText
-      slotChar=""
       ngDefaultControl
+      [unmask]="true"
       [required]="required"
       [mask]="mask"
       [formControlName]="formControlName"
