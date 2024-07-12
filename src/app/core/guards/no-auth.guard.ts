@@ -7,7 +7,7 @@ export const noAuthGuard: CanActivateFn = () => {
   const router = inject(Router);
   const userSession = StorageUtils.find('userSession') as AuthResponse;
 
-  if (!userSession.accessToken) {
+  if (!userSession || !userSession.accessToken) {
     return true;
   }
 

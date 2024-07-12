@@ -18,7 +18,7 @@ export const authGuard: CanActivateFn = (_, state) => {
     }
   }
 
-  if (userSession.accessToken && !userSession.emailConfirmed && state.url.match('email-confirmation')) {
+  if (userSession.accessToken && !userSession.emailConfirmed && !state.url.match('email-confirmation')) {
     return router.createUrlTree(['email-confirmation']);
   }
 
