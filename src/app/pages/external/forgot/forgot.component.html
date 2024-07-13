@@ -23,7 +23,14 @@
       </div>
       <div class="w-[80%]">
         <div class="flex flex-col w-full gap-[1rem]">
-          <app-buttons label="Recuperar" [rounded]="true" case="primary" type="submit" (click)="forgot()" />
+          <app-buttons
+            label="Recuperar"
+            [rounded]="true"
+            case="primary"
+            type="submit"
+            (click)="forgot()"
+            [disabled]="requestOn || forms.invalid"
+          />
           <app-buttons label="Sair" [rounded]="true" case="secondary" type="button" [routerLink]="['/login']" />
         </div>
       </div>

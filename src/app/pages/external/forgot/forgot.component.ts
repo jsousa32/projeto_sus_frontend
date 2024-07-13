@@ -1,8 +1,11 @@
 import { CommonModule } from '@angular/common';
 import { Component, inject } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
+import { finalize, tap } from 'rxjs';
 import { forgotForm } from '../../../core/forms/forgot.forms.model';
+import { AuthService } from '../../../core/services/auth.service';
+import { SwalertUtils } from '../../../core/utils/swalert.utils';
 import { ButtonsComponent } from '../../../shared/buttons/buttons.component';
 import { CarouselComponent } from '../../../shared/carousel/carousel.component';
 import { InputsComponent } from '../../../shared/inputs/inputs.component';
@@ -16,13 +19,33 @@ import { InputsComponent } from '../../../shared/inputs/inputs.component';
 })
 export default class ForgotComponent {
   private fb = inject(FormBuilder);
+  private authService = inject(AuthService);
+  private router = inject(Router);
 
+  protected requestOn = false;
   protected forgotForm = forgotForm;
   protected forms = this.fb.group({
     email: ['', [Validators.required, Validators.email]],
   });
 
   forgot() {
-    console.log(this.forms);
+    this.requestOn = true;
+
+    this.authService
+      .forgot(this.forms.value.email!)
+      .pipe(
+        tap((_) => {
+          SwalertUtils.swalertSuccessWithoutOptions(
+            'Parabéns',
+            'Solicitação da recuperação de senha enviada com sucesso'
+          ).then((confirm) => {
+            if (confirm) {
+              this.router.navigate(['/login']);
+            }
+          });
+        }),
+        finalize(() => (this.requestOn = false))
+      )
+      .subscribe();
   }
 }
