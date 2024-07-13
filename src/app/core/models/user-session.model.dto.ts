@@ -1,6 +1,6 @@
 import { Permissions } from '../enums/permissions.enum';
 
-export interface AuthResponse {
+export interface UserSession {
   accessToken: string;
   emailConfirmed: boolean;
   permissions: Permissions[];

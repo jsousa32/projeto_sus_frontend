@@ -1,13 +1,13 @@
 import { HttpInterceptorFn } from '@angular/common/http';
 import { inject } from '@angular/core';
 import { Router } from '@angular/router';
-import { AuthResponse } from '../models/auth-response.model.dto';
+import { UserSession } from '../models/user-session.model.dto';
 import { StorageUtils } from '../utils/storage.utils';
 
 export const authInterceptor: HttpInterceptorFn = (req, next) => {
   const router = inject(Router);
 
-  const userSession = StorageUtils.find('userSession') as AuthResponse;
+  const userSession = StorageUtils.find('userSession') as UserSession;
 
   const accessToken = userSession != null ? userSession.accessToken : null;
 

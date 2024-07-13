@@ -1,12 +1,12 @@
 import { inject } from '@angular/core';
 import { CanActivateFn, Router } from '@angular/router';
-import { AuthResponse } from '../models/auth-response.model.dto';
+import { UserSession } from '../models/user-session.model.dto';
 import { StorageUtils } from '../utils/storage.utils';
 
 export const authGuard: CanActivateFn = (_, state) => {
   const router = inject(Router);
 
-  const userSession = StorageUtils.find('userSession') as AuthResponse;
+  const userSession = StorageUtils.find('userSession') as UserSession;
 
   const accessToken = userSession ? userSession.accessToken : null;
 

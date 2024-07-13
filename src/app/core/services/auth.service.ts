@@ -1,7 +1,7 @@
 import { HttpClient, HttpErrorResponse, HttpHeaders, HttpParams } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { catchError, take, tap } from 'rxjs';
-import { AuthResponse } from '../models/auth-response.model.dto';
+import { UserSession } from '../models/user-session.model.dto';
 import { CryptoUtils } from '../utils/crypto.utils';
 import { StorageUtils } from '../utils/storage.utils';
 import { CatchErrorHandler } from './catch-error.handler';
@@ -15,7 +15,7 @@ export class AuthService {
 
   login(email: string, password: string) {
     return this.httpClient
-      .post<AuthResponse>(Routes.RoutesAuthentications.LOGIN, null, {
+      .post<UserSession>(Routes.RoutesAuthentications.LOGIN, null, {
         headers: this.buildHeaderBasicAuth(email, password),
       })
       .pipe(
@@ -33,7 +33,7 @@ export class AuthService {
       .pipe(
         take(1),
         tap((_) => {
-          const userSession = StorageUtils.find('userSession') as AuthResponse;
+          const userSession = StorageUtils.find('userSession') as UserSession;
 
           userSession.emailConfirmed = true;
 
