@@ -11,7 +11,7 @@
       </h1>
       <div class="flex flex-col w-[80%] gap-[1rem]">
         <div class="flex flex-col gap-[2.25rem]">
-          <form [formGroup]="forms" *ngFor="let input of resetForm" (keydown.enter)="forms.valid && reset()">
+          <form [formGroup]="forms" *ngFor="let input of resetForm">
             <app-inputs
               [case]="input.case"
               [formControlName]="input.formControlName"
