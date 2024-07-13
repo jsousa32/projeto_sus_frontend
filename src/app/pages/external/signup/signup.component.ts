@@ -57,14 +57,10 @@ export default class SignupComponent {
         switchMap((_) => this.authService.login(this.forms.value.email!, this.forms.value.password!)),
         finalize(() => (this.loading = false))
       )
-      .subscribe({
-        next: () => {
-          SwalertUtils.swalertSuccessWithoutOptions('Parabéns', 'Usuario cadastrado com sucesso').then((confirm) => {
-            if (confirm) {
-              this.router.navigate(['/dashboard']);
-            }
-          });
-        },
+      .subscribe(() => {
+        SwalertUtils.swalertSuccessWithoutOptions('Parabéns', 'Usuario cadastrado com sucesso').then((confirm) => {
+          if (confirm) this.router.navigate(['/dashboard']);
+        });
       });
   }
 }

@@ -32,12 +32,10 @@ export default class EmailConfirmationComponent {
     this.authService
       .emailConfirmation(this.forms.value.token!)
       .pipe(finalize(() => (this.loading = false)))
-      .subscribe({
-        next: () => {
-          SwalertUtils.swalertSuccessWithoutOptions('Parabéns', 'Email confirmado com sucesso').then((confirm) => {
-            if (confirm) this.router.navigate(['/dashboard']);
-          });
-        },
+      .subscribe(() => {
+        SwalertUtils.swalertSuccessWithoutOptions('Parabéns', 'Email confirmado com sucesso').then((confirm) => {
+          if (confirm) this.router.navigate(['/dashboard']);
+        });
       });
   }
 }

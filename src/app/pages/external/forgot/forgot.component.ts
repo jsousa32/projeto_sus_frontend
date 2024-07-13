@@ -32,17 +32,13 @@ export default class ForgotComponent {
     this.authService
       .forgot(this.forms.value.email!)
       .pipe(finalize(() => (this.loading = false)))
-      .subscribe({
-        next: () => {
-          SwalertUtils.swalertSuccessWithoutOptions(
-            'Parabéns',
-            'Solicitação da recuperação de senha enviada com sucesso'
-          ).then((confirm) => {
-            if (confirm) {
-              this.router.navigate(['/login']);
-            }
-          });
-        },
+      .subscribe(() => {
+        SwalertUtils.swalertSuccessWithoutOptions(
+          'Parabéns',
+          'Solicitação da recuperação de senha enviada com sucesso'
+        ).then((confirm) => {
+          if (confirm) this.router.navigate(['/login']);
+        });
       });
   }
 }
