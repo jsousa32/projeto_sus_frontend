@@ -20,7 +20,7 @@ export const routes: Routes = [
   {
     canActivate: [logoutGuard],
     path: 'logout',
-    component: LoginComponent
+    component: LoginComponent,
   },
   {
     canActivate: [noAuthGuard],
@@ -39,7 +39,7 @@ export const routes: Routes = [
   },
   {
     canActivate: [noAuthGuard],
-    path: 'reset',
+    path: 'reset/:userId/:expiresAt',
     loadComponent: () => import('../app/pages/external/reset/reset.component'),
   },
   {
