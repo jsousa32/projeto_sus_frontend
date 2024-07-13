@@ -54,13 +54,10 @@ export class AuthService {
       );
   }
 
-  reset(forgotId: string, userId: string, password: string) {
+  reset(userId: string, password: string) {
     return this.httpClient
       .post(Routes.RoutesAuthentications.RESET, null, {
-        params: new HttpParams()
-          .append('forgotId', forgotId)
-          .append('userId', userId)
-          .append('password', CryptoUtils.encrypt(password)),
+        params: new HttpParams().append('userId', userId).append('password', CryptoUtils.encrypt(password)),
       })
       .pipe(
         take(1),
