@@ -22,7 +22,14 @@
       </div>
       <div class="w-[80%]">
         <div class="flex flex-col w-full gap-[1rem]">
-          <app-buttons label="Login" [rounded]="true" case="primary" type="submit" (click)="login()" />
+          <app-buttons
+            label="Login"
+            [rounded]="true"
+            case="primary"
+            type="submit"
+            (click)="login(); loading = true"
+            [disabled]="loading || forms.invalid"
+          />
           <app-buttons label="Cadastre-se" [rounded]="true" case="secondary" type="button" [routerLink]="['/signup']" />
         </div>
       </div>

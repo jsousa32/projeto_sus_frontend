@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, inject } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
-import { tap } from 'rxjs';
+import { finalize } from 'rxjs';
 import { loginForm } from '../../../core/forms/login.forms.model';
 import { AuthService } from '../../../core/services/auth.service';
 import { ButtonsComponent } from '../../../shared/buttons/buttons.component';
@@ -21,6 +21,7 @@ export class LoginComponent {
   private authService = inject(AuthService);
   private router = inject(Router);
 
+  protected loading = false;
   protected loginForm = loginForm;
   protected forms = this.fb.group({
     email: ['', [Validators.required, Validators.email]],
@@ -30,7 +31,7 @@ export class LoginComponent {
   login() {
     this.authService
       .login(this.forms.value.email!, this.forms.value.password!)
-      .pipe(tap((_) => this.router.navigate(['/dashboard'])))
-      .subscribe();
+      .pipe(finalize(() => (this.loading = false)))
+      .subscribe(() => this.router.navigate(['dashboard']));
   }
 }

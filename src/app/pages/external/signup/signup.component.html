@@ -6,10 +6,7 @@
     >
       <h1 class="text-primary text-[2rem] sm:text-[3rem] md:text-[4rem] xl:text-[3rem]">Cadastre-se</h1>
       <div class="flex flex-col w-[80%] gap-[1rem]">
-        <form
-          [formGroup]="forms"
-          class="grid grid-cols-2 overflow-auto gap-[2.25rem] md:gap-[1rem]"
-        >
+        <form [formGroup]="forms" class="grid grid-cols-2 overflow-auto gap-[2.25rem] md:gap-[1rem]">
           <div class="grid col-span-2 md:col-span-1 gap-[2.25rem]">
             <div *ngFor="let input of formsLeftSide">
               <app-inputs
@@ -34,7 +31,14 @@
       </div>
       <div class="w-[80%]">
         <div class="flex flex-col w-full gap-[1rem]">
-          <app-buttons label="Cadastrar" [rounded]="true" case="primary" type="submit" (click)="signup()" />
+          <app-buttons
+            label="Cadastrar"
+            [rounded]="true"
+            case="primary"
+            type="submit"
+            (click)="signup(); loading = true"
+            [disabled]="loading || forms.invalid"
+          />
           <app-buttons label="Voltar" [rounded]="true" case="secondary" type="button" [routerLink]="['/login']" />
         </div>
       </div>

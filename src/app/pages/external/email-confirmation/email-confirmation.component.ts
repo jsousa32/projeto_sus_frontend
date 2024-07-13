@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, inject } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
-import { tap } from 'rxjs';
+import { finalize } from 'rxjs';
 import { emailConfirmationForm } from '../../../core/forms/email-confirmation.forms.model';
 import { AuthService } from '../../../core/services/auth.service';
 import { SwalertUtils } from '../../../core/utils/swalert.utils';
@@ -22,6 +22,7 @@ export default class EmailConfirmationComponent {
   private authService = inject(AuthService);
   private router = inject(Router);
 
+  protected loading = false;
   protected emailConfirmationForm = emailConfirmationForm;
   protected forms = this.fb.group({
     token: ['', [Validators.required]],
@@ -30,13 +31,13 @@ export default class EmailConfirmationComponent {
   confirmation() {
     this.authService
       .emailConfirmation(this.forms.value.token!)
-      .pipe(
-        tap((_) => {
+      .pipe(finalize(() => (this.loading = false)))
+      .subscribe({
+        next: () => {
           SwalertUtils.swalertSuccessWithoutOptions('Parabéns', 'Email confirmado com sucesso').then((confirm) => {
             if (confirm) this.router.navigate(['/dashboard']);
           });
-        })
-      )
-      .subscribe();
+        },
+      });
   }
 }

@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, inject } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
-import { finalize, tap } from 'rxjs';
+import { finalize } from 'rxjs';
 import { forgotForm } from '../../../core/forms/forgot.forms.model';
 import { AuthService } from '../../../core/services/auth.service';
 import { SwalertUtils } from '../../../core/utils/swalert.utils';
@@ -22,19 +22,18 @@ export default class ForgotComponent {
   private authService = inject(AuthService);
   private router = inject(Router);
 
-  protected requestOn = false;
+  protected loading = false;
   protected forgotForm = forgotForm;
   protected forms = this.fb.group({
     email: ['', [Validators.required, Validators.email]],
   });
 
   forgot() {
-    this.requestOn = true;
-
     this.authService
       .forgot(this.forms.value.email!)
-      .pipe(
-        tap((_) => {
+      .pipe(finalize(() => (this.loading = false)))
+      .subscribe({
+        next: () => {
           SwalertUtils.swalertSuccessWithoutOptions(
             'Parabéns',
             'Solicitação da recuperação de senha enviada com sucesso'
@@ -43,9 +42,7 @@ export default class ForgotComponent {
               this.router.navigate(['/login']);
             }
           });
-        }),
-        finalize(() => (this.requestOn = false))
-      )
-      .subscribe();
+        },
+      });
   }
 }

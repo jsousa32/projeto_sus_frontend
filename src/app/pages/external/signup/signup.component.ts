@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, inject } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
-import { switchMap, tap } from 'rxjs';
+import { finalize, switchMap } from 'rxjs';
 import { signupFormsLeftSide, signupFormsRightSide } from '../../../core/forms/signup.forms.model';
 import { Pacient } from '../../../core/models/pacient.model.dto';
 import { AuthService } from '../../../core/services/auth.service';
@@ -27,6 +27,7 @@ export default class SignupComponent {
   private authService = inject(AuthService);
   private router = inject(Router);
 
+  protected loading = false;
   protected transition: boolean = true;
   protected formsRightSide = signupFormsRightSide;
   protected formsLeftSide = signupFormsLeftSide;
@@ -54,14 +55,16 @@ export default class SignupComponent {
       .save(this.forms.value as Pacient)
       .pipe(
         switchMap((_) => this.authService.login(this.forms.value.email!, this.forms.value.password!)),
-        tap((_) => {
+        finalize(() => (this.loading = false))
+      )
+      .subscribe({
+        next: () => {
           SwalertUtils.swalertSuccessWithoutOptions('Parabéns', 'Usuario cadastrado com sucesso').then((confirm) => {
             if (confirm) {
               this.router.navigate(['/dashboard']);
             }
           });
-        })
-      )
-      .subscribe();
+        },
+      });
   }
 }
