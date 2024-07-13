@@ -11,7 +11,7 @@ export const authGuard: CanActivateFn = (_, state) => {
     return router.createUrlTree(['login']);
   }
 
-  if (!userSession.accessToken) {
+  if (userSession.accessToken) {
     if (userSession.createdAt < userSession.expiresAt) {
       StorageUtils.removeAll();
       return router.createUrlTree(['login']);
