@@ -9,17 +9,11 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
 
   const userSession = StorageUtils.find('userSession') as AuthResponse;
 
-  if (userSession) {
-    router.navigate(['/login']);
-  }
-
-  if (userSession.createdAt > userSession.expiresAt) {
-    router.navigate(['/login']);
-  }
+  const accessToken = userSession != null ? userSession.accessToken : null;
 
   const clonedRequest = req.clone({
-    headers: req.headers.append('Authorization', `Bearer ${userSession.accessToken}`),
+    headers: req.headers.append('Authorization', `Bearer ${accessToken}`),
   });
 
-  return next(userSession.accessToken ? clonedRequest : req);
+  return next(accessToken != null ? clonedRequest : req);
 };
