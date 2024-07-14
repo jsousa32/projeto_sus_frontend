@@ -41,8 +41,8 @@
           [rounded]="true"
           label="Cadastrar"
           type="submit"
-          [disabled]="forms.invalid"
-          (click)="register()"
+          [disabled]="loading || forms.invalid"
+          (click)="register(); loading = true"
         />
       </div>
     </div>

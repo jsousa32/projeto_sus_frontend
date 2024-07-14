@@ -1,8 +1,12 @@
 import { CommonModule } from '@angular/common';
 import { Component, inject } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
+import { finalize } from 'rxjs';
 import { pacientFormsLeftSide, pacientFormsRightSide } from '../../../../core/forms/pacient.forms.model';
+import { Pacient } from '../../../../core/models/pacient.model.dto';
+import { PacientService } from '../../../../core/services/pacient.service';
+import { SwalertUtils } from '../../../../core/utils/swalert.utils';
 import { ButtonsComponent } from '../../../../shared/buttons/buttons.component';
 import { InputsComponent } from '../../../../shared/inputs/inputs.component';
 
@@ -15,7 +19,10 @@ import { InputsComponent } from '../../../../shared/inputs/inputs.component';
 })
 export default class CreatePacientsComponent {
   private fb = inject(FormBuilder);
+  private pacientService = inject(PacientService);
+  private router = inject(Router);
 
+  protected loading = false;
   protected formsRightSide = pacientFormsRightSide;
   protected formsLeftSide = pacientFormsLeftSide;
 
@@ -29,6 +36,13 @@ export default class CreatePacientsComponent {
   });
 
   register() {
-    console.log(this.forms);
+    this.pacientService
+      .saveInternal(this.forms.value as Pacient)
+      .pipe(finalize(() => (this.loading = false)))
+      .subscribe(() => {
+        SwalertUtils.swalertSuccessWithoutOptions('Parabéns', 'Paciente cadastrado com sucesso').then((confirm) => {
+          if (confirm) this.router.navigate(['pacients']);
+        });
+      });
   }
 }
