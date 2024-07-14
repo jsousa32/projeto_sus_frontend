@@ -8,20 +8,29 @@
         <form class="w-8/12" [formGroup]="form">
           <app-inputs case="text" [form]="form" formControlName="filter" placeholder="Filtrar" [required]="false" />
         </form>
-        <app-buttons case="primary" label="Novo Paciente" type="button" [rounded]="true" [routerLink]="['new']"/>
+        <app-buttons
+          *ngIf="hasPermission"
+          case="primary"
+          label="Novo Paciente"
+          type="button"
+          [rounded]="true"
+          [routerLink]="['new']"
+        />
       </div>
     </div>
-    <div class="custom-table flex-shrink-0">
+    <div class="custom-table flex-shrink-0" *ngIf="pacients$ | async as pacients">
       <p-table
-        [value]="pacients()"
+        [value]="pacients.content"
         [paginator]="true"
         [rows]="5"
         [showCurrentPageReport]="true"
         [responsive]="true"
         [scrollable]="true"
         scrollHeight="350px"
+        (onLazyLoad)="lazyLoad($event)"
         currentPageReportTemplate="Mostrando {first} de {last} no total {totalRecords} pacientes"
         [rowsPerPageOptions]="[5, 15, 50]"
+        [totalRecords]="pacients.totalElements"
       >
         <ng-template pTemplate="header">
           <tr>
@@ -33,10 +42,10 @@
         </ng-template>
         <ng-template pTemplate="body" let-pacients>
           <tr>
-            <td>{{ pacients.name }}</td>
+            <td>{{ pacients.firstName + " " + pacients.lastName }}</td>
             <td>{{ pacients.susNumber }}</td>
             <td>{{ pacients.email }}</td>
-            <td>{{ pacients.telephone }}</td>
+            <td>{{ pacients.telephone | telephone }}</td>
           </tr>
         </ng-template>
         <ng-template pTemplate="emptymessage">
