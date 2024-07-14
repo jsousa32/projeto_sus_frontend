@@ -19,7 +19,7 @@ export class DoctorService {
     );
   }
 
-  allPacients(params: HttpParams) {
+  allDoctors(params: HttpParams) {
     return this.httpClient
       .get<Page<DoctorPage>>(Routes.RoutesDoctors.ALL_DOCTORS, {
         params: params,
@@ -27,7 +27,7 @@ export class DoctorService {
       .pipe(take(1));
   }
 
-  allPacientsUnpaged(params: HttpParams) {
+  allDoctorsUnpaged(params: HttpParams) {
     return this.httpClient
       .get<Page<DoctorPage>>(Routes.RoutesDoctors.ALL_DOCTORS_UNPAGED, {
         params: params,
@@ -35,7 +35,7 @@ export class DoctorService {
       .pipe(take(1));
   }
 
-  pacient(id: string) {
+  doctor(id: string) {
     return this.httpClient
       .get<DoctorResume>(Routes.RoutesDoctors.DOCTOR, {
         params: new HttpParams().append('id', id),

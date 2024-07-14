@@ -1,8 +1,12 @@
 import { CommonModule } from '@angular/common';
 import { Component, inject } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
+import { finalize } from 'rxjs';
 import { doctorFormsLeftSide, doctorFormsRightSide } from '../../../../core/forms/doctors.forms.model';
+import { Doctor } from '../../../../core/models/doctors.model.dto';
+import { DoctorService } from '../../../../core/services/doctor.service';
+import { SwalertUtils } from '../../../../core/utils/swalert.utils';
 import { ButtonsComponent } from '../../../../shared/buttons/buttons.component';
 import { InputsComponent } from '../../../../shared/inputs/inputs.component';
 
@@ -11,11 +15,14 @@ import { InputsComponent } from '../../../../shared/inputs/inputs.component';
   standalone: true,
   imports: [RouterLink, ReactiveFormsModule, InputsComponent, CommonModule, ButtonsComponent],
   templateUrl: './create-doctors.component.html',
-  styleUrl: './create-doctors.component.scss'
+  styleUrl: './create-doctors.component.scss',
 })
 export default class CreateDoctorsComponent {
   private fb = inject(FormBuilder);
+  private doctorService = inject(DoctorService);
+  private router = inject(Router);
 
+  protected loading = false;
   protected formsRightSide = doctorFormsRightSide;
   protected formsLeftSide = doctorFormsLeftSide;
 
@@ -29,6 +36,13 @@ export default class CreateDoctorsComponent {
   });
 
   register() {
-    console.log(this.forms);
+    this.doctorService
+      .save(this.forms.value as Doctor)
+      .pipe(finalize(() => (this.loading = false)))
+      .subscribe(() => {
+        SwalertUtils.swalertSuccessWithoutOptions('Parabéns', 'Médico cadastrado com sucesso').then((confirm) => {
+          if (confirm) this.router.navigate(['doctors']);
+        });
+      });
   }
 }
