@@ -28,6 +28,7 @@ export class NavbarComponent {
     {
       label: 'Sair',
       icon: 'ph-sign-out',
+      routerLink: ['/logout'],
     },
   ];
 }

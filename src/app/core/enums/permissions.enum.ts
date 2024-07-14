@@ -1,5 +1,5 @@
 export enum Permissions {
-  ADMIN,
-  PACIENT,
-  DOCTOR,
+  ADMIN = 'ADMIN',
+  PACIENT = 'PACIENT',
+  DOCTOR = 'DOCTOR',
 }

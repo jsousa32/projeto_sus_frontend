@@ -2,7 +2,8 @@
   <div class="flex flex-col w-full bg-white/80 rounded-3xl p-[1rem] gap-[1rem]">
     @for (item of items; track $index) {
     <div
-      class="flex w-full h-[3rem] items-center px-[3rem] rounded-3xl text-[1.5rem] gap-[1rem] text-primary hover:text-white hover:bg-primary cursor-pointer"
+      *ngIf="hasPermissions(item.permissions)"
+      class="flex w-full h-[3rem] items-center px-[2.5rem] rounded-3xl text-[1.5rem] gap-[1rem] text-primary hover:text-white hover:bg-primary cursor-pointer"
       [routerLink]="item.router"
       [ngClass]="{ 'text-white bg-primary': router.url.includes(item.router!) }"
     >
