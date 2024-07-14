@@ -19,6 +19,14 @@ export class PacientService {
     );
   }
 
+  saveInternal(pacient: Pacient) {
+    return this.httpClient.post(Routes.RoutesPacients.SAVE_INTERNAL, pacient).pipe(
+      take(1),
+      catchError((err: HttpErrorResponse) => CatchErrorHandler.err(err))
+    );
+  }
+
+
   allPacients(params: HttpParams) {
     return this.httpClient
       .get<Page<PacientPage>>(Routes.RoutesPacients.ALL_PACIENTS, {

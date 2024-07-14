@@ -23,6 +23,7 @@ export class Routes {
   static RoutesPacients = class {
     private static BASE = Routes.url + '/pacients';
     public static SAVE = this.BASE;
+    public static SAVE_INTERNAL = this.BASE + '/internal';
     public static ALL_PACIENTS = this.BASE + '/all';
     public static ALL_PACIENTS_UNPAGED = this.BASE + '/unpaged';
     public static PACIENT = this.BASE;
