@@ -1,6 +1,7 @@
 import { inject } from '@angular/core';
 import { CanActivateFn, Router } from '@angular/router';
 import { UserSession } from '../models/user-session.model.dto';
+import { PermissionsUtils } from '../utils/permission.utils';
 import { StorageUtils } from '../utils/storage.utils';
 
 export const authGuard: CanActivateFn = (_, state) => {
@@ -23,6 +24,14 @@ export const authGuard: CanActivateFn = (_, state) => {
 
   if (accessToken && !userSession.emailConfirmed && !state.url.match('email-confirmation')) {
     return router.createUrlTree(['email-confirmation']);
+  }
+
+  if (accessToken && PermissionsUtils.isDoctor(userSession.permissions) && !state.url.match('pacients')) {
+    return router.createUrlTree(['pacients']);
+  }
+
+  if (accessToken && PermissionsUtils.isPacient(userSession.permissions) && !state.url.match('doctors')) {
+    return router.createUrlTree(['doctors']);
   }
 
   return true;

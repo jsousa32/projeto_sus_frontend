@@ -5,19 +5,19 @@ export const items: Sidebar[] = [
   {
     label: 'Dashboard',
     icon: 'ph-house',
-    router: '/dashboard',
+    router: 'dashboard',
     permissions: [Permissions.ADMIN],
   },
   {
     label: 'Pacientes',
     icon: 'ph-users-three',
-    router: '/pacients',
+    router: 'pacients',
     permissions: [Permissions.ADMIN, Permissions.DOCTOR],
   },
   {
     label: 'Médicos',
     icon: 'ph-first-aid',
-    router: '/doctors',
+    router: 'doctors',
     permissions: [Permissions.ADMIN, Permissions.PACIENT],
   },
   {
