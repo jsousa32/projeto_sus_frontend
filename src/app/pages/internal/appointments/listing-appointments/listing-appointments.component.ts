@@ -5,7 +5,7 @@ import { RouterLink } from '@angular/router';
 import { TableModule } from 'primeng/table';
 import { Appointment } from '../../../../core/models/appointments.model.dto';
 import { ButtonsComponent } from '../../../../shared/buttons/buttons.component';
-import { InputsComponent } from '../../../../shared/inputs/inputs.component';
+import { InputsComponent } from '../../../../shared/inputs2/inputs.component';
 
 @Component({
   selector: 'app-listing-appointments',

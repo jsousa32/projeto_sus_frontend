@@ -13,7 +13,7 @@ import { Page } from '../../../../core/utils/page.utils';
 import { PermissionsUtils } from '../../../../core/utils/permission.utils';
 import { StorageUtils } from '../../../../core/utils/storage.utils';
 import { ButtonsComponent } from '../../../../shared/buttons/buttons.component';
-import { InputsComponent } from '../../../../shared/inputs/inputs.component';
+import { InputsComponent } from '../../../../shared/inputs2/inputs.component';
 
 @Component({
   selector: 'app-listing-doctors',

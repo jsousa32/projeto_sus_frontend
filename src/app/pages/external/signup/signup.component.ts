@@ -11,8 +11,8 @@ import { SwalertUtils } from '../../../core/utils/swalert.utils';
 import { TimerUtils } from '../../../core/utils/timer.utils';
 import { PasswordValidator } from '../../../core/validators/password.validator';
 import { CarouselComponent } from '../../../shared/carousel/carousel.component';
+import { InputsComponent } from '../../../shared/inputs2/inputs.component';
 import { ButtonsComponent } from './../../../shared/buttons/buttons.component';
-import { InputsComponent } from './../../../shared/inputs/inputs.component';
 
 @Component({
   selector: 'app-signup',

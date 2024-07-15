@@ -10,7 +10,7 @@ import { SwalertUtils } from '../../../core/utils/swalert.utils';
 import { PasswordValidator } from '../../../core/validators/password.validator';
 import { ButtonsComponent } from '../../../shared/buttons/buttons.component';
 import { CarouselComponent } from '../../../shared/carousel/carousel.component';
-import { InputsComponent } from '../../../shared/inputs/inputs.component';
+import { InputsComponent } from '../../../shared/inputs2/inputs.component';
 
 @Component({
   selector: 'app-reset',

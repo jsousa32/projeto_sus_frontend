@@ -8,7 +8,7 @@ import { AuthService } from '../../../core/services/auth.service';
 import { SwalertUtils } from '../../../core/utils/swalert.utils';
 import { ButtonsComponent } from '../../../shared/buttons/buttons.component';
 import { CarouselComponent } from '../../../shared/carousel/carousel.component';
-import { InputsComponent } from '../../../shared/inputs/inputs.component';
+import { InputsComponent } from '../../../shared/inputs2/inputs.component';
 
 @Component({
   selector: 'app-email-confirmation',
