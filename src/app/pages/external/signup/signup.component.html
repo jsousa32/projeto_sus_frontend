@@ -34,12 +34,12 @@
           <app-buttons
             label="Cadastrar"
             [rounded]="true"
-            case="primary"
+            [primary]="true"
             type="submit"
             (click)="signup(); loading = true"
             [disabled]="loading || forms.invalid"
           />
-          <app-buttons label="Voltar" [rounded]="true" case="secondary" type="button" [routerLink]="['/login']" />
+          <app-buttons label="Voltar" [rounded]="true" [secondary]="true" type="button" [routerLink]="['/login']" />
         </div>
       </div>
     </div>

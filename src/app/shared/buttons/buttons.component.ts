@@ -5,27 +5,31 @@ import { ButtonModule } from 'primeng/button';
 @Component({
   selector: 'app-buttons',
   standalone: true,
+  host: {
+    '[class.primary]': 'primary',
+    '[class.secondary]': 'secondary',
+    '[class.disabled]': 'disabled',
+  },
   imports: [CommonModule, ButtonModule],
   templateUrl: './buttons.component.html',
-  styleUrl: './buttons.component.scss'
+  styleUrl: './buttons.component.scss',
 })
 export class ButtonsComponent {
+  @Input()
+  primary: boolean = false;
 
-  @Input({required: true})
-  case: string = '';
+  @Input()
+  secondary: boolean = false;
 
-  @Input({required: true})
+  @Input({ required: true })
   label: string = '';
 
-  @Input({required: true})
+  @Input({ required: true })
   rounded: boolean = false;
 
-  @Input({required: false})
+  @Input()
   disabled: boolean = false;
 
-  @Input({required: false})
-  ngClass: string = '';
-
-  @Input({required: true})
-  type: string = ''
+  @Input({ required: true })
+  type: string = '';
 }

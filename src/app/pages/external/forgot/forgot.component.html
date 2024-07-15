@@ -26,12 +26,12 @@
           <app-buttons
             label="Recuperar"
             [rounded]="true"
-            case="primary"
+            [primary]="true"
             type="submit"
             (click)="forgot(); loading = true"
             [disabled]="loading || forms.invalid"
           />
-          <app-buttons label="Sair" [rounded]="true" case="secondary" type="button" [routerLink]="['/login']" />
+          <app-buttons label="Sair" [rounded]="true" [secondary]="true" type="button" [routerLink]="['/login']" />
         </div>
       </div>
     </div>

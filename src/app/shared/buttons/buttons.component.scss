@@ -1,0 +1,26 @@
+@import "../../../assets/scss/colors";
+
+:host {
+  display: block;
+
+  &.primary {
+    button {
+      color: white;
+      background-color: $primary;
+    }
+  }
+
+  &.secondary {
+    button {
+      color: $primary;
+      background-color: white;
+      border: solid 2px $primary;
+    }
+  }
+
+  &:disabled {
+    button {
+      opacity: 50%;
+    }
+  }
+}

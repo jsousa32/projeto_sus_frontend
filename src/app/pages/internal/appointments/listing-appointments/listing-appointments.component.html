@@ -8,7 +8,7 @@
         <form class="w-8/12" [formGroup]="form">
           <app-inputs case="text" [form]="form" formControlName="filter" placeholder="Filtrar" [required]="false" />
         </form>
-        <app-buttons case="primary" label="Nova Consulta" type="button" [rounded]="true" [routerLink]="['new']" />
+        <app-buttons [primary]="true" label="Nova Consulta" type="button" [rounded]="true" [routerLink]="['new']" />
       </div>
     </div>
     <div class="custom-table flex-shrink-0">

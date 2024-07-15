@@ -10,7 +10,7 @@
         </form>
         <app-buttons
           *ngIf="hasPermission"
-          case="primary"
+          [primary]="true"
           label="Novo Paciente"
           type="button"
           [rounded]="true"

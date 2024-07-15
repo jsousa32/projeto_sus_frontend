@@ -25,12 +25,18 @@
           <app-buttons
             label="Login"
             [rounded]="true"
-            case="primary"
             type="submit"
+            [primary]="true"
             (click)="login(); loading = true"
             [disabled]="loading || forms.invalid"
           />
-          <app-buttons label="Cadastre-se" [rounded]="true" case="secondary" type="button" [routerLink]="['/signup']" />
+          <app-buttons
+            label="Cadastre-se"
+            [secondary]="true"
+            [rounded]="true"
+            type="button"
+            [routerLink]="['/signup']"
+          />
         </div>
       </div>
     </div>

@@ -10,7 +10,7 @@
         </form>
         <app-buttons
           *ngIf="isAdmin"
-          case="primary"
+          [primary]="true"
           label="Novo Médico"
           type="button"
           [rounded]="true"
