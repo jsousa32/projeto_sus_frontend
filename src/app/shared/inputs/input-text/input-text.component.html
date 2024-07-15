@@ -1,0 +1,19 @@
+<span class="p-float-label">
+  <input
+    [attr.id]="id"
+    pInputText
+    [required]="required"
+    [readonly]="readonly"
+    [placeholder]="label"
+    [(ngModel)]="value"
+    [ngClass]="{
+      'ng-invalid ng-dirty ': controls.get(id)?.errors && (controls.get(id)?.touched || controls.get(id)?.dirty)
+    }"
+  />
+  <label [attr.for]="id" class="font-medium text-gray_one">{{ label }}</label>
+  <small
+    *ngIf="controls.get(id)?.errors && (controls.get(id)?.touched || controls.get(id)?.dirty)"
+    class="p-error absolute"
+    >{{ label }} não pode ser vazio.
+  </small>
+</span>
