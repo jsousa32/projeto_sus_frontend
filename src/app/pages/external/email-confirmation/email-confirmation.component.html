@@ -28,7 +28,6 @@
             [rounded]="true"
             [primary]="true"
             type="submit"
-            (click)="confirmation(); loading = true"
             [disabled]="loading || forms.invalid"
           />
           <app-buttons label="Sair" [rounded]="true" [secondary]="true" type="button" [routerLink]="['/logout']" />
