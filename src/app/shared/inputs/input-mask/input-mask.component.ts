@@ -38,6 +38,9 @@ export class InputMaskComponent implements OnInit, ControlValueAccessor {
   @Input()
   readonly = false;
 
+  @Input()
+  disabled = false;
+
   get value() {
     return this.innerValue;
   }
@@ -68,7 +71,5 @@ export class InputMaskComponent implements OnInit, ControlValueAccessor {
     this.onTouched = fn;
   }
 
-  setDisabledState?(isDisabled: boolean): void {
-    this.readonly = isDisabled;
-  }
+  setDisabledState?(isDisabled: boolean): void {}
 }
