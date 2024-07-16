@@ -3,7 +3,7 @@ import { Component, inject } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { filter, finalize, map, switchMap, tap } from 'rxjs';
-import { Doctor } from '../../../../core/models/doctors.model.dto';
+import { Doctor, DoctorEditableFields } from '../../../../core/models/doctors.model.dto';
 import { DoctorService } from '../../../../core/services/doctor.service';
 import { SwalertUtils } from '../../../../core/utils/swalert.utils';
 import { ButtonsComponent } from '../../../../shared/buttons/buttons.component';
@@ -47,10 +47,19 @@ export default class CreateDoctorsComponent {
     this.doctorService
       .save(this.forms.value as Doctor)
       .pipe(finalize(() => (this.loading = false)))
-      .subscribe(() => {
-        SwalertUtils.swalertSuccessWithoutOptions('Parabéns', 'Médico cadastrado com sucesso').then((confirm) => {
-          if (confirm) this.router.navigate(['doctors']);
-        });
-      });
+      .subscribe(() => this.message());
+  }
+
+  update() {
+    this.doctorService
+      .update(this.doctorId!, this.forms.value as DoctorEditableFields)
+      .pipe(finalize(() => (this.loading = false)))
+      .subscribe(() => this.message());
+  }
+
+  private message() {
+    SwalertUtils.swalertSuccessWithoutOptions('Parabéns', 'Médico editado com sucesso').then((confirm) => {
+      if (confirm) this.router.navigate(['doctors']);
+    });
   }
 }

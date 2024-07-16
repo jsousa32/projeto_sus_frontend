@@ -6,15 +6,15 @@
     ></i>
   </div>
   <div class="flex w-full justify-center">
-    <h1 class="text-primary text-[1.75rem] sm:text-[2rem]">Novo Médico</h1>
+    <h1 class="text-primary text-[1.75rem] sm:text-[2rem]">{{ doctorId ? "Editar Médico" : "Novo Médico" }}</h1>
   </div>
   <form
     [formGroup]="forms"
-    (ngSubmit)="register(); loading = true"
+    (ngSubmit)="doctorId ? update() : register(); loading = true"
     class="flex flex-col h-[85%] mt-[5rem] gap-[5rem] w-full items-center overflow-y-auto"
   >
     <div class="w-[80%]">
-      <app-doctor-form [readonly]="!!doctorId"/>
+      <app-doctor-form [readonly]="!!doctorId" />
     </div>
     <div class="flex w-full justify-center">
       <div class="w-full md:w-6/12">
