@@ -5,7 +5,11 @@
     </div>
   </div>
   <div class="flex w-full xl:w-[50%] justify-center items-center">
-    <div class="flex flex-col h-[85%] w-[75%] items-center justify-around bg-white/70 rounded-3xl shadow-xl">
+    <form
+      [formGroup]="forms"
+      (ngSubmit)="confirmation(); loading = true"
+      class="flex flex-col h-[85%] w-[75%] items-center justify-around bg-white/70 rounded-3xl shadow-xl"
+    >
       <h1 class="text-primary text-center text-[1.5rem] sm:text-[2rem] lg:text-[4rem] xl:text-[2.5rem]">
         Confirmação de E-mail
       </h1>
@@ -14,14 +18,7 @@
           Insira o token de confirmação
         </h2>
         <div class="flex flex-col gap-[2.25rem]">
-          <form [formGroup]="forms" *ngFor="let input of emailConfirmationForm" (keydown.enter)="(forms.valid)">
-            <app-inputs
-              [case]="input.case"
-              [formControlName]="input.formControlName"
-              [form]="forms"
-              [placeholder]="input.placeholder"
-            />
-          </form>
+          <app-input-otp id="token" formControlName="token" length="6" label="Token Email" [required]="true" />
         </div>
       </div>
       <div class="w-[80%]">
@@ -37,6 +34,6 @@
           <app-buttons label="Sair" [rounded]="true" [secondary]="true" type="button" [routerLink]="['/logout']" />
         </div>
       </div>
-    </div>
+    </form>
   </div>
 </div>
