@@ -1,0 +1,20 @@
+<span class="p-float-label">
+  <p-inputMask
+    [attr.id]="id"
+    pInputText
+    [unmask]="true"
+    [required]="required"
+    [placeholder]="label"
+    [mask]="mask"
+    [(ngModel)]="value"
+    [ngClass]="{
+      'ng-invalid ng-dirty ': controls.get(id)?.errors && (controls.get(id)?.touched || controls.get(id)?.dirty)
+    }"
+  />
+  <label [attr.for]="id" class="font-medium text-gray_one">{{ label }}</label>
+</span>
+<small
+  *ngIf="controls.get(id)?.errors && (controls.get(id)?.touched || controls.get(id)?.dirty)"
+  class="p-error absolute"
+  >{{ label }} não pode ser vazio.
+</small>
