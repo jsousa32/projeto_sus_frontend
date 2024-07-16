@@ -85,7 +85,12 @@ export const routes: Routes = [
       {
         path: 'doctors/new',
         data: { permissions: [Permissions.ADMIN] },
-        loadComponent: () => import('../app/pages/internal/doctors/create-doctors/create-doctors.component'),
+        loadComponent: () => import('./pages/internal/doctors/create-and-edit-doctors/create-and-edit-doctors.component'),
+      },
+      {
+        path: 'doctors/:id',
+        data: { permissions: [Permissions.ADMIN] },
+        loadComponent: () => import('./pages/internal/doctors/create-and-edit-doctors/create-and-edit-doctors.component'),
       },
       {
         path: 'appointments',
