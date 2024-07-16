@@ -5,13 +5,14 @@
     [required]="required"
     [length]="length"
     [(ngModel)]="value"
+    [integerOnly]="true"
     class="flex flex-col sm:flex-row"
     (onBlur)="onTouched($event)"
     [ngClass]="{
-      'ng-invalid ng-dirty ': controls.get(id)?.errors && (controls.get(id)?.touched || controls.get(id)?.dirty)
+      'ng-invalid ng-dirty ': controls.errors && (controls.touched || controls.dirty)
     }"
   />
 </span>
-<small *ngIf="controls.get(id)?.errors && (controls.get(id)?.touched || controls.get(id)?.dirty)" class="p-error"
+<small *ngIf="controls.errors && (controls.touched || controls.dirty)" class="p-error"
   >{{ label }} não pode ser vazio.
 </small>
