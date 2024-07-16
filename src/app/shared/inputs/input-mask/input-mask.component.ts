@@ -1,12 +1,19 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject, Input, OnInit } from '@angular/core';
-import { ControlValueAccessor, FormControl, FormGroupDirective, FormsModule } from '@angular/forms';
+import { Component, forwardRef, inject, Input, OnInit } from '@angular/core';
+import { ControlValueAccessor, FormControl, FormGroupDirective, FormsModule, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { InputMaskModule } from 'primeng/inputmask';
 
 @Component({
   selector: 'app-input-mask',
   standalone: true,
   imports: [CommonModule, FormsModule, InputMaskModule],
+  providers: [
+    {
+      provide: NG_VALUE_ACCESSOR,
+      useExisting: forwardRef(() => InputMaskComponent),
+      multi: true,
+    },
+  ],
   templateUrl: './input-mask.component.html',
   styleUrl: './input-mask.component.scss',
 })
