@@ -3,16 +3,24 @@ import { Component, inject } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 import { finalize } from 'rxjs';
-import { loginForm } from '../../../core/forms/login.forms.model';
 import { AuthService } from '../../../core/services/auth.service';
 import { ButtonsComponent } from '../../../shared/buttons/buttons.component';
 import { CarouselComponent } from '../../../shared/carousel/carousel.component';
-import { InputsComponent } from '../../../shared/inputs2/inputs.component';
+import { InputPasswordComponent } from '../../../shared/inputs/input-password/input-password.component';
+import { InputTextComponent } from '../../../shared/inputs/input-text/input-text.component';
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [CommonModule, CarouselComponent, RouterLink, ReactiveFormsModule, ButtonsComponent, InputsComponent],
+  imports: [
+    CommonModule,
+    CarouselComponent,
+    RouterLink,
+    ReactiveFormsModule,
+    ButtonsComponent,
+    InputTextComponent,
+    InputPasswordComponent,
+  ],
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss',
 })
@@ -22,7 +30,6 @@ export class LoginComponent {
   private router = inject(Router);
 
   protected loading = false;
-  protected loginForm = loginForm;
   protected forms = this.fb.group({
     email: ['', [Validators.required, Validators.email]],
     password: ['', [Validators.required]],
