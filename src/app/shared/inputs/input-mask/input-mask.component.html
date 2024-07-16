@@ -7,14 +7,13 @@
     [placeholder]="label"
     [mask]="mask"
     [(ngModel)]="value"
+    (onBlur)="onTouched($event)"
     [ngClass]="{
-      'ng-invalid ng-dirty ': controls.get(id)?.errors && (controls.get(id)?.touched || controls.get(id)?.dirty)
+      'ng-invalid ng-dirty ': controls.errors && (controls.touched || controls.dirty)
     }"
   />
   <label [attr.for]="id" class="font-medium text-gray_one">{{ label }}</label>
 </span>
-<small
-  *ngIf="controls.get(id)?.errors && (controls.get(id)?.touched || controls.get(id)?.dirty)"
-  class="p-error absolute"
+<small *ngIf="controls.errors && (controls.touched || controls.dirty)" class="p-error"
   >{{ label }} não pode ser vazio.
 </small>

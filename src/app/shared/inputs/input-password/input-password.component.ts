@@ -30,7 +30,7 @@ export class InputPasswordComponent implements OnInit, ControlValueAccessor {
   label = '';
 
   @Input()
-  required = false;
+  required = true;
 
   @Input()
   readonly = false;

@@ -33,7 +33,7 @@ export class InputMaskComponent implements OnInit, ControlValueAccessor {
   mask = '';
 
   @Input()
-  required = false;
+  required = true;
 
   @Input()
   readonly = false;

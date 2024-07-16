@@ -1,12 +1,12 @@
 import { CommonModule } from '@angular/common';
 import { Component, forwardRef, inject, Input, OnInit } from '@angular/core';
 import { ControlValueAccessor, FormControl, FormGroupDirective, FormsModule, NG_VALUE_ACCESSOR } from '@angular/forms';
+import { FloatLabelModule } from 'primeng/floatlabel';
 import { InputTextModule } from 'primeng/inputtext';
-
 @Component({
   selector: 'app-input-text',
   standalone: true,
-  imports: [CommonModule, FormsModule, InputTextModule],
+  imports: [CommonModule, FormsModule, InputTextModule, FloatLabelModule],
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,
@@ -21,7 +21,7 @@ export class InputTextComponent implements OnInit, ControlValueAccessor {
   private formGroupDirective = inject(FormGroupDirective);
   private innerValue: any;
 
-  protected controls!: FormControl;
+  controls!: FormControl;
 
   @Input({ required: true })
   id = '';
@@ -30,7 +30,7 @@ export class InputTextComponent implements OnInit, ControlValueAccessor {
   label = '';
 
   @Input()
-  required = false;
+  required = true;
 
   @Input()
   readonly = false;

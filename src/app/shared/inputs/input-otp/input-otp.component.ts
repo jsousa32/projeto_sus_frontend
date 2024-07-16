@@ -33,7 +33,7 @@ export class InputOtpComponent implements OnInit, ControlValueAccessor {
   length = 0;
 
   @Input()
-  required = false;
+  required = true;
 
   get value() {
     return this.innerValue;
