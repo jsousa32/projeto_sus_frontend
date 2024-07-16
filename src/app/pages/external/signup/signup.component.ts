@@ -3,7 +3,6 @@ import { Component, inject } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 import { finalize, switchMap } from 'rxjs';
-import { signupFormsLeftSide, signupFormsRightSide } from '../../../core/forms/signup.forms.model';
 import { Pacient } from '../../../core/models/pacient.model.dto';
 import { AuthService } from '../../../core/services/auth.service';
 import { PacientService } from '../../../core/services/pacient.service';
@@ -11,13 +10,13 @@ import { SwalertUtils } from '../../../core/utils/swalert.utils';
 import { TimerUtils } from '../../../core/utils/timer.utils';
 import { PasswordValidator } from '../../../core/validators/password.validator';
 import { CarouselComponent } from '../../../shared/carousel/carousel.component';
-import { InputsComponent } from '../../../shared/inputs2/inputs.component';
+import { PacientFormComponent } from '../../../shared/forms/pacient-form/pacient-form.component';
 import { ButtonsComponent } from './../../../shared/buttons/buttons.component';
 
 @Component({
   selector: 'app-signup',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, InputsComponent, ButtonsComponent, CarouselComponent, RouterLink],
+  imports: [CommonModule, ReactiveFormsModule, ButtonsComponent, CarouselComponent, RouterLink, PacientFormComponent],
   templateUrl: './signup.component.html',
   styleUrl: './signup.component.scss',
 })
@@ -29,8 +28,6 @@ export default class SignupComponent {
 
   protected loading = false;
   protected transition: boolean = true;
-  protected formsRightSide = signupFormsRightSide;
-  protected formsLeftSide = signupFormsLeftSide;
 
   protected forms = this.fb.group(
     {

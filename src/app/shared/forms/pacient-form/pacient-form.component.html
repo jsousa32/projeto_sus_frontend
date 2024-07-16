@@ -1,0 +1,18 @@
+<div class="flex flex-col gap-[1.75rem]">
+  <div class="flex gap-[0.75rem]">
+    <app-input-text id="firstName" formControlName="firstName" label="Nome" />
+    <app-input-text id="lastName" formControlName="lastName" label="Sobrenome" />
+  </div>
+  <div class="flex gap-[0.75rem]">
+    <app-input-text id="email" formControlName="email" label="Email" />
+    <app-input-mask id="telephone" formControlName="telephone" label="Telefone" mask="(99) 9 9999-9999" />
+  </div>
+  <div class="flex gap-[0.75rem]">
+    <app-input-mask id="susNumber" formControlName="susNumber" label="Nº do SUS" mask="999999999999999" />
+    <app-input-mask id="document" formControlName="document" label="Documento" mask="999.999.999-99" />
+  </div>
+  <div *ngIf="hasPassword" class="flex gap-[0.75rem]">
+    <app-input-password id="password" formControlName="password" label="Senha" />
+    <app-input-password id="confirmPassword" formControlName="confirmPassword" label="Confirmação de Senha" />
+  </div>
+</div>
