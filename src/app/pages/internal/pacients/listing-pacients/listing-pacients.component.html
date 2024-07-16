@@ -18,7 +18,7 @@
         />
       </div>
     </div>
-    <div class="custom-table flex-shrink-0" *ngIf="pacients$ | async as pacients">
+    <div class="custom-table flex-shrink-0" *ngIf="pacients() as pacients">
       <p-table
         [value]="pacients.content"
         [paginator]="true"
@@ -27,6 +27,7 @@
         [responsive]="true"
         [scrollable]="true"
         scrollHeight="350px"
+        [lazy]="true"
         (onLazyLoad)="lazyLoad($event)"
         currentPageReportTemplate="Mostrando {first} de {last} no total {totalRecords} pacientes"
         [rowsPerPageOptions]="[5, 15, 50]"
@@ -34,14 +35,22 @@
       >
         <ng-template pTemplate="header">
           <tr>
+            <th style="width: 5%"></th>
             <th style="width: 25%">Nome</th>
             <th style="width: 25%">Nº SUS</th>
             <th style="width: 25%">Email</th>
-            <th style="width: 25%">Telefone</th>
+            <th style="width: 20%">Telefone</th>
           </tr>
         </ng-template>
         <ng-template pTemplate="body" let-pacients>
           <tr>
+            <td>
+              <i
+                class="flex icon ph-bold ph-list text-primary_three cursor-pointer"
+                (click)="pacientId = pacients.id; menu.toggle($event)"
+              ></i>
+              <p-menu #menu [model]="items" [popup]="true" [appendTo]="'body'"></p-menu>
+            </td>
             <td>{{ pacients.firstName + " " + pacients.lastName }}</td>
             <td>{{ pacients.susNumber }}</td>
             <td>{{ pacients.email }}</td>
