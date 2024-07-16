@@ -1,30 +1,38 @@
 import { CommonModule } from '@angular/common';
 import { Component, inject } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
-import { Router, RouterLink } from '@angular/router';
-import { finalize } from 'rxjs';
-import { pacientFormsLeftSide, pacientFormsRightSide } from '../../../../core/forms/pacient.forms.model';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
+import { filter, finalize, map, switchMap, tap } from 'rxjs';
 import { Pacient } from '../../../../core/models/pacient.model.dto';
 import { PacientService } from '../../../../core/services/pacient.service';
 import { SwalertUtils } from '../../../../core/utils/swalert.utils';
 import { ButtonsComponent } from '../../../../shared/buttons/buttons.component';
-import { InputsComponent } from '../../../../shared/inputs2/inputs.component';
+import { PacientFormComponent } from '../../../../shared/forms/pacient-form/pacient-form.component';
 
 @Component({
   selector: 'app-create-pacients',
   standalone: true,
-  imports: [RouterLink, ReactiveFormsModule, InputsComponent, CommonModule, ButtonsComponent],
-  templateUrl: './create-pacients.component.html',
-  styleUrl: './create-pacients.component.scss',
+  imports: [RouterLink, ReactiveFormsModule, CommonModule, ButtonsComponent, PacientFormComponent],
+  templateUrl: './create-and-edit-pacients.component.html',
+  styleUrl: './create-and-edit-pacients.component.scss',
 })
-export default class CreatePacientsComponent {
+export default class CreateAndEditPacientsComponent {
   private fb = inject(FormBuilder);
   private pacientService = inject(PacientService);
+  private activatedRouter = inject(ActivatedRoute);
   private router = inject(Router);
 
   protected loading = false;
-  protected formsRightSide = pacientFormsRightSide;
-  protected formsLeftSide = pacientFormsLeftSide;
+  protected pacientId: string | null = null;
+
+  protected params$ = this.activatedRouter.paramMap
+    .pipe(
+      map((params) => params.get('id')),
+      filter((id) => !!id),
+      tap((id) => (this.pacientId = id)),
+      switchMap((id) => this.pacientService.pacient(id!))
+    )
+    .subscribe((res) => this.forms.patchValue(res));
 
   protected forms = this.fb.group({
     firstName: ['', [Validators.required]],
