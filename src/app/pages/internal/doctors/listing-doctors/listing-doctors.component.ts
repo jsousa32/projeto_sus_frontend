@@ -1,9 +1,11 @@
 import { CommonModule } from '@angular/common';
 import { Component, inject, OnDestroy } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
+import { MenuItem } from 'primeng/api';
+import { MenuModule } from 'primeng/menu';
 import { TableLazyLoadEvent, TableModule } from 'primeng/table';
-import { debounceTime, Observable, Subject, takeUntil, tap } from 'rxjs';
+import { debounceTime, Observable, Subject, takeUntil } from 'rxjs';
 import { DoctorPage } from '../../../../core/models/doctors.model.dto';
 import { UserSession } from '../../../../core/models/user-session.model.dto';
 import { TelephonePipe } from '../../../../core/pipes/telephone.pipe';
@@ -26,31 +28,38 @@ import { InputsComponent } from '../../../../shared/inputs2/inputs.component';
     RouterLink,
     CommonModule,
     TelephonePipe,
+    MenuModule,
   ],
   templateUrl: './listing-doctors.component.html',
   styleUrl: './listing-doctors.component.scss',
 })
 export default class ListingDoctorsComponent implements OnDestroy {
   private fb = inject(FormBuilder);
+  private router = inject(Router);
   private doctorService = inject(DoctorService);
   private userSession = StorageUtils.find('userSession') as UserSession;
   private unsub$ = new Subject<boolean>();
   private filter = '';
 
+  protected doctorId = '';
   protected isAdmin = PermissionsUtils.isAdmin(this.userSession.permissions);
 
   protected form = this.fb.group({ filter: [''] });
 
   protected changedValue = this.form.controls.filter.valueChanges
-    .pipe(
-      debounceTime(1000),
-      takeUntil(this.unsub$),
-      tap((f) => {
-        this.filter = f!;
-        this.lazyLoad(null);
-      })
-    )
-    .subscribe();
+    .pipe(debounceTime(1000), takeUntil(this.unsub$))
+    .subscribe((res) => {
+      this.filter = res!;
+      this.lazyLoad(null);
+    });
+
+  protected items: MenuItem[] = [
+    {
+      label: 'Editar',
+      icon: 'ph-pencil',
+      command: () => this.router.navigate(['doctors', this.doctorId]),
+    },
+  ];
 
   protected doctors$ = new Observable<Page<DoctorPage>>();
 

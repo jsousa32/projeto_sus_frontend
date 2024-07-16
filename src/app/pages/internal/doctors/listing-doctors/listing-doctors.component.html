@@ -34,6 +34,7 @@
       >
         <ng-template pTemplate="header">
           <tr>
+            <th style="width: 5%"></th>
             <th style="width: 25%">Nome</th>
             <th style="width: 25%">CRM</th>
             <th style="width: 25%">Email</th>
@@ -42,6 +43,13 @@
         </ng-template>
         <ng-template pTemplate="body" let-doctors>
           <tr>
+            <td>
+              <i
+                class="flex icon ph-bold ph-list text-primary_three cursor-pointer"
+                (click)="doctorId = doctors.id; menu.toggle($event)"
+              ></i>
+              <p-menu #menu [model]="items" [popup]="true" [appendTo]="'body'"></p-menu>
+            </td>
             <td>{{ doctors.firstName + " " + doctors.lastName }}</td>
             <td>{{ doctors.crm }}</td>
             <td>{{ doctors.email }}</td>
