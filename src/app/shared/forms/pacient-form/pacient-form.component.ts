@@ -19,7 +19,9 @@ import { InputTextComponent } from '../../inputs/input-text/input-text.component
   styleUrl: './pacient-form.component.scss',
 })
 export class PacientFormComponent {
-
   @Input()
   hasPassword: boolean = true;
+
+  @Input()
+  readonly: boolean = false;
 }
