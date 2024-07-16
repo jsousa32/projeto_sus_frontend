@@ -10,7 +10,7 @@
   </div>
   <form
     [formGroup]="forms"
-    (ngSubmit)="register(); loading = true"
+    (ngSubmit)="pacientId ? updated() : register(); loading = true"
     class="flex flex-col h-[85%] mt-[5rem] gap-[5rem] w-full items-center overflow-y-auto"
   >
     <div class="w-[80%]">

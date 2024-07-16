@@ -3,7 +3,7 @@ import { Component, inject } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { filter, finalize, map, switchMap, tap } from 'rxjs';
-import { Pacient } from '../../../../core/models/pacient.model.dto';
+import { Pacient, PacientEditableFields } from '../../../../core/models/pacient.model.dto';
 import { PacientService } from '../../../../core/services/pacient.service';
 import { SwalertUtils } from '../../../../core/utils/swalert.utils';
 import { ButtonsComponent } from '../../../../shared/buttons/buttons.component';
@@ -47,10 +47,19 @@ export default class CreateAndEditPacientsComponent {
     this.pacientService
       .saveInternal(this.forms.value as Pacient)
       .pipe(finalize(() => (this.loading = false)))
-      .subscribe(() => {
-        SwalertUtils.swalertSuccessWithoutOptions('Parabéns', 'Paciente cadastrado com sucesso').then((confirm) => {
-          if (confirm) this.router.navigate(['pacients']);
-        });
-      });
+      .subscribe(() => this.message());
+  }
+
+  updated() {
+    this.pacientService
+      .update(this.pacientId!, this.forms.value as PacientEditableFields)
+      .pipe(finalize(() => (this.loading = false)))
+      .subscribe(() => this.message());
+  }
+
+  private message() {
+    SwalertUtils.swalertSuccessWithoutOptions('Parabéns', 'Paciente cadastrado com sucesso').then((confirm) => {
+      if (confirm) this.router.navigate(['pacients']);
+    });
   }
 }
