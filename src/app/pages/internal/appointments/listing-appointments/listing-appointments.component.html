@@ -6,7 +6,7 @@
     <div class="flex justify-center">
       <div class="flex w-full items-center justify-evenly">
         <form class="w-8/12" [formGroup]="form">
-          <app-inputs case="text" [form]="form" formControlName="filter" placeholder="Filtrar" [required]="false" />
+          <app-input-text id="filter" formControlName="filter" label="Filtrar" [required]="false" />
         </form>
         <app-buttons [primary]="true" label="Nova Consulta" type="button" [rounded]="true" [routerLink]="['new']" />
       </div>

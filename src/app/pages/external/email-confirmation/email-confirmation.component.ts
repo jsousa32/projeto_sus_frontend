@@ -3,17 +3,16 @@ import { Component, inject } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 import { finalize } from 'rxjs';
-import { emailConfirmationForm } from '../../../core/forms/email-confirmation.forms.model';
 import { AuthService } from '../../../core/services/auth.service';
 import { SwalertUtils } from '../../../core/utils/swalert.utils';
 import { ButtonsComponent } from '../../../shared/buttons/buttons.component';
 import { CarouselComponent } from '../../../shared/carousel/carousel.component';
-import { InputsComponent } from '../../../shared/inputs/inputs.component';
+import { InputOtpComponent } from '../../../shared/inputs/input-otp/input-otp.component';
 
 @Component({
   selector: 'app-email-confirmation',
   standalone: true,
-  imports: [CommonModule, CarouselComponent, ButtonsComponent, InputsComponent, RouterLink, ReactiveFormsModule],
+  imports: [CommonModule, CarouselComponent, ButtonsComponent, RouterLink, ReactiveFormsModule, InputOtpComponent],
   templateUrl: './email-confirmation.component.html',
   styleUrl: './email-confirmation.component.scss',
 })
@@ -23,7 +22,6 @@ export default class EmailConfirmationComponent {
   private router = inject(Router);
 
   protected loading = false;
-  protected emailConfirmationForm = emailConfirmationForm;
   protected forms = this.fb.group({
     token: ['', [Validators.required]],
   });

@@ -1,25 +1,21 @@
-<form [formGroup]="form">
-  <span class="p-float-label">
-    <p-inputMask
-      id="{{ formControlName }}"
-      pInputText
-      ngDefaultControl
-      [unmask]="true"
-      [required]="required"
-      [mask]="mask"
-      [formControlName]="formControlName"
-      [ngClass]="{
-        'ng-invalid ng-dirty ':
-          form.get(formControlName)?.errors && (form.get(formControlName)?.touched || form.get(formControlName)?.dirty)
-      }"
-    />
-    <label for="{{ formControlName }}" class="font-medium text-gray_one">{{ placeholder }}</label>
-  </span>
-  <small
-    *ngIf="
-      form.get(formControlName)?.errors && (form.get(formControlName)?.touched || form.get(formControlName)?.dirty)
-    "
-    class="p-error absolute"
-    >{{ placeholder }} não pode ser vazio.</small
-  >
-</form>
+<span class="p-float-label">
+  <p-inputMask
+    [attr.id]="id"
+    pInputText
+    [unmask]="true"
+    [required]="required"
+    [readonly]="readonly"
+    [disabled]="disabled"
+    [placeholder]="label"
+    [mask]="mask"
+    [(ngModel)]="value"
+    (onBlur)="onTouched($event)"
+    [ngClass]="{
+      'ng-invalid ng-dirty ': controls.errors && (controls.touched || controls.dirty)
+    }"
+  />
+  <label [attr.for]="id" class="font-medium text-gray_one">{{ label }}</label>
+</span>
+<small *ngIf="controls.errors && (controls.touched || controls.dirty)" class="p-error"
+  >{{ label }} não pode ser vazio.
+</small>

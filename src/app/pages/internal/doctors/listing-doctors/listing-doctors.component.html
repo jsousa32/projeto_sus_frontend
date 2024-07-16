@@ -6,7 +6,7 @@
     <div class="flex justify-center">
       <div class="flex w-full items-center justify-evenly">
         <form class="w-8/12" [formGroup]="form">
-          <app-inputs case="text" [form]="form" formControlName="filter" placeholder="Filtrar" [required]="false" />
+          <app-input-text id="filter" formControlName="filter" label="Filtrar" [required]="false" />
         </form>
         <app-buttons
           *ngIf="isAdmin"
@@ -34,6 +34,7 @@
       >
         <ng-template pTemplate="header">
           <tr>
+            <th style="width: 5%"></th>
             <th style="width: 25%">Nome</th>
             <th style="width: 25%">CRM</th>
             <th style="width: 25%">Email</th>
@@ -42,6 +43,13 @@
         </ng-template>
         <ng-template pTemplate="body" let-doctors>
           <tr>
+            <td>
+              <i
+                class="flex icon ph-bold ph-list text-primary_three cursor-pointer"
+                (click)="doctorId = doctors.id; menu.toggle($event)"
+              ></i>
+              <p-menu #menu [model]="items" [popup]="true" [appendTo]="'body'"></p-menu>
+            </td>
             <td>{{ doctors.firstName + " " + doctors.lastName }}</td>
             <td>{{ doctors.crm }}</td>
             <td>{{ doctors.email }}</td>
@@ -50,7 +58,7 @@
         </ng-template>
         <ng-template pTemplate="emptymessage">
           <tr>
-            <td colspan="4"><div class="flex w-full justify-center">Nenhum médico cadastrado.</div></td>
+            <td colspan="5"><div class="flex w-full justify-center">Nenhum médico cadastrado.</div></td>
           </tr>
         </ng-template>
       </p-table>

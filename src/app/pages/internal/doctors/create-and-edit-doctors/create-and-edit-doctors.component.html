@@ -1,0 +1,31 @@
+<div class="flex flex-col h-full rounded-3xl w-full bg-white/80 p-[1rem]">
+  <div>
+    <i
+      class="ph-arrow-left mt-[1rem] cursor-pointer text-[1.75rem] sm:text-[2.25rem] text-primary"
+      [routerLink]="['..']"
+    ></i>
+  </div>
+  <div class="flex w-full justify-center">
+    <h1 class="text-primary text-[1.75rem] sm:text-[2rem]">{{ doctorId ? "Editar Médico" : "Novo Médico" }}</h1>
+  </div>
+  <form
+    [formGroup]="forms"
+    (ngSubmit)="doctorId ? update() : register(); loading = true"
+    class="flex flex-col h-[85%] mt-[5rem] gap-[5rem] w-full items-center overflow-y-auto"
+  >
+    <div class="w-[80%]">
+      <app-doctor-form [readonly]="!!doctorId" />
+    </div>
+    <div class="flex w-full justify-center">
+      <div class="w-full md:w-6/12">
+        <app-buttons
+          [primary]="true"
+          [rounded]="true"
+          label="Cadastrar"
+          type="submit"
+          [disabled]="loading || forms.invalid"
+        />
+      </div>
+    </div>
+  </form>
+</div>

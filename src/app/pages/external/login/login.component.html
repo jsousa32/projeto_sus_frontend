@@ -5,20 +5,22 @@
     </div>
   </div>
   <div class="flex w-full xl:w-[50%] justify-center items-center">
-    <div class="flex flex-col h-[85%] w-[75%] items-center justify-around bg-white/70 rounded-3xl shadow-xl">
+    <form
+      [formGroup]="forms"
+      (ngSubmit)="login(); loading = true"
+      class="flex flex-col h-[85%] w-[75%] items-center justify-around bg-white/70 rounded-3xl shadow-xl"
+    >
       <h1 class="text-primary text-[4rem] xl:text-[3rem]">Login</h1>
       <div class="flex flex-col w-[80%] gap-[1rem]">
         <div class="flex flex-col gap-[2.25rem]">
-          <form [formGroup]="forms" *ngFor="let input of loginForm">
-            <app-inputs
-              [case]="input.case"
-              [formControlName]="input.formControlName"
-              [form]="forms"
-              [placeholder]="input.placeholder"
-            />
-          </form>
+          <div class="flex flex-col gap-[1.75rem]">
+            <app-input-text id="email" formControlName="email" label="Email" />
+            <app-input-password id="password" formControlName="password" label="Senha" />
+          </div>
         </div>
-        <a class="flex text-xl text-primary justify-end" [routerLink]="['/forgot']">Esqueceu senha?</a>
+        <div class="flex justify-end">
+          <a class="text-xl text-primary" [routerLink]="['/forgot']">Esqueceu senha?</a>
+        </div>
       </div>
       <div class="w-[80%]">
         <div class="flex flex-col w-full gap-[1rem]">
@@ -27,7 +29,6 @@
             [rounded]="true"
             type="submit"
             [primary]="true"
-            (click)="login(); loading = true"
             [disabled]="loading || forms.invalid"
           />
           <app-buttons
@@ -39,6 +40,6 @@
           />
         </div>
       </div>
-    </div>
+    </form>
   </div>
 </div>

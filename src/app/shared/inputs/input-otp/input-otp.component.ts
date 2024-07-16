@@ -1,14 +1,12 @@
 import { CommonModule } from '@angular/common';
-import { Component, Input, forwardRef } from '@angular/core';
-import { ControlValueAccessor, FormGroup, FormsModule, NG_VALUE_ACCESSOR, ReactiveFormsModule } from '@angular/forms';
+import { Component, forwardRef, inject, Input, numberAttribute, OnInit } from '@angular/core';
+import { ControlValueAccessor, FormControl, FormGroupDirective, FormsModule, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { InputOtpModule } from 'primeng/inputotp';
 
 @Component({
   selector: 'app-input-otp',
   standalone: true,
-  imports: [CommonModule, InputOtpModule, ReactiveFormsModule, FormsModule],
-  templateUrl: './input-otp.component.html',
-  styleUrl: './input-otp.component.scss',
+  imports: [CommonModule, FormsModule, InputOtpModule],
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,
@@ -16,28 +14,55 @@ import { InputOtpModule } from 'primeng/inputotp';
       multi: true,
     },
   ],
+  templateUrl: './input-otp.component.html',
+  styleUrl: './input-otp.component.scss',
 })
-export class InputOtpComponent implements ControlValueAccessor {
-  @Input({ required: true })
-  form!: FormGroup;
+export class InputOtpComponent implements OnInit, ControlValueAccessor {
+  private formGroupDirective = inject(FormGroupDirective);
+  private innerValue: any;
+
+  protected controls!: FormControl;
 
   @Input({ required: true })
-  formControlName: string = '';
+  id = '';
 
   @Input({ required: true })
-  placeholder: string = '';
+  label = '';
 
-  @Input({ required: false })
-  required: boolean = true;
+  @Input({ required: true, transform: numberAttribute })
+  length = 0;
 
-  @Input({ required: false })
-  readonly: boolean = false;
+  @Input()
+  required = true;
 
-  writeValue(obj: any): void {}
+  get value() {
+    return this.innerValue;
+  }
 
-  registerOnChange(fn: any): void {}
+  set value(v: any) {
+    if (this.innerValue !== v) {
+      this.innerValue = v;
+      this.onChanged(v);
+    }
+  }
 
-  registerOnTouched(fn: any): void {}
+  onChanged: (_: any) => void = () => {};
+  onTouched: (_: any) => void = () => {};
+
+  ngOnInit(): void {
+    this.controls = this.formGroupDirective.control.get(this.id) as FormControl;
+  }
+
+  writeValue(value: any): void {
+    this.value = value;
+  }
+  registerOnChange(fn: any): void {
+    this.onChanged = fn;
+  }
+
+  registerOnTouched(fn: any): void {
+    this.onTouched = fn;
+  }
 
   setDisabledState?(isDisabled: boolean): void {}
 }

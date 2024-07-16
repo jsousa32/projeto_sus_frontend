@@ -1,14 +1,12 @@
 import { CommonModule } from '@angular/common';
-import { Component, Input, forwardRef } from '@angular/core';
-import { ControlValueAccessor, FormGroup, NG_VALUE_ACCESSOR, ReactiveFormsModule } from '@angular/forms';
+import { Component, forwardRef, inject, Input, OnInit } from '@angular/core';
+import { ControlValueAccessor, FormControl, FormGroupDirective, FormsModule, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { PasswordModule } from 'primeng/password';
 
 @Component({
   selector: 'app-input-password',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, PasswordModule],
-  templateUrl: './input-password.component.html',
-  styleUrl: './input-password.component.scss',
+  imports: [CommonModule, FormsModule, PasswordModule],
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,
@@ -16,28 +14,58 @@ import { PasswordModule } from 'primeng/password';
       multi: true,
     },
   ],
+  templateUrl: './input-password.component.html',
+  styleUrl: './input-password.component.scss',
 })
-export class InputPasswordComponent implements ControlValueAccessor {
-  @Input({ required: true })
-  form!: FormGroup;
+export class InputPasswordComponent implements OnInit, ControlValueAccessor {
+  private formGroupDirective = inject(FormGroupDirective);
+  private innerValue: any;
+
+  protected controls!: FormControl;
 
   @Input({ required: true })
-  formControlName: string = '';
+  id = '';
 
   @Input({ required: true })
-  placeholder: string = '';
+  label = '';
 
-  @Input({ required: false })
-  required: boolean = true;
+  @Input()
+  required = true;
 
-  @Input({ required: false })
-  readonly: boolean = false;
+  @Input()
+  readonly = false;
 
-  writeValue(obj: any): void {}
+  get value() {
+    return this.innerValue;
+  }
 
-  registerOnChange(fn: any): void {}
+  set value(v: any) {
+    if (this.innerValue !== v) {
+      this.innerValue = v;
+      this.onChaged(v);
+    }
+  }
 
-  registerOnTouched(fn: any): void {}
+  onChaged: (_: any) => void = () => {};
+  onTouched: (_: any) => void = () => {};
 
-  setDisabledState?(isDisabled: boolean): void {}
+  ngOnInit(): void {
+    this.controls = this.formGroupDirective.control.get(this.id) as FormControl;
+  }
+
+  writeValue(value: any): void {
+    this.value = value;
+  }
+
+  registerOnChange(fn: any): void {
+    this.onChaged = fn;
+  }
+
+  registerOnTouched(fn: any): void {
+    this.onTouched = fn;
+  }
+
+  setDisabledState?(isDisabled: boolean): void {
+    this.readonly = isDisabled;
+  }
 }
