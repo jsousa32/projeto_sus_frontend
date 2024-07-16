@@ -6,7 +6,7 @@
     <div class="flex justify-center">
       <div class="flex w-full items-center justify-evenly">
         <form class="w-8/12" [formGroup]="form">
-          <app-inputs case="text" [form]="form" formControlName="filter" placeholder="Filtrar" [required]="false" />
+          <app-input-text id="filter" formControlName="filter" label="Filtrar" [required]="false" />
         </form>
         <app-buttons
           *ngIf="hasPermission"
@@ -59,7 +59,7 @@
         </ng-template>
         <ng-template pTemplate="emptymessage">
           <tr>
-            <td colspan="4"><div class="flex w-full justify-center">Nenhum paciente cadastrado.</div></td>
+            <td colspan="5"><div class="flex w-full justify-center">Nenhum paciente cadastrado.</div></td>
           </tr>
         </ng-template>
       </p-table>

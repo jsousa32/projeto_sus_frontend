@@ -15,14 +15,14 @@ import { Page } from '../../../../core/utils/page.utils';
 import { PermissionsUtils } from '../../../../core/utils/permission.utils';
 import { StorageUtils } from '../../../../core/utils/storage.utils';
 import { ButtonsComponent } from '../../../../shared/buttons/buttons.component';
-import { InputsComponent } from '../../../../shared/inputs2/inputs.component';
+import { InputTextComponent } from '../../../../shared/inputs/input-text/input-text.component';
 
 @Component({
   selector: 'app-listing-pacients',
   standalone: true,
   imports: [
     CommonModule,
-    InputsComponent,
+    InputTextComponent,
     ButtonsComponent,
     ReactiveFormsModule,
     TableModule,
