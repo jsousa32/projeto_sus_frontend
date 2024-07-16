@@ -1,0 +1,18 @@
+<span class="p-float-label">
+  <p-inputOtp
+    [attr.id]="id"
+    pInputText
+    [required]="required"
+    [length]="length"
+    [(ngModel)]="value"
+    class="flex flex-col sm:flex-row"
+    [ngClass]="{
+      'ng-invalid ng-dirty ': controls.get(id)?.errors && (controls.get(id)?.touched || controls.get(id)?.dirty)
+    }"
+  />
+</span>
+<small
+  *ngIf="controls.get(id)?.errors && (controls.get(id)?.touched || controls.get(id)?.dirty)"
+  class="p-error absolute"
+  >{{ label }} não pode ser vazio.
+</small>
