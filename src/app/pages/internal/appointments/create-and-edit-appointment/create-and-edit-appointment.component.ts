@@ -2,7 +2,9 @@ import { CommonModule } from '@angular/common';
 import { Component, inject } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { RouterLink } from '@angular/router';
+import { UserSession } from '../../../../core/models/user-session.model.dto';
 import { PermissionsUtils } from '../../../../core/utils/permission.utils';
+import { StorageUtils } from '../../../../core/utils/storage.utils';
 import { ButtonsComponent } from '../../../../shared/buttons/buttons.component';
 import { AppointmentFormComponent } from '../../../../shared/forms/appointment-form/appointment-form.component';
 
@@ -16,7 +18,7 @@ import { AppointmentFormComponent } from '../../../../shared/forms/appointment-f
 export default class CreateAndEditAppointmentComponent {
   private fb = inject(FormBuilder);
 
-  protected isAdmin = PermissionsUtils.isAdmin();
+  protected isAdmin = PermissionsUtils.isAdmin((StorageUtils.find('userSession') as UserSession).permissions);
   protected appointmentId: string | null = null;
   protected doctorId: string | null = null;
   protected pacientId: string | null = null;

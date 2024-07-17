@@ -3,10 +3,12 @@ import { Component, EventEmitter, inject, Output } from '@angular/core';
 import { ControlContainer, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { tap } from 'rxjs';
 import { Options } from '../../../core/models/options.model.dto';
+import { UserSession } from '../../../core/models/user-session.model.dto';
 import { AppointmentsService } from '../../../core/services/appointments.service';
 import { DoctorService } from '../../../core/services/doctor.service';
 import { PacientService } from '../../../core/services/pacient.service';
 import { PermissionsUtils } from '../../../core/utils/permission.utils';
+import { StorageUtils } from '../../../core/utils/storage.utils';
 import { ButtonsComponent } from '../../buttons/buttons.component';
 import { CalendarComponent } from '../../selects/calendar/calendar.component';
 import { SingleSelectComponent } from '../../selects/single-select/single-select.component';
@@ -37,7 +39,7 @@ export class AppointmentFormComponent {
   private pacientService = inject(PacientService);
   private appointmentService = inject(AppointmentsService);
 
-  protected isAdmin = PermissionsUtils.isAdmin();
+  protected isAdmin = PermissionsUtils.isAdmin((StorageUtils.find('userSession') as UserSession).permissions);
   protected doctorId = '';
   protected pacientId = '';
   protected doctorOptions: Options[] = [];

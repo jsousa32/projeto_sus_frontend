@@ -7,11 +7,13 @@ import { MenuModule } from 'primeng/menu';
 import { TableLazyLoadEvent, TableModule } from 'primeng/table';
 import { debounceTime, Observable, Subject, takeUntil } from 'rxjs';
 import { DoctorPage } from '../../../../core/models/doctors.model.dto';
+import { UserSession } from '../../../../core/models/user-session.model.dto';
 import { TelephonePipe } from '../../../../core/pipes/telephone.pipe';
 import { DoctorService } from '../../../../core/services/doctor.service';
 import { CustomPageable } from '../../../../core/utils/custom-pageable.utils';
 import { Page } from '../../../../core/utils/page.utils';
 import { PermissionsUtils } from '../../../../core/utils/permission.utils';
+import { StorageUtils } from '../../../../core/utils/storage.utils';
 import { ButtonsComponent } from '../../../../shared/buttons/buttons.component';
 import { InputTextComponent } from '../../../../shared/inputs/input-text/input-text.component';
 
@@ -39,7 +41,7 @@ export default class ListingDoctorsComponent implements OnDestroy {
   private filter = '';
 
   protected doctorId = '';
-  protected isAdmin = PermissionsUtils.isAdmin();
+  protected isAdmin = PermissionsUtils.isAdmin((StorageUtils.find('userSession') as UserSession).permissions);
 
   protected form = this.fb.group({ filter: [''] });
 
