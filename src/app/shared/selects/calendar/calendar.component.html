@@ -1,0 +1,13 @@
+<p-calendar
+  [(ngModel)]="value"
+  [iconDisplay]="'input'"
+  [showIcon]="true"
+  inputId="icondisplay"
+  [minDate]="minDate"
+  dateFormat="dd/mm/yy"
+  (onBlur)="onTouched($event)"
+  [placeholder]="label"
+/>
+<small *ngIf="controls.errors && (controls.touched || controls.dirty)" class="p-error"
+  >{{ label }} não pode ser vazio.
+</small>
