@@ -27,12 +27,8 @@ export class DoctorService {
       .pipe(take(1));
   }
 
-  allDoctorsUnpaged(params: HttpParams) {
-    return this.httpClient
-      .get<Page<DoctorPage>>(Routes.RoutesDoctors.ALL_DOCTORS_UNPAGED, {
-        params: params,
-      })
-      .pipe(take(1));
+  allDoctorsUnpaged() {
+    return this.httpClient.get<Page<DoctorPage>>(Routes.RoutesDoctors.ALL_DOCTORS_UNPAGED).pipe(take(1));
   }
 
   doctor(id: string) {

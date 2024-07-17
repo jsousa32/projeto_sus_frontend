@@ -26,7 +26,6 @@ export class PacientService {
     );
   }
 
-
   allPacients(params: HttpParams) {
     return this.httpClient
       .get<Page<PacientPage>>(Routes.RoutesPacients.ALL_PACIENTS, {
@@ -35,12 +34,8 @@ export class PacientService {
       .pipe(take(1));
   }
 
-  allPacientsUnpaged(params: HttpParams) {
-    return this.httpClient
-      .get<Page<PacientPage>>(Routes.RoutesPacients.ALL_PACIENTS_UNPAGED, {
-        params: params,
-      })
-      .pipe(take(1));
+  allPacientsUnpaged() {
+    return this.httpClient.get<Page<PacientPage>>(Routes.RoutesPacients.ALL_PACIENTS_UNPAGED).pipe(take(1));
   }
 
   pacient(id: string) {
