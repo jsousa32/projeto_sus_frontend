@@ -1,0 +1,16 @@
+<p-dropdown
+  [attr.id]="id"
+  [options]="options"
+  optionLabel="name"
+  optionValue="value"
+  [readonly]="readonly"
+  [required]="required"
+  [(ngModel)]="value"
+  (onChange)="onChangedDropdown($event)"
+  [placeholder]="label"
+/>
+<div *ngIf="hasValidation && !!id">
+  <small *ngIf="controls.errors && (controls.touched || controls.dirty)" class="p-error"
+    >{{ label }} não pode ser vazio.
+  </small>
+</div>
