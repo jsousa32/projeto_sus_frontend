@@ -1,0 +1,35 @@
+<div class="flex flex-col gap-[2rem] justify-center">
+  <div class="flex gap-[2rem] justify-center">
+    <app-single-select
+      class="w-[30%]"
+      *ngIf="doctors$ | async"
+      label="Médico"
+      [options]="doctorOptions"
+      (changed)="doctorId = $event; doctorIdEmitter.emit($event);"
+    />
+    <app-calendar
+      *ngIf="doctorId"
+      class="w-[30%]"
+      id="date"
+      formControlName="date"
+      label="Dia da consulta"
+      (ngModelChange)="hourOptions = []; avaliableTimes()"
+    />
+  </div>
+  <div *ngIf="(pacient$ | async) && hourOptions.length != 0" class="flex gap-[2rem] justify-center">
+    <app-single-select
+      [ngClass]="isAdmin ? 'w-[30%]' : 'w-[40%]'"
+      id="hour"
+      formControlName="hour"
+      label="Horário"
+      [options]="hourOptions"
+    />
+    <app-single-select
+      *ngIf="isAdmin"
+      class="w-[30%]"
+      label="Paciente"
+      [options]="pacientOptions"
+      (changed)="pacientIdEmitter.emit($event)"
+    />
+  </div>
+</div>
