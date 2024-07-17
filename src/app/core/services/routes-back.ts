@@ -16,6 +16,7 @@ export class Routes {
     public static SAVE = this.BASE;
     public static ALL_APPOINTMENTS = this.BASE + '/all';
     public static APPOINTMENT = this.BASE;
+    public static AVALIABLE_TIMES = this.BASE + '/avaliable-times'
     public static UPDATE_APPOINTMENTS = this.BASE;
     public static DELETE_APPOINTMENTS = this.BASE;
   };

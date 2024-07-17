@@ -47,6 +47,17 @@ export class AppointmentsService {
       );
   }
 
+  avaliableTimes(doctorId: string, dateAppointment: string) {
+    return this.httpClient
+      .get<string[]>(Routes.RoutesAppointments.AVALIABLE_TIMES, {
+        params: new HttpParams().append('doctorId', doctorId).append('dateAppointment', dateAppointment),
+      })
+      .pipe(
+        take(1),
+        catchError((err) => CatchErrorHandler.err(err))
+      );
+  }
+
   update(id: string, appointment: AppointmentEditableFields) {
     return this.httpClient
       .patch(Routes.RoutesAppointments.UPDATE_APPOINTMENTS, appointment, {
