@@ -11,9 +11,9 @@
         <app-buttons [primary]="true" label="Nova Consulta" type="button" [rounded]="true" [routerLink]="['new']" />
       </div>
     </div>
-    <div class="custom-table flex-shrink-0">
+    <div class="custom-table flex-shrink-0" *ngIf="appointments() as appointments">
       <p-table
-        [value]="appointments()"
+        [value]="appointments.content"
         [paginator]="true"
         [rows]="5"
         [showCurrentPageReport]="true"
@@ -22,6 +22,7 @@
         scrollHeight="350px"
         currentPageReportTemplate="Mostrando {first} de {last} no total {totalRecords} consultas"
         [rowsPerPageOptions]="[5, 15, 50]"
+        [totalRecords]="appointments.totalElements"
       >
         <ng-template pTemplate="header">
           <tr>
@@ -34,13 +35,17 @@
         </ng-template>
         <ng-template pTemplate="body" let-appointments>
           <tr>
-            <!-- Adicionar Menu -->
-            <td></td>
-            <!-- Adicionar Menu -->
-            <td>{{ appointments.date | date : "dd/MM/yyyy" }}</td>
+            <td>
+              <i
+                class="flex icon ph-bold ph-list text-primary_three cursor-pointer"
+                (click)="appointmentId = appointments.id; menu.toggle($event)"
+              ></i>
+              <p-menu #menu [model]="items" [popup]="true" [appendTo]="'body'"></p-menu>
+            </td>
+            <td>{{ appointments.date }}</td>
             <td>{{ appointments.hour }}</td>
-            <td>{{ appointments.doctor.name }}</td>
-            <td>{{ appointments.pacient.name }}</td>
+            <td>{{ appointments.doctor.firstName + " " + appointments.doctor.lastName }}</td>
+            <td>{{ appointments.pacient.firstName + " " + appointments.pacient.lastName }}</td>
           </tr>
         </ng-template>
         <ng-template pTemplate="emptymessage">
