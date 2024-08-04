@@ -22,4 +22,18 @@ export class SwalertUtils {
       iconColor: '#C23321',
     });
   }
+
+  static swalertQuestion(title: string, text: string) {
+    return Swal.fire({
+      title: title,
+      text: text,
+      icon: 'question',
+      showCancelButton: true,
+      cancelButtonText: 'Cancelar',
+      cancelButtonColor: '#C23321',
+      confirmButtonText: 'Confirmar',
+      confirmButtonColor: '#2857ab',
+      iconColor: '#F4A52D',
+    });
+  }
 }
