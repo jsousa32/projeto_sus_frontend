@@ -2,10 +2,10 @@
   <div class="flex gap-[2rem] justify-center">
     <app-single-select
       class="w-[30%]"
-      *ngIf="doctors$ | async"
+      *ngIf="doctors$ | async as doctors"
       [formControl]="doctorId"
       label="Médico"
-      [options]="doctorOptions"
+      [options]="doctors"
     />
     <app-calendar
       *ngIf="doctorId.value"
@@ -13,11 +13,12 @@
       id="date"
       formControlName="date"
       label="Dia da consulta"
-      (ngModelChange)="hourOptions = []; avaliableTimes()"
+      (onSelect)="hourOptions = []; avaliableTimes()"
     />
   </div>
-  <div *ngIf="(pacient$ | async) && hourOptions.length != 0" class="flex gap-[2rem] justify-center">
+  <div *ngIf="pacient$ | async as pacients" class="flex gap-[2rem] justify-center">
     <app-single-select
+      *ngIf="hourOptions.length != 0"
       [ngClass]="isAdmin ? 'w-[30%]' : 'w-[40%]'"
       id="hour"
       formControlName="hour"
@@ -25,10 +26,10 @@
       [options]="hourOptions"
     />
     <app-single-select
-      *ngIf="isAdmin"
+      *ngIf="isAdmin && hourOptions.length != 0"
       class="w-[30%]"
       label="Paciente"
-      [options]="pacientOptions"
+      [options]="pacients"
       [formControl]="pacientId"
     />
   </div>

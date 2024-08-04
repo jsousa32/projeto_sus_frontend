@@ -1,7 +1,7 @@
-import { CommonModule, DatePipe } from '@angular/common';
+import { CommonModule } from '@angular/common';
 import { Component, inject } from '@angular/core';
 import { ControlContainer, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { tap } from 'rxjs';
+import { map } from 'rxjs';
 import { Options } from '../../../core/models/options.model.dto';
 import { UserSession } from '../../../core/models/user-session.model.dto';
 import { AppointmentsService } from '../../../core/services/appointments.service';
@@ -17,7 +17,6 @@ import { SingleSelectComponent } from '../../selects/single-select/single-select
   selector: 'app-appointment-form',
   standalone: true,
   imports: [ReactiveFormsModule, CommonModule, SingleSelectComponent, CalendarComponent, ButtonsComponent],
-  providers: [DatePipe],
   viewProviders: [
     {
       provide: ControlContainer,
@@ -34,25 +33,21 @@ export class AppointmentFormComponent {
   private appointmentService = inject(AppointmentsService);
 
   protected isAdmin = PermissionsUtils.isAdmin((StorageUtils.find('userSession') as UserSession).permissions);
-  protected doctorOptions: Options[] = [];
-  protected pacientOptions: Options[] = [];
   protected hourOptions: Options[] = [];
   public doctorId = new FormControl('', Validators.required);
   public pacientId = new FormControl('', Validators.required);
 
   protected doctors$ = this.doctorService.allDoctorsUnpaged().pipe(
-    tap((res) =>
-      res.content.forEach((d) => {
-        this.doctorOptions.push({ name: d.firstName, value: d.id! });
-      })
+    map((res) => res.content),
+    map((res) =>
+      res.map((d) => ({ value: d.id, name: `${d.firstName.toUpperCase()} ${d.lastName.toUpperCase()}` } as Options))
     )
   );
 
   protected pacient$ = this.pacientService.allPacientsUnpaged().pipe(
-    tap((res) =>
-      res.content.forEach((d) => {
-        this.pacientOptions.push({ name: d.firstName, value: d.id! });
-      })
+    map((res) => res.content),
+    map((res) =>
+      res.map((p) => ({ value: p.id, name: `${p.firstName.toUpperCase()} ${p.lastName.toUpperCase()}` } as Options))
     )
   );
 
