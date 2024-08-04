@@ -47,7 +47,7 @@ export default class CreateAndEditAppointmentComponent {
     });
 
   protected forms = this.fb.group({
-    date: [this.datePipe.transform(new Date(), 'dd/MM/yyyy'), Validators.required],
+    date: [new Date(), Validators.required],
     hour: ['', Validators.required],
   });
 

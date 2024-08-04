@@ -6,7 +6,7 @@
   [minDate]="minDate"
   dateFormat="dd/mm/yy"
   (onFocus)="onTouched && onTouched()"
-  (onSelect)="(onChanged && onChanged(inputValue)) || onSelect.emit(inputValue)"
+  (onSelect)="onChanged && onChanged(inputValue) || onChangedValue(inputValue)"
   [placeholder]="label"
 />
 <small *ngIf="controls && controls.errors && (controls.touched || controls.dirty)" class="p-error"

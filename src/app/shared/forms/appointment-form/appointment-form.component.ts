@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
 import { Component, inject } from '@angular/core';
 import { ControlContainer, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { map } from 'rxjs';
@@ -23,6 +23,7 @@ import { SingleSelectComponent } from '../../selects/single-select/single-select
       useFactory: () => inject(ControlContainer, { skipSelf: true }),
     },
   ],
+  providers: [DatePipe],
   templateUrl: './appointment-form.component.html',
   styleUrl: './appointment-form.component.scss',
 })
@@ -31,6 +32,7 @@ export class AppointmentFormComponent {
   private doctorService = inject(DoctorService);
   private pacientService = inject(PacientService);
   private appointmentService = inject(AppointmentsService);
+  private datePipe = inject(DatePipe);
 
   protected isAdmin = PermissionsUtils.isAdmin((StorageUtils.find('userSession') as UserSession).permissions);
   protected hourOptions: Options[] = [];
@@ -55,8 +57,8 @@ export class AppointmentFormComponent {
     return this.controlContainer.control as FormGroup;
   }
 
-  avaliableTimes() {
-    this.appointmentService.avaliableTimes(this.doctorId.value!, this.formGroup.get('date')!.value).subscribe((res) => {
+  avaliableTimes(date: string) {
+    this.appointmentService.avaliableTimes(this.doctorId.value!, date).subscribe((res) => {
       res.forEach((s) => this.hourOptions.push({ name: s, value: s }));
     });
   }

@@ -13,7 +13,7 @@
       id="date"
       formControlName="date"
       label="Dia da consulta"
-      (onSelect)="hourOptions = []; avaliableTimes()"
+      (onSelect)="hourOptions = []; avaliableTimes($event)"
     />
   </div>
   <div *ngIf="pacient$ | async as pacients" class="flex gap-[2rem] justify-center">

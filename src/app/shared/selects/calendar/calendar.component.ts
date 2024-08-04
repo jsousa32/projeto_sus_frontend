@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
 import { Component, EventEmitter, inject, Input, Output } from '@angular/core';
 import { ControlValueAccessor, FormsModule, NgControl } from '@angular/forms';
 import { CalendarModule } from 'primeng/calendar';
@@ -9,9 +9,11 @@ import { CalendarModule } from 'primeng/calendar';
   imports: [CalendarModule, FormsModule, CommonModule],
   templateUrl: './calendar.component.html',
   styleUrl: './calendar.component.scss',
+  providers: [DatePipe],
 })
 export class CalendarComponent implements ControlValueAccessor {
   private ngControl = inject(NgControl, { optional: true });
+  private datePipe = inject(DatePipe);
 
   protected inputValue: any;
   protected isDisabled = false;
@@ -37,17 +39,15 @@ export class CalendarComponent implements ControlValueAccessor {
 
   constructor() {
     if (this.ngControl) this.ngControl.valueAccessor = this;
-    console.log(this.minDate);
   }
 
   writeValue(value: any): void {
-    console.log(value);
     this.inputValue = value;
   }
 
   registerOnChange(fn: any): void {
     this.onChanged = fn;
-    this.onSelect.emit(this.inputValue);
+    this.onChangedValue(this.inputValue);
   }
 
   registerOnTouched(fn: any): void {
@@ -56,5 +56,14 @@ export class CalendarComponent implements ControlValueAccessor {
 
   setDisabledState?(isDisabled: boolean): void {
     this.isDisabled = isDisabled;
+  }
+
+  onChangedValue(inputValue: any) {
+    if (inputValue instanceof Date) {
+      inputValue = this.datePipe.transform(inputValue, 'dd/MM/yyyy');
+      this.onChanged!(inputValue);
+    }
+
+    this.onSelect.emit(inputValue);
   }
 }
