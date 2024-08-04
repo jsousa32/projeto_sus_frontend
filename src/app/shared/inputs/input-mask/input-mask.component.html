@@ -7,7 +7,7 @@
     [mask]="mask"
     [(ngModel)]="inputValue"
     (onFocus)="onTouched && onTouched()"
-    (input)="onChanged && onChanged(inputValue)"
+    (onComplete)="onChanged && onChanged(inputValue)"
     [ngClass]="{
       'ng-invalid ng-dirty ': controls && controls.errors && (controls.touched || controls.dirty)
     }"
