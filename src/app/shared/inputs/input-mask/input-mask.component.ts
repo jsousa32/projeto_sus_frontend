@@ -1,27 +1,24 @@
 import { CommonModule } from '@angular/common';
-import { Component, forwardRef, inject, Input, OnInit } from '@angular/core';
-import { ControlValueAccessor, FormControl, FormGroupDirective, FormsModule, NG_VALUE_ACCESSOR } from '@angular/forms';
+import { Component, inject, Input } from '@angular/core';
+import {
+  ControlValueAccessor,
+  FormsModule,
+  NgControl
+} from '@angular/forms';
 import { InputMaskModule } from 'primeng/inputmask';
 
 @Component({
   selector: 'app-input-mask',
   standalone: true,
   imports: [CommonModule, FormsModule, InputMaskModule],
-  providers: [
-    {
-      provide: NG_VALUE_ACCESSOR,
-      useExisting: forwardRef(() => InputMaskComponent),
-      multi: true,
-    },
-  ],
   templateUrl: './input-mask.component.html',
   styleUrl: './input-mask.component.scss',
 })
-export class InputMaskComponent implements OnInit, ControlValueAccessor {
-  private formGroupDirective = inject(FormGroupDirective);
-  private innerValue: any;
+export class InputMaskComponent implements ControlValueAccessor {
+  private ngControl = inject(NgControl, { optional: true });
 
-  protected controls!: FormControl;
+  protected inputValue: any;
+  protected isDisabled = false;
 
   @Input({ required: true })
   id = '';
@@ -32,44 +29,30 @@ export class InputMaskComponent implements OnInit, ControlValueAccessor {
   @Input({ required: true })
   mask = '';
 
-  @Input()
-  required = true;
-
-  @Input()
-  readonly = false;
-
-  @Input()
-  disabled = false;
-
-  get value() {
-    return this.innerValue;
+  get controls() {
+    return this.ngControl;
   }
 
-  set value(v: any) {
-    if (this.innerValue !== v) {
-      this.innerValue = v;
-      this.onChaged(v);
-    }
-  }
+  onChanged?: (_: any) => {};
+  onTouched?: () => {};
 
-  onChaged: (_: any) => void = () => {};
-  onTouched: (_: any) => void = () => {};
-
-  ngOnInit(): void {
-    this.controls = this.formGroupDirective.control.get(this.id) as FormControl;
+  constructor() {
+    if (this.ngControl) this.ngControl.valueAccessor = this;
   }
 
   writeValue(value: any): void {
-    this.value = value;
+    this.inputValue = value;
   }
 
   registerOnChange(fn: any): void {
-    this.onChaged = fn;
+    this.onChanged = fn;
   }
 
   registerOnTouched(fn: any): void {
     this.onTouched = fn;
   }
 
-  setDisabledState?(isDisabled: boolean): void {}
+  setDisabledState?(isDisabled: boolean): void {
+    this.isDisabled = isDisabled;
+  }
 }

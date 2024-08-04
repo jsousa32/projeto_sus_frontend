@@ -2,17 +2,17 @@
   <p-inputOtp
     [attr.id]="id"
     pInputText
-    [required]="required"
     [length]="length"
-    [(ngModel)]="value"
+    [(ngModel)]="inputValue"
     [integerOnly]="true"
     class="flex flex-col sm:flex-row"
-    (onBlur)="onTouched($event)"
+    (onFocus)="onTouched && onTouched()"
+    (input)="onChanged && onChanged(inputValue)"
     [ngClass]="{
-      'ng-invalid ng-dirty ': controls.errors && (controls.touched || controls.dirty)
+      'ng-invalid ng-dirty ': controls && controls.errors && (controls.touched || controls.dirty)
     }"
   />
 </span>
-<small *ngIf="controls.errors && (controls.touched || controls.dirty)" class="p-error"
+<small *ngIf="controls && controls.errors && (controls.touched || controls.dirty)" class="p-error"
   >{{ label }} não pode ser vazio.
 </small>

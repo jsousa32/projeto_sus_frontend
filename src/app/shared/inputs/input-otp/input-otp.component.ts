@@ -1,27 +1,24 @@
 import { CommonModule } from '@angular/common';
-import { Component, forwardRef, inject, Input, numberAttribute, OnInit } from '@angular/core';
-import { ControlValueAccessor, FormControl, FormGroupDirective, FormsModule, NG_VALUE_ACCESSOR } from '@angular/forms';
+import { Component, inject, Input, numberAttribute } from '@angular/core';
+import {
+  ControlValueAccessor,
+  FormsModule,
+  NgControl
+} from '@angular/forms';
 import { InputOtpModule } from 'primeng/inputotp';
 
 @Component({
   selector: 'app-input-otp',
   standalone: true,
   imports: [CommonModule, FormsModule, InputOtpModule],
-  providers: [
-    {
-      provide: NG_VALUE_ACCESSOR,
-      useExisting: forwardRef(() => InputOtpComponent),
-      multi: true,
-    },
-  ],
   templateUrl: './input-otp.component.html',
   styleUrl: './input-otp.component.scss',
 })
-export class InputOtpComponent implements OnInit, ControlValueAccessor {
-  private formGroupDirective = inject(FormGroupDirective);
-  private innerValue: any;
+export class InputOtpComponent implements ControlValueAccessor {
+  private ngControl = inject(NgControl, { optional: true });
 
-  protected controls!: FormControl;
+  protected inputValue: any;
+  protected isDisabled = false;
 
   @Input({ required: true })
   id = '';
@@ -32,30 +29,21 @@ export class InputOtpComponent implements OnInit, ControlValueAccessor {
   @Input({ required: true, transform: numberAttribute })
   length = 0;
 
-  @Input()
-  required = true;
-
-  get value() {
-    return this.innerValue;
+  get controls() {
+    return this.ngControl;
   }
 
-  set value(v: any) {
-    if (this.innerValue !== v) {
-      this.innerValue = v;
-      this.onChanged(v);
-    }
-  }
+  onChanged?: (_: any) => {};
+  onTouched?: () => {};
 
-  onChanged: (_: any) => void = () => {};
-  onTouched: (_: any) => void = () => {};
-
-  ngOnInit(): void {
-    this.controls = this.formGroupDirective.control.get(this.id) as FormControl;
+  constructor() {
+    if (this.ngControl) this.ngControl.valueAccessor = this;
   }
 
   writeValue(value: any): void {
-    this.value = value;
+    this.inputValue = value;
   }
+
   registerOnChange(fn: any): void {
     this.onChanged = fn;
   }
@@ -64,5 +52,7 @@ export class InputOtpComponent implements OnInit, ControlValueAccessor {
     this.onTouched = fn;
   }
 
-  setDisabledState?(isDisabled: boolean): void {}
+  setDisabledState?(isDisabled: boolean): void {
+    this.isDisabled = isDisabled;
+  }
 }

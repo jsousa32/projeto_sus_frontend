@@ -3,14 +3,12 @@
   [options]="options"
   optionLabel="name"
   optionValue="value"
-  [readonly]="readonly"
-  [required]="required"
-  [(ngModel)]="value"
-  (onChange)="onChangedDropdown($event)"
+  [disabled]="isDisabled"
+  [(ngModel)]="inputValue"
+  (onFocus)="onTouched && onTouched()"
+  (onChange)="(onChanged && onChanged(inputValue)) || onSelect.emit($event.value)"
   [placeholder]="label"
 />
-<div *ngIf="hasValidation && !!id">
-  <small *ngIf="controls.errors && (controls.touched || controls.dirty)" class="p-error"
-    >{{ label }} não pode ser vazio.
-  </small>
-</div>
+<small *ngIf="controls && controls.errors && (controls.touched || controls.dirty)" class="p-error"
+  >{{ label }} não pode ser vazio.
+</small>

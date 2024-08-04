@@ -1,27 +1,20 @@
 import { CommonModule } from '@angular/common';
-import { Component, forwardRef, inject, Input, OnInit } from '@angular/core';
-import { ControlValueAccessor, FormControl, FormGroupDirective, FormsModule, NG_VALUE_ACCESSOR } from '@angular/forms';
+import { Component, inject, Input } from '@angular/core';
+import { ControlValueAccessor, FormsModule, NgControl } from '@angular/forms';
 import { FloatLabelModule } from 'primeng/floatlabel';
 import { InputTextModule } from 'primeng/inputtext';
 @Component({
   selector: 'app-input-text',
   standalone: true,
   imports: [CommonModule, FormsModule, InputTextModule, FloatLabelModule],
-  providers: [
-    {
-      provide: NG_VALUE_ACCESSOR,
-      useExisting: forwardRef(() => InputTextComponent),
-      multi: true,
-    },
-  ],
   templateUrl: './input-text.component.html',
   styleUrl: './input-text.component.scss',
 })
-export class InputTextComponent implements OnInit, ControlValueAccessor {
-  private formGroupDirective = inject(FormGroupDirective);
-  private innerValue: any;
+export class InputTextComponent implements ControlValueAccessor {
+  private ngControl = inject(NgControl, { optional: true });
 
-  controls!: FormControl;
+  protected inputValue: any;
+  protected isDisabled = false;
 
   @Input({ required: true })
   id = '';
@@ -29,37 +22,23 @@ export class InputTextComponent implements OnInit, ControlValueAccessor {
   @Input({ required: true })
   label = '';
 
-  @Input()
-  required = true;
-
-  @Input()
-  readonly = false;
-
-
-  get value() {
-    return this.innerValue;
+  get controls() {
+    return this.ngControl;
   }
 
-  set value(v: any) {
-    if (this.innerValue !== v) {
-      this.innerValue = v;
-      this.onChaged(v);
-    }
-  }
+  onChanged?: (_: any) => {};
+  onTouched?: () => {};
 
-  onChaged: (_: any) => void = () => {};
-  onTouched: (_: any) => void = () => {};
-
-  ngOnInit(): void {
-    this.controls = this.formGroupDirective.control.get(this.id) as FormControl;
+  constructor() {
+    if (this.ngControl) this.ngControl.valueAccessor = this;
   }
 
   writeValue(value: any): void {
-    this.value = value;
+    this.inputValue = value;
   }
 
   registerOnChange(fn: any): void {
-    this.onChaged = fn;
+    this.onChanged = fn;
   }
 
   registerOnTouched(fn: any): void {
@@ -67,6 +46,6 @@ export class InputTextComponent implements OnInit, ControlValueAccessor {
   }
 
   setDisabledState?(isDisabled: boolean): void {
-    this.readonly = isDisabled;
+    this.isDisabled = isDisabled;
   }
 }

@@ -3,19 +3,17 @@
     [attr.id]="id"
     pInputText
     [unmask]="true"
-    [required]="required"
-    [readonly]="readonly"
-    [disabled]="disabled"
     [placeholder]="label"
     [mask]="mask"
-    [(ngModel)]="value"
-    (onBlur)="onTouched($event)"
+    [(ngModel)]="inputValue"
+    (onFocus)="onTouched && onTouched()"
+    (input)="onChanged && onChanged(inputValue)"
     [ngClass]="{
-      'ng-invalid ng-dirty ': controls.errors && (controls.touched || controls.dirty)
+      'ng-invalid ng-dirty ': controls && controls.errors && (controls.touched || controls.dirty)
     }"
   />
   <label [attr.for]="id" class="font-medium text-gray_one">{{ label }}</label>
 </span>
-<small *ngIf="controls.errors && (controls.touched || controls.dirty)" class="p-error"
+<small *ngIf="controls && controls.errors && (controls.touched || controls.dirty)" class="p-error"
   >{{ label }} não pode ser vazio.
 </small>

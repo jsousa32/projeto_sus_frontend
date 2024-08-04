@@ -1,28 +1,25 @@
 import { CommonModule } from '@angular/common';
-import { Component, EventEmitter, forwardRef, inject, Input, OnInit, Output } from '@angular/core';
-import { ControlValueAccessor, FormControl, FormGroupDirective, FormsModule, NG_VALUE_ACCESSOR } from '@angular/forms';
-import { DropdownChangeEvent, DropdownModule } from 'primeng/dropdown';
+import { Component, EventEmitter, inject, Input, Output } from '@angular/core';
+import {
+  ControlValueAccessor,
+  FormsModule,
+  NgControl
+} from '@angular/forms';
+import { DropdownModule } from 'primeng/dropdown';
 import { Options } from '../../../core/models/options.model.dto';
 
 @Component({
   selector: 'app-single-select',
   standalone: true,
   imports: [CommonModule, DropdownModule, FormsModule],
-  providers: [
-    {
-      provide: NG_VALUE_ACCESSOR,
-      useExisting: forwardRef(() => SingleSelectComponent),
-      multi: true,
-    },
-  ],
   templateUrl: './single-select.component.html',
   styleUrl: './single-select.component.scss',
 })
-export class SingleSelectComponent implements OnInit, ControlValueAccessor {
-  private formGroupDirective = inject(FormGroupDirective);
-  private innerValue: any;
+export class SingleSelectComponent implements ControlValueAccessor {
+  private ngControl = inject(NgControl, { optional: true });
 
-  controls!: FormControl;
+  protected inputValue: any;
+  protected isDisabled = false;
 
   @Input({ required: true })
   label = '';
@@ -33,40 +30,22 @@ export class SingleSelectComponent implements OnInit, ControlValueAccessor {
   @Input()
   id = '';
 
-  @Input()
-  hasValidation = false;
-
-  @Input()
-  required = true;
-
-  @Input()
-  readonly = false;
-
   @Output()
-  changed = new EventEmitter<string>();
+  onSelect = new EventEmitter<string>();
 
-  get value() {
-    return this.innerValue;
+  get controls() {
+    return this.ngControl;
   }
 
-  set value(v: any) {
-    if (this.innerValue !== v) {
-      this.innerValue = v;
-      this.onChanged(v);
-    }
-  }
+  onChanged?: (_: any) => {};
+  onTouched?: () => {};
 
-  onChanged: (_: any) => void = () => {};
-  onTouched: (_: any) => void = () => {};
-
-  ngOnInit(): void {
-    if (this.hasValidation && this.id) {
-      this.controls = this.formGroupDirective.control.get(this.id) as FormControl;
-    }
+  constructor() {
+    if (this.ngControl) this.ngControl.valueAccessor = this;
   }
 
   writeValue(value: any): void {
-    this.value = value;
+    this.inputValue = value;
   }
 
   registerOnChange(fn: any): void {
@@ -78,11 +57,6 @@ export class SingleSelectComponent implements OnInit, ControlValueAccessor {
   }
 
   setDisabledState?(isDisabled: boolean): void {
-    this.readonly = isDisabled;
-  }
-
-  onChangedDropdown($event: DropdownChangeEvent) {
-    this.value = $event.value;
-    this.changed.emit($event.value);
+    this.isDisabled = isDisabled;
   }
 }
