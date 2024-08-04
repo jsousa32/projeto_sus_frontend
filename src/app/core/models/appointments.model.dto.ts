@@ -3,7 +3,7 @@ import { Pacient } from './pacient.model.dto';
 
 export interface Appointment {
   id?: string;
-  date: Date;
+  date: string;
   hour: string;
   doctor: Doctor;
   pacient: Pacient;

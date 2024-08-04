@@ -58,10 +58,16 @@ export class AppointmentsService {
       );
   }
 
-  update(id: string, appointment: AppointmentEditableFields) {
+  update(id: string, appointment: AppointmentEditableFields, pacientId?: string) {
+    let params = new HttpParams();
+
+    if (pacientId) {
+      params = params.append('pacientId', pacientId);
+    }
+
     return this.httpClient
       .patch(Routes.RoutesAppointments.UPDATE_APPOINTMENTS, appointment, {
-        params: new HttpParams().append('id', id),
+        params: params.append('id', id),
       })
       .pipe(
         take(1),

@@ -22,7 +22,7 @@
         <app-buttons
           [primary]="true"
           [rounded]="true"
-          label="Cadastrar Consulta"
+          [label]="appointmentId ? 'Atualizar Consulta' : 'Cadastrar Consulta'"
           type="submit"
           [disabled]="isAdmin ? forms.invalid || child.pacientId.invalid : forms.invalid || loading"
         />

@@ -1,9 +1,9 @@
-import { CommonModule } from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
 import { Component, inject, ViewChild } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { filter, finalize, map, switchMap, tap } from 'rxjs';
-import { AppointmentCreate } from '../../../../core/models/appointments.model.dto';
+import { AppointmentCreate, AppointmentEditableFields } from '../../../../core/models/appointments.model.dto';
 import { UserSession } from '../../../../core/models/user-session.model.dto';
 import { AppointmentsService } from '../../../../core/services/appointments.service';
 import { PermissionsUtils } from '../../../../core/utils/permission.utils';
@@ -18,6 +18,7 @@ import { AppointmentFormComponent } from '../../../../shared/forms/appointment-f
   imports: [RouterLink, ButtonsComponent, AppointmentFormComponent, ReactiveFormsModule, CommonModule],
   templateUrl: './create-and-edit-appointment.component.html',
   styleUrl: './create-and-edit-appointment.component.scss',
+  providers: [DatePipe],
 })
 export default class CreateAndEditAppointmentComponent {
   @ViewChild(AppointmentFormComponent) child!: AppointmentFormComponent;
@@ -26,6 +27,7 @@ export default class CreateAndEditAppointmentComponent {
   private activatedRoute = inject(ActivatedRoute);
   private router = inject(Router);
   private appointmentService = inject(AppointmentsService);
+  private datePipe = inject(DatePipe);
 
   protected isAdmin = PermissionsUtils.isAdmin((StorageUtils.find('userSession') as UserSession).permissions);
   protected appointmentId: string | null = null;
@@ -42,12 +44,10 @@ export default class CreateAndEditAppointmentComponent {
       this.forms.patchValue(res);
       this.child.doctorId.patchValue(res.doctor.id!);
       this.child.pacientId.patchValue(res.pacient.id!);
-      console.log(res);
-      console.log(this.forms);
     });
 
   protected forms = this.fb.group({
-    date: [new Date(), Validators.required],
+    date: [this.datePipe.transform(new Date(), 'dd/MM/yyyy'), Validators.required],
     hour: ['', Validators.required],
   });
 
@@ -58,7 +58,12 @@ export default class CreateAndEditAppointmentComponent {
       .subscribe(() => this.message());
   }
 
-  update() {}
+  update() {
+    this.appointmentService
+      .update(this.appointmentId!, this.forms.value as AppointmentEditableFields, this.child.pacientId.value!)
+      .pipe(finalize(() => (this.loading = false)))
+      .subscribe(() => this.message());
+  }
 
   private message() {
     SwalertUtils.swalertSuccessWithoutOptions(
