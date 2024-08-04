@@ -15,11 +15,7 @@
     (ngSubmit)="appointmentId ? update() : register(); loading = true"
     class="flex flex-col h-[85%] mt-[5rem] gap-[5rem] w-full items-center overflow-y-auto"
   >
-    <app-appointment-form
-      class="w-full"
-      (doctorIdEmitter)="doctorId = $event"
-      (pacientIdEmitter)="pacientId = $event"
-    />
+    <app-appointment-form class="w-full" />
 
     <div class="flex w-full justify-center">
       <div class="w-full md:w-6/12">
@@ -28,7 +24,7 @@
           [rounded]="true"
           label="Cadastrar Consulta"
           type="submit"
-          [disabled]="isAdmin ? forms.invalid || !pacientId : forms.invalid || loading"
+          [disabled]="isAdmin ? forms.invalid || child.pacientId.invalid : forms.invalid || loading"
         />
       </div>
     </div>

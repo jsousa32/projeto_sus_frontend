@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject } from '@angular/core';
+import { Component, inject, ViewChild } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { filter, finalize, map, switchMap, tap } from 'rxjs';
@@ -20,6 +20,8 @@ import { AppointmentFormComponent } from '../../../../shared/forms/appointment-f
   styleUrl: './create-and-edit-appointment.component.scss',
 })
 export default class CreateAndEditAppointmentComponent {
+  @ViewChild(AppointmentFormComponent) child!: AppointmentFormComponent;
+
   private fb = inject(FormBuilder);
   private activatedRoute = inject(ActivatedRoute);
   private router = inject(Router);
@@ -27,28 +29,31 @@ export default class CreateAndEditAppointmentComponent {
 
   protected isAdmin = PermissionsUtils.isAdmin((StorageUtils.find('userSession') as UserSession).permissions);
   protected appointmentId: string | null = null;
-  protected doctorId: string | null = null;
-  protected pacientId: string | null = null;
   protected loading = false;
-
-  protected forms = this.fb.group({
-    date: [new Date(), Validators.required],
-    hour: ['', Validators.required],
-  });
 
   protected params$ = this.activatedRoute.paramMap
     .pipe(
       map((param) => param.get('id')),
       filter((id) => !!id),
       tap((id) => (this.appointmentId = id)),
-      switchMap((id) => this.appointmentService.appointment(id!)),
-      tap((res) => (this.doctorId = res.doctor.id!))
+      switchMap((id) => this.appointmentService.appointment(id!))
     )
-    .subscribe((res) => this.forms.patchValue(res));
+    .subscribe((res) => {
+      this.forms.patchValue(res);
+      this.child.doctorId.patchValue(res.doctor.id!);
+      this.child.pacientId.patchValue(res.pacient.id!);
+      console.log(res);
+      console.log(this.forms);
+    });
+
+  protected forms = this.fb.group({
+    date: [new Date(), Validators.required],
+    hour: ['', Validators.required],
+  });
 
   register() {
     this.appointmentService
-      .save(this.forms.value as AppointmentCreate, this.pacientId!, this.doctorId!)
+      .save(this.forms.value as AppointmentCreate, this.child.pacientId.value!, this.child.doctorId.value!)
       .pipe(finalize(() => (this.loading = false)))
       .subscribe(() => this.message());
   }

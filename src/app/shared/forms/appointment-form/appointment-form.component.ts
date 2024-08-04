@@ -1,6 +1,6 @@
 import { CommonModule, DatePipe } from '@angular/common';
-import { Component, EventEmitter, inject, Output } from '@angular/core';
-import { ControlContainer, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { Component, inject } from '@angular/core';
+import { ControlContainer, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { tap } from 'rxjs';
 import { Options } from '../../../core/models/options.model.dto';
 import { UserSession } from '../../../core/models/user-session.model.dto';
@@ -28,23 +28,17 @@ import { SingleSelectComponent } from '../../selects/single-select/single-select
   styleUrl: './appointment-form.component.scss',
 })
 export class AppointmentFormComponent {
-  @Output()
-  doctorIdEmitter = new EventEmitter<string>();
-
-  @Output()
-  pacientIdEmitter = new EventEmitter<string>();
-
   private controlContainer = inject(ControlContainer);
   private doctorService = inject(DoctorService);
   private pacientService = inject(PacientService);
   private appointmentService = inject(AppointmentsService);
 
   protected isAdmin = PermissionsUtils.isAdmin((StorageUtils.find('userSession') as UserSession).permissions);
-  protected doctorId = '';
-  protected pacientId = '';
   protected doctorOptions: Options[] = [];
   protected pacientOptions: Options[] = [];
   protected hourOptions: Options[] = [];
+  public doctorId = new FormControl('', Validators.required);
+  public pacientId = new FormControl('', Validators.required);
 
   protected doctors$ = this.doctorService.allDoctorsUnpaged().pipe(
     tap((res) =>
@@ -67,7 +61,7 @@ export class AppointmentFormComponent {
   }
 
   avaliableTimes() {
-    this.appointmentService.avaliableTimes(this.doctorId, this.formGroup.get('date')!.value).subscribe((res) => {
+    this.appointmentService.avaliableTimes(this.doctorId.value!, this.formGroup.get('date')!.value).subscribe((res) => {
       res.forEach((s) => this.hourOptions.push({ name: s, value: s }));
     });
   }
