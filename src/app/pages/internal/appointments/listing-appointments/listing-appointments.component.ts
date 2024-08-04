@@ -1,15 +1,16 @@
 import { CommonModule, DatePipe } from '@angular/common';
-import { Component, inject, OnDestroy, signal } from '@angular/core';
-import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
+import { Component, inject, OnDestroy, OnInit, signal } from '@angular/core';
+import { FormBuilder, FormControl, ReactiveFormsModule } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 import { MenuItem } from 'primeng/api';
 import { MenuModule } from 'primeng/menu';
 import { TableLazyLoadEvent, TableModule } from 'primeng/table';
-import { debounceTime, Subject, takeUntil } from 'rxjs';
+import { debounceTime, distinctUntilChanged, Subject } from 'rxjs';
 import { AppointmentPage } from '../../../../core/models/appointments.model.dto';
 import { AppointmentsService } from '../../../../core/services/appointments.service';
 import { CustomPageable } from '../../../../core/utils/custom-pageable.utils';
 import { Page } from '../../../../core/utils/page.utils';
+import { SwalertUtils } from '../../../../core/utils/swalert.utils';
 import { ButtonsComponent } from '../../../../shared/buttons/buttons.component';
 import { InputTextComponent } from '../../../../shared/inputs/input-text/input-text.component';
 
@@ -29,23 +30,15 @@ import { InputTextComponent } from '../../../../shared/inputs/input-text/input-t
   templateUrl: './listing-appointments.component.html',
   styleUrl: './listing-appointments.component.scss',
 })
-export default class ListingAppointmentsComponent implements OnDestroy {
+export default class ListingAppointmentsComponent implements OnInit, OnDestroy {
   private fb = inject(FormBuilder);
   private appointmentService = inject(AppointmentsService);
   private router = inject(Router);
   private unsub$ = new Subject<boolean>();
-  private filter = '';
 
   protected appointments = signal<Page<AppointmentPage> | null>(null);
-  protected form = this.fb.group({ filter: [''] });
+  protected filter = new FormControl('');
   protected appointmentId = '';
-
-  protected changedValue = this.form.controls.filter.valueChanges
-    .pipe(debounceTime(1000), takeUntil(this.unsub$))
-    .subscribe((res) => {
-      this.filter = res! as string;
-      this.lazyLoad(null);
-    });
 
   protected items: MenuItem[] = [
     {
@@ -53,16 +46,34 @@ export default class ListingAppointmentsComponent implements OnDestroy {
       icon: 'ph-pencil',
       command: () => this.router.navigate(['appointments', this.appointmentId]),
     },
+    {
+      label: 'Excluir',
+      icon: 'ph-trash',
+      command: () => this.delete(this.appointmentId),
+    },
   ];
 
-  constructor() {
+  ngOnInit(): void {
+    this.filter.valueChanges.pipe(debounceTime(500), distinctUntilChanged()).subscribe(() => this.lazyLoad(null));
     this.lazyLoad(null);
   }
 
   lazyLoad(event: TableLazyLoadEvent | null) {
     this.appointmentService
-      .allAppointments(CustomPageable.instance(event, this.filter))
+      .allAppointments(CustomPageable.instance(event, this.filter.value))
       .subscribe((res) => this.appointments.set(res));
+  }
+
+  delete(appointmentId: string) {
+    SwalertUtils.swalertQuestion('Atenção', 'Você deseja mesmo deletar a consulta?').then((result) => {
+      if (result.isConfirmed) {
+        this.appointmentService.delete(appointmentId).subscribe(() => {
+          SwalertUtils.swalertSuccessWithoutOptions('Parabéns', 'Consulta deletada com sucesso').then(() =>
+            this.lazyLoad(null)
+          );
+        });
+      }
+    });
   }
 
   ngOnDestroy(): void {
