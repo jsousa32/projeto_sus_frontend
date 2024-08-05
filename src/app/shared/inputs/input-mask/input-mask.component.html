@@ -5,6 +5,7 @@
     [unmask]="true"
     [placeholder]="label"
     [mask]="mask"
+    [disabled]="isDisabled"
     [(ngModel)]="inputValue"
     (onFocus)="onTouched && onTouched()"
     (onComplete)="onChanged && onChanged(inputValue)"
