@@ -39,8 +39,8 @@ export default class CreateAndEditPacientsComponent {
     lastName: ['', [Validators.required]],
     email: ['', [Validators.required, Validators.email]],
     telephone: ['', [Validators.required]],
-    susNumber: ['', [Validators.required]],
-    document: ['', [Validators.required]],
+    susNumber: [{ value: '', disabled: !!this.pacientId }, [Validators.required]],
+    document: [{ value: '', disabled: !!this.pacientId }, [Validators.required]],
   });
 
   register() {
