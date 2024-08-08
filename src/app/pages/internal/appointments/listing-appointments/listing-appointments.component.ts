@@ -7,9 +7,12 @@ import { Menu, MenuModule } from 'primeng/menu';
 import { TableLazyLoadEvent, TableModule } from 'primeng/table';
 import { debounceTime, distinctUntilChanged } from 'rxjs';
 import { AppointmentPage } from '../../../../core/models/appointments.model.dto';
+import { UserSession } from '../../../../core/models/user-session.model.dto';
 import { AppointmentsService } from '../../../../core/services/appointments.service';
 import { CustomPageable } from '../../../../core/utils/custom-pageable.utils';
 import { Page } from '../../../../core/utils/page.utils';
+import { PermissionsUtils } from '../../../../core/utils/permission.utils';
+import { StorageUtils } from '../../../../core/utils/storage.utils';
 import { SwalertUtils } from '../../../../core/utils/swalert.utils';
 import { ButtonsComponent } from '../../../../shared/buttons/buttons.component';
 import { InputTextComponent } from '../../../../shared/inputs/input-text/input-text.component';
@@ -33,6 +36,7 @@ import { InputTextComponent } from '../../../../shared/inputs/input-text/input-t
 export default class ListingAppointmentsComponent implements OnInit {
   private appointmentService = inject(AppointmentsService);
   private router = inject(Router);
+  private isAdmin = PermissionsUtils.isAdmin((StorageUtils.find('userSession') as UserSession).permissions);
 
   protected appointments = signal<Page<AppointmentPage> | null>(null);
   protected filter = new FormControl('');
@@ -47,6 +51,7 @@ export default class ListingAppointmentsComponent implements OnInit {
     {
       label: 'Excluir',
       icon: 'ph-trash',
+      visible: this.isAdmin,
       command: () => this.delete(),
     },
   ];
