@@ -1,7 +1,7 @@
 import { CommonModule, DatePipe } from '@angular/common';
 import { Component, inject } from '@angular/core';
 import { ControlContainer, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { map } from 'rxjs';
+import { filter, map } from 'rxjs';
 import { Options } from '../../../core/models/options.model.dto';
 import { UserSession } from '../../../core/models/user-session.model.dto';
 import { AppointmentsService } from '../../../core/services/appointments.service';
@@ -47,6 +47,7 @@ export class AppointmentFormComponent {
   );
 
   protected pacient$ = this.pacientService.allPacientsUnpaged().pipe(
+    filter(() => this.isAdmin),
     map((res) => res.content),
     map((res) =>
       res.map((p) => ({ value: p.id, name: `${p.firstName.toUpperCase()} ${p.lastName.toUpperCase()}` } as Options))

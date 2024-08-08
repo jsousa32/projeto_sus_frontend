@@ -16,7 +16,7 @@
       (onSelect)="hourOptions = []; avaliableTimes($event)"
     />
   </div>
-  <div *ngIf="pacient$ | async as pacients" class="flex gap-[2rem] justify-center">
+  <div class="flex gap-[2rem] justify-center">
     <app-single-select
       *ngIf="hourOptions.length != 0"
       [ngClass]="isAdmin ? 'w-[30%]' : 'w-[40%]'"
@@ -25,12 +25,14 @@
       label="Horário"
       [options]="hourOptions"
     />
-    <app-single-select
-      *ngIf="isAdmin && hourOptions.length != 0"
-      class="w-[30%]"
-      label="Paciente"
-      [options]="pacients"
-      [formControl]="pacientId"
-    />
+    <ng-container *ngIf="pacient$ | async as pacients">
+      <app-single-select
+        *ngIf="hourOptions.length != 0"
+        class="w-[30%]"
+        label="Paciente"
+        [options]="pacients"
+        [formControl]="pacientId"
+      />
+    </ng-container>
   </div>
 </div>
