@@ -3,7 +3,7 @@ import { Component, inject, OnInit, signal } from '@angular/core';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 import { MenuItem } from 'primeng/api';
-import { MenuModule } from 'primeng/menu';
+import { Menu, MenuModule } from 'primeng/menu';
 import { TableLazyLoadEvent, TableModule } from 'primeng/table';
 import { debounceTime, distinctUntilChanged } from 'rxjs';
 import { AppointmentPage } from '../../../../core/models/appointments.model.dto';
@@ -47,7 +47,7 @@ export default class ListingAppointmentsComponent implements OnInit {
     {
       label: 'Excluir',
       icon: 'ph-trash',
-      command: () => this.delete(this.appointmentId),
+      command: () => this.delete(),
     },
   ];
 
@@ -62,15 +62,23 @@ export default class ListingAppointmentsComponent implements OnInit {
       .subscribe((res) => this.appointments.set(res));
   }
 
-  delete(appointmentId: string) {
+  delete() {
     SwalertUtils.swalertQuestion('Atenção', 'Você deseja mesmo deletar a consulta?').then((result) => {
       if (result.isConfirmed) {
-        this.appointmentService.delete(appointmentId).subscribe(() => {
+        this.appointmentService.delete(this.appointmentId).subscribe(() => {
           SwalertUtils.swalertSuccessWithoutOptions('Parabéns', 'Consulta deletada com sucesso').then(() =>
             this.lazyLoad(null)
           );
         });
       }
     });
+  }
+
+  toggle(menu: Menu, event: MouseEvent, appointment: AppointmentPage) {
+    const menuItem = this.items.find((res) => res.label == 'Editar')!;
+
+    menuItem.visible = new Date(appointment.date) > new Date();
+
+    menu.toggle(event);
   }
 }
