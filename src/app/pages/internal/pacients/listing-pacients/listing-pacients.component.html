@@ -8,7 +8,7 @@
         <app-input-text class="w-full md:w-8/12 xl:8/12" id="filter" label="Filtrar" [formControl]="filter" />
         <app-buttons
           class="w-full md:w-4/12 xl:w-2/12"
-          *ngIf="hasPermission"
+          *ngIf="isAdmin || isDoctor"
           [primary]="true"
           label="Novo Paciente"
           type="button"
@@ -34,8 +34,8 @@
       >
         <ng-template pTemplate="header">
           <tr>
-            <th style="width: 5%"></th>
-            <th style="width: 25%">Nome</th>
+            <th style="width: 5%" *ngIf="isAdmin"></th>
+            <th [ngStyle]="isAdmin ? { width: '30%' } : { width: '25%' }">Nome</th>
             <th style="width: 25%">Nº SUS</th>
             <th style="width: 25%">Email</th>
             <th style="width: 20%">Telefone</th>
@@ -43,7 +43,7 @@
         </ng-template>
         <ng-template pTemplate="body" let-pacients>
           <tr>
-            <td>
+            <td *ngIf="isAdmin">
               <i
                 class="flex icon ph-bold ph-list text-primary_three cursor-pointer"
                 (click)="pacientId = pacients.id; menu.toggle($event)"
