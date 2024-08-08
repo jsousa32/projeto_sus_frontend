@@ -1,11 +1,11 @@
 import { CommonModule, DatePipe } from '@angular/common';
-import { Component, inject, OnDestroy, OnInit, signal } from '@angular/core';
-import { FormBuilder, FormControl, ReactiveFormsModule } from '@angular/forms';
+import { Component, inject, OnInit, signal } from '@angular/core';
+import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 import { MenuItem } from 'primeng/api';
 import { MenuModule } from 'primeng/menu';
 import { TableLazyLoadEvent, TableModule } from 'primeng/table';
-import { debounceTime, distinctUntilChanged, Subject } from 'rxjs';
+import { debounceTime, distinctUntilChanged } from 'rxjs';
 import { AppointmentPage } from '../../../../core/models/appointments.model.dto';
 import { AppointmentsService } from '../../../../core/services/appointments.service';
 import { CustomPageable } from '../../../../core/utils/custom-pageable.utils';
@@ -30,11 +30,9 @@ import { InputTextComponent } from '../../../../shared/inputs/input-text/input-t
   templateUrl: './listing-appointments.component.html',
   styleUrl: './listing-appointments.component.scss',
 })
-export default class ListingAppointmentsComponent implements OnInit, OnDestroy {
-  private fb = inject(FormBuilder);
+export default class ListingAppointmentsComponent implements OnInit {
   private appointmentService = inject(AppointmentsService);
   private router = inject(Router);
-  private unsub$ = new Subject<boolean>();
 
   protected appointments = signal<Page<AppointmentPage> | null>(null);
   protected filter = new FormControl('');
@@ -74,10 +72,5 @@ export default class ListingAppointmentsComponent implements OnInit, OnDestroy {
         });
       }
     });
-  }
-
-  ngOnDestroy(): void {
-    this.unsub$.next(true);
-    this.unsub$.complete();
   }
 }

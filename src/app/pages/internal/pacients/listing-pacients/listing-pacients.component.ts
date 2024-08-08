@@ -1,11 +1,11 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject, OnDestroy, signal } from '@angular/core';
-import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
+import { Component, inject, OnInit, signal } from '@angular/core';
+import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 import { MenuItem } from 'primeng/api';
 import { MenuModule } from 'primeng/menu';
 import { TableLazyLoadEvent, TableModule } from 'primeng/table';
-import { debounceTime, Subject, takeUntil } from 'rxjs';
+import { debounceTime, distinctUntilChanged } from 'rxjs';
 import { PacientPage } from '../../../../core/models/pacient.model.dto';
 import { UserSession } from '../../../../core/models/user-session.model.dto';
 import { TelephonePipe } from '../../../../core/pipes/telephone.pipe';
@@ -33,28 +33,15 @@ import { InputTextComponent } from '../../../../shared/inputs/input-text/input-t
   templateUrl: './listing-pacients.component.html',
   styleUrl: './listing-pacients.component.scss',
 })
-export default class ListingPacientsComponent implements OnDestroy {
-  private fb = inject(FormBuilder);
+export default class ListingPacientsComponent implements OnInit {
   private pacientService = inject(PacientService);
   private router = inject(Router);
-  private unsub$ = new Subject<boolean>();
-  private filter = '';
 
   protected pacients = signal<Page<PacientPage> | null>(null);
   protected permissions = (StorageUtils.find('userSession') as UserSession).permissions;
-
-  protected hasPermission =
-    PermissionsUtils.isAdmin(this.permissions) || PermissionsUtils.isDoctor(this.permissions);
-
-  protected form = this.fb.group({ filter: [''] });
+  protected hasPermission = PermissionsUtils.isAdmin(this.permissions) || PermissionsUtils.isDoctor(this.permissions);
+  protected filter = new FormControl('');
   protected pacientId = '';
-
-  protected changedValue = this.form.controls.filter.valueChanges
-    .pipe(debounceTime(1000), takeUntil(this.unsub$))
-    .subscribe((res) => {
-      this.filter = res!;
-      this.lazyLoad(null);
-    });
 
   protected items: MenuItem[] = [
     {
@@ -64,18 +51,14 @@ export default class ListingPacientsComponent implements OnDestroy {
     },
   ];
 
-  constructor() {
+  ngOnInit(): void {
+    this.filter.valueChanges.pipe(debounceTime(500), distinctUntilChanged()).subscribe(() => this.lazyLoad(null));
     this.lazyLoad(null);
   }
 
   lazyLoad(event: TableLazyLoadEvent | null) {
     this.pacientService
-      .allPacients(CustomPageable.instance(event, this.filter))
+      .allPacients(CustomPageable.instance(event, this.filter.value))
       .subscribe((res) => this.pacients.set(res));
-  }
-
-  ngOnDestroy(): void {
-    this.unsub$.next(true);
-    this.unsub$.complete();
   }
 }

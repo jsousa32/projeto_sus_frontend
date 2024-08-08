@@ -4,11 +4,10 @@
   </div>
   <div class="flex flex-col h-[85%] gap-[5rem]">
     <div class="flex justify-center">
-      <div class="flex w-full items-center justify-evenly">
-        <form class="w-8/12" [formGroup]="form">
-          <app-input-text id="filter" formControlName="filter" label="Filtrar" [required]="false" />
-        </form>
+      <div class="flex flex-col gap-[1rem] md:flex-row w-full items-center justify-evenly">
+        <app-input-text class="w-full md:w-8/12 xl:8/12" id="filter" label="Filtrar" [formControl]="filter" />
         <app-buttons
+          class="w-full md:w-4/12 xl:w-2/12"
           *ngIf="hasPermission"
           [primary]="true"
           label="Novo Paciente"

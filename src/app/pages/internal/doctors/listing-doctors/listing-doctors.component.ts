@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject, OnDestroy } from '@angular/core';
-import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
+import { Component, inject, OnInit } from '@angular/core';
+import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 import { MenuItem } from 'primeng/api';
 import { MenuModule } from 'primeng/menu';
@@ -33,24 +33,15 @@ import { InputTextComponent } from '../../../../shared/inputs/input-text/input-t
   templateUrl: './listing-doctors.component.html',
   styleUrl: './listing-doctors.component.scss',
 })
-export default class ListingDoctorsComponent implements OnDestroy {
-  private fb = inject(FormBuilder);
+export default class ListingDoctorsComponent implements OnInit {
   private router = inject(Router);
   private doctorService = inject(DoctorService);
   private unsub$ = new Subject<boolean>();
-  private filter = '';
 
+  protected filter = new FormControl('');
   protected doctorId = '';
   protected isAdmin = PermissionsUtils.isAdmin((StorageUtils.find('userSession') as UserSession).permissions);
-
-  protected form = this.fb.group({ filter: [''] });
-
-  protected changedValue = this.form.controls.filter.valueChanges
-    .pipe(debounceTime(1000), takeUntil(this.unsub$))
-    .subscribe((res) => {
-      this.filter = res!;
-      this.lazyLoad(null);
-    });
+  protected doctors$ = new Observable<Page<DoctorPage>>();
 
   protected items: MenuItem[] = [
     {
@@ -60,18 +51,13 @@ export default class ListingDoctorsComponent implements OnDestroy {
     },
   ];
 
-  protected doctors$ = new Observable<Page<DoctorPage>>();
+  ngOnInit(): void {
+    this.filter.valueChanges.pipe(debounceTime(1000), takeUntil(this.unsub$)).subscribe(() => this.lazyLoad(null));
 
-  constructor() {
     this.lazyLoad(null);
   }
 
   lazyLoad(event: TableLazyLoadEvent | null) {
-    this.doctors$ = this.doctorService.allDoctors(CustomPageable.instance(event, this.filter));
-  }
-
-  ngOnDestroy(): void {
-    this.unsub$.next(true);
-    this.unsub$.complete();
+    this.doctors$ = this.doctorService.allDoctors(CustomPageable.instance(event, this.filter.value));
   }
 }
