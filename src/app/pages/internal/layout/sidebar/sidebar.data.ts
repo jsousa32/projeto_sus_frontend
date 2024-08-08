@@ -30,6 +30,12 @@ export const items: Sidebar[] = [
     label: 'Minhas Consultas',
     icon: 'ph-calendar',
     router: 'appointments',
+    permissions: [Permissions.DOCTOR],
+  },
+  {
+    label: 'Minhas Consultas',
+    icon: 'ph-calendar',
+    router: 'appointments',
     permissions: [Permissions.PACIENT],
   },
 ];

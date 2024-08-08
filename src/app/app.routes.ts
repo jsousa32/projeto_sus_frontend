@@ -94,19 +94,19 @@ export const routes: Routes = [
       },
       {
         path: 'appointments',
-        data: { permissions: [Permissions.ADMIN, Permissions.PACIENT] },
+        data: { permissions: [Permissions.ADMIN, Permissions.PACIENT, Permissions.DOCTOR] },
         loadComponent: () =>
           import('../app/pages/internal/appointments/listing-appointments/listing-appointments.component'),
       },
       {
         path: 'appointments/new',
-        data: { permissions: [Permissions.ADMIN, Permissions.PACIENT] },
+        data: { permissions: [Permissions.ADMIN, Permissions.PACIENT, Permissions.DOCTOR] },
         loadComponent: () =>
           import('../app/pages/internal/appointments/create-and-edit-appointment/create-and-edit-appointment.component'),
       },
       {
         path: 'appointments/:id',
-        data: { permissions: [Permissions.ADMIN, Permissions.PACIENT] },
+        data: { permissions: [Permissions.ADMIN, Permissions.PACIENT, Permissions.DOCTOR] },
         loadComponent: () =>
           import('../app/pages/internal/appointments/create-and-edit-appointment/create-and-edit-appointment.component'),
       },
