@@ -56,7 +56,7 @@ export default class ListingDoctorsComponent implements OnInit {
       label: 'Desativar',
       icon: 'ph-trash',
       disabled: !this.isAdmin,
-      command: () => this.disable(),
+      command: () => { this.loading = true; this.disable(); },
     },
   ];
 
