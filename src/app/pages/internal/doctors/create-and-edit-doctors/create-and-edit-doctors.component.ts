@@ -39,8 +39,8 @@ export default class CreateDoctorsComponent {
     lastName: ['', [Validators.required]],
     email: ['', [Validators.required, Validators.email]],
     telephone: ['', [Validators.required]],
-    crm: ['', [Validators.required]],
-    document: ['', [Validators.required]],
+    crm: [{ value: '', disabled: !!this.doctorId }, [Validators.required]],
+    document: [{ value: '', disabled: !!this.doctorId }, [Validators.required]],
   });
 
   register() {
