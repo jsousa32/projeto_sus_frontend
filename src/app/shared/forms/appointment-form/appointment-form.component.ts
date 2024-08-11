@@ -57,7 +57,6 @@ export class AppointmentFormComponent {
 
   protected pacient$ = this.pacientService.allPacientsUnpaged().pipe(
     filter(() => this.isAdmin),
-    map((res) => res.content),
     map((res) =>
       res.map((p) => ({ value: p.id, name: `${p.firstName.toUpperCase()} ${p.lastName.toUpperCase()}` } as Options))
     )

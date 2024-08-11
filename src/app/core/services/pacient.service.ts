@@ -35,7 +35,7 @@ export class PacientService {
   }
 
   allPacientsUnpaged() {
-    return this.httpClient.get<Page<PacientPage>>(Routes.RoutesPacients.ALL_PACIENTS_UNPAGED).pipe(take(1));
+    return this.httpClient.get<PacientPage[]>(Routes.RoutesPacients.ALL_PACIENTS_UNPAGED).pipe(take(1));
   }
 
   pacient(id: string) {
