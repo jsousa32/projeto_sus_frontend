@@ -3,10 +3,10 @@ import { Component, inject, OnInit, signal } from '@angular/core';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 import { MenuItem } from 'primeng/api';
-import { MenuModule } from 'primeng/menu';
+import { Menu, MenuModule } from 'primeng/menu';
 import { ScrollerModule } from 'primeng/scroller';
 import { TableLazyLoadEvent, TableModule } from 'primeng/table';
-import { debounceTime, distinctUntilChanged, finalize } from 'rxjs';
+import { debounceTime, distinctUntilChanged, filter, finalize } from 'rxjs';
 import { PacientPage } from '../../../../core/models/pacient.model.dto';
 import { UserSession } from '../../../../core/models/user-session.model.dto';
 import { TelephonePipe } from '../../../../core/pipes/telephone.pipe';
@@ -64,6 +64,15 @@ export default class ListingPacientsComponent implements OnInit {
         this.disable();
       },
     },
+    {
+      label: 'Desbloquear Paciente',
+      icon: 'ph-x-circle',
+      disabled: !this.isAdmin,
+      command: () => {
+        this.loading = true;
+        this.removeBlock();
+      },
+    },
   ];
 
   ngOnInit(): void {
@@ -82,12 +91,40 @@ export default class ListingPacientsComponent implements OnInit {
       if (result.isConfirmed)
         this.pacientService
           .disable(this.pacientId)
-          .pipe(finalize(() => (this.loading = false)))
+          .pipe(
+            filter(() => this.loading),
+            finalize(() => (this.loading = false))
+          )
           .subscribe(() =>
             SwalertUtils.swalertSuccessWithoutOptions('Parabéns', 'Paciente desativado com sucesso.').then(() =>
               this.lazyLoad(null)
             )
           );
     });
+  }
+
+  removeBlock() {
+    SwalertUtils.swalertQuestion('Atenção', 'Você deseja mesmo remover o bloqueio do paciente?').then((result) => {
+      if (result.isConfirmed)
+        this.pacientService
+          .removeBlock(this.pacientId)
+          .pipe(
+            filter(() => this.loading),
+            finalize(() => (this.loading = false))
+          )
+          .subscribe(() =>
+            SwalertUtils.swalertSuccessWithoutOptions('Parabéns', 'Paciente desbloqueado com sucesso.').then(() =>
+              this.lazyLoad(null)
+            )
+          );
+    });
+  }
+
+  toggle(menu: Menu, event: MouseEvent) {
+    const menuItem = this.items.filter((res) => res.disabled == true);
+
+    menuItem.map((item) => (item.visible = false));
+
+    menu.toggle(event);
   }
 }

@@ -26,16 +26,17 @@
         (onLazyLoad)="lazyLoad($event)"
         currentPageReportTemplate="Mostrando {first} de {last} no total {totalRecords} pacientes"
         [rowsPerPageOptions]="[5, 15, 50]"
-        [tableStyle]="{ 'min-width': '50rem', 'width': '100%' }"
+        [tableStyle]="{ 'min-width': '50rem', width: '100%' }"
         [totalRecords]="pacients.totalElements"
       >
         <ng-template pTemplate="header">
           <tr>
             <th style="width: 5%" *ngIf="isAdmin"></th>
             <th [ngStyle]="isAdmin ? { width: '30%' } : { width: '25%' }">Nome</th>
-            <th style="width: 25%">Nº SUS</th>
+            <th style="width: 20%">Nº SUS</th>
             <th style="width: 25%">Email</th>
             <th style="width: 20%">Telefone</th>
+            <th style="width: 5%">Status</th>
           </tr>
         </ng-template>
         <ng-template pTemplate="body" let-pacients>
@@ -43,7 +44,7 @@
             <td *ngIf="isAdmin">
               <i
                 class="flex icon ph-bold ph-list text-primary_three cursor-pointer"
-                (click)="pacientId = pacients.id; menu.toggle($event)"
+                (click)="pacientId = pacients.id; toggle(menu, $event)"
               ></i>
               <p-menu #menu [model]="items" [popup]="true" [appendTo]="'body'"></p-menu>
             </td>
@@ -51,6 +52,13 @@
             <td>{{ pacients.susNumber }}</td>
             <td>{{ pacients.email }}</td>
             <td>{{ pacients.telephone | telephone }}</td>
+            <td>
+              <i
+                class="flex icon"
+                [pTooltip]="pacients.blockAt ? 'Paciente bloqueado' : 'Paciente liberado'"
+                [ngClass]="pacients.blockAt != null ? 'ph-x-circle text-error' : 'ph-check-circle text-success'"
+              ></i>
+            </td>
           </tr>
         </ng-template>
         <ng-template pTemplate="emptymessage">

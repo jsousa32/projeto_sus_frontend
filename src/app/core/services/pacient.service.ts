@@ -71,6 +71,28 @@ export class PacientService {
       );
   }
 
+  absent(id: string) {
+    return this.httpClient
+      .patch(Routes.RoutesPacients.ABSENT_PACIENT, null, {
+        params: new HttpParams().append('id', id),
+      })
+      .pipe(
+        take(1),
+        catchError((err: HttpErrorResponse) => CatchErrorHandler.err(err))
+      );
+  }
+
+  removeBlock(id: string) {
+    return this.httpClient
+      .patch(Routes.RoutesPacients.REMOVE_BLOCK, null, {
+        params: new HttpParams().append('id', id),
+      })
+      .pipe(
+        take(1),
+        catchError((err: HttpErrorResponse) => CatchErrorHandler.err(err))
+      );
+  }
+
   disable(id: string) {
     return this.httpClient
       .delete(Routes.RoutesPacients.DESACTIVE_PACIENT, {

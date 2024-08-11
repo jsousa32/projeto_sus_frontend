@@ -30,6 +30,8 @@ export class Routes {
     public static PACIENT = this.BASE;
     public static UPDATE_PACIENT = this.BASE;
     public static ACTIVE_PACIENT = this.BASE + '/active';
+    public static ABSENT_PACIENT = this.BASE + '/absent';
+    public static REMOVE_BLOCK = this.BASE + '/remove-block';
     public static DESACTIVE_PACIENT = this.BASE;
   };
 

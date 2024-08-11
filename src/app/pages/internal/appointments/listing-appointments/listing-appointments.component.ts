@@ -5,10 +5,11 @@ import { Router, RouterLink } from '@angular/router';
 import { MenuItem } from 'primeng/api';
 import { Menu, MenuModule } from 'primeng/menu';
 import { TableLazyLoadEvent, TableModule } from 'primeng/table';
-import { debounceTime, distinctUntilChanged } from 'rxjs';
+import { debounceTime, distinctUntilChanged, filter, finalize } from 'rxjs';
 import { AppointmentPage } from '../../../../core/models/appointments.model.dto';
 import { UserSession } from '../../../../core/models/user-session.model.dto';
 import { AppointmentsService } from '../../../../core/services/appointments.service';
+import { PacientService } from '../../../../core/services/pacient.service';
 import { CustomPageable } from '../../../../core/utils/custom-pageable.utils';
 import { Page } from '../../../../core/utils/page.utils';
 import { PermissionsUtils } from '../../../../core/utils/permission.utils';
@@ -35,24 +36,37 @@ import { InputTextComponent } from '../../../../shared/inputs/input-text/input-t
 })
 export default class ListingAppointmentsComponent implements OnInit {
   private appointmentService = inject(AppointmentsService);
+  private pacientService = inject(PacientService);
   private router = inject(Router);
   private isAdmin = PermissionsUtils.isAdmin((StorageUtils.find('userSession') as UserSession).permissions);
+  private loading = false;
 
   protected appointments = signal<Page<AppointmentPage> | null>(null);
   protected filter = new FormControl('');
-  protected appointmentId = '';
+  protected appointment!: AppointmentPage;
 
   protected items: MenuItem[] = [
     {
       label: 'Editar',
       icon: 'ph-pencil',
-      command: () => this.router.navigate(['appointments', this.appointmentId]),
+      command: () => this.router.navigate(['appointments', this.appointment.id]),
     },
     {
       label: 'Excluir',
       icon: 'ph-trash',
       visible: this.isAdmin,
-      command: () => this.delete(),
+      command: () => {
+        this.loading = true;
+        this.delete();
+      },
+    },
+    {
+      label: 'Paciente Ausente',
+      icon: 'ph-x-circle',
+      command: () => {
+        this.loading = true;
+        this.absent();
+      },
     },
   ];
 
@@ -70,11 +84,35 @@ export default class ListingAppointmentsComponent implements OnInit {
   delete() {
     SwalertUtils.swalertQuestion('Atenção', 'Você deseja mesmo deletar a consulta?').then((result) => {
       if (result.isConfirmed) {
-        this.appointmentService.delete(this.appointmentId).subscribe(() => {
-          SwalertUtils.swalertSuccessWithoutOptions('Parabéns', 'Consulta deletada com sucesso').then(() =>
-            this.lazyLoad(null)
-          );
-        });
+        this.appointmentService
+          .delete(this.appointment.id!)
+          .pipe(
+            filter(() => this.loading),
+            finalize(() => (this.loading = false))
+          )
+          .subscribe(() => {
+            SwalertUtils.swalertSuccessWithoutOptions('Parabéns', 'Consulta deletada com sucesso').then(() =>
+              this.lazyLoad(null)
+            );
+          });
+      }
+    });
+  }
+
+  absent() {
+    SwalertUtils.swalertQuestion('Atenção', 'O paciente não veio a consulta?').then((result) => {
+      if (result.isConfirmed) {
+        this.pacientService
+          .absent(this.appointment.pacient.id!)
+          .pipe(
+            filter(() => this.loading),
+            finalize(() => (this.loading = false))
+          )
+          .subscribe(() => {
+            SwalertUtils.swalertSuccessWithoutOptions('Parabéns', 'Paciente bloqueado com sucesso').then(() =>
+              this.lazyLoad(null)
+            );
+          });
       }
     });
   }

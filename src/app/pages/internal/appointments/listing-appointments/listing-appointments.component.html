@@ -41,7 +41,7 @@
             <td>
               <i
                 class="flex icon ph-bold ph-list text-primary_three cursor-pointer"
-                (click)="appointmentId = appointments.id; toggle(menu, $event, appointments)"
+                (click)="appointment = appointments; toggle(menu, $event, appointments)"
               ></i>
               <p-menu #menu [model]="items" [popup]="true" [appendTo]="'body'"></p-menu>
             </td>

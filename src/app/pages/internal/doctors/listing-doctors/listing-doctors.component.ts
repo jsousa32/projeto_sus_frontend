@@ -77,7 +77,7 @@ export default class ListingDoctorsComponent implements OnInit {
 
   disable() {
     SwalertUtils.swalertQuestion('Atenção', 'Você deseja mesmo desativar o médico?').then((result) => {
-      if (result.isConfirmed)
+      if (result.isConfirmed && !this.loading)
         this.doctorService
           .disable(this.doctorId)
           .pipe(finalize(() => (this.loading = false)))
