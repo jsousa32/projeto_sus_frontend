@@ -5,6 +5,7 @@
   optionValue="value"
   [disabled]="isDisabled"
   [(ngModel)]="inputValue"
+  [emptyMessage]="emptyMessage"
   (onFocus)="onTouched && onTouched()"
   (onChange)="(onChanged && onChanged(inputValue)) || onSelect.emit($event.value)"
   [placeholder]="label"

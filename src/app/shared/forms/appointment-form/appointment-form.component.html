@@ -6,6 +6,7 @@
       [formControl]="doctorId"
       label="Médico"
       [options]="doctors"
+      emptyMessage="Não há médicos cadastrados"
     />
     <app-calendar
       *ngIf="doctorId.value"
@@ -32,6 +33,7 @@
         label="Paciente"
         [options]="pacients"
         [formControl]="pacientId"
+        emptyMessage="Não há pacientes cadastrados"
       />
     </ng-container>
   </div>

@@ -1,10 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, inject, Input, Output } from '@angular/core';
-import {
-  ControlValueAccessor,
-  FormsModule,
-  NgControl
-} from '@angular/forms';
+import { ControlValueAccessor, FormsModule, NgControl } from '@angular/forms';
 import { DropdownModule } from 'primeng/dropdown';
 import { Options } from '../../../core/models/options.model.dto';
 
@@ -26,6 +22,9 @@ export class SingleSelectComponent implements ControlValueAccessor {
 
   @Input({ required: true })
   options: Options[] = [];
+
+  @Input()
+  emptyMessage = '';
 
   @Input()
   id = '';
