@@ -1,8 +1,8 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject } from '@angular/core';
+import { Component, inject, OnDestroy } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
-import { filter, finalize, map, switchMap, tap } from 'rxjs';
+import { filter, finalize, map, Subject, switchMap, takeUntil, tap } from 'rxjs';
 import { Pacient, PacientEditableFields } from '../../../../core/models/pacient.model.dto';
 import { PacientService } from '../../../../core/services/pacient.service';
 import { SwalertUtils } from '../../../../core/utils/swalert.utils';
@@ -16,11 +16,12 @@ import { PacientFormComponent } from '../../../../shared/forms/pacient-form/paci
   templateUrl: './create-and-edit-pacients.component.html',
   styleUrl: './create-and-edit-pacients.component.scss',
 })
-export default class CreateAndEditPacientsComponent {
+export default class CreateAndEditPacientsComponent implements OnDestroy {
   private fb = inject(FormBuilder);
   private pacientService = inject(PacientService);
   private activatedRouter = inject(ActivatedRoute);
   private router = inject(Router);
+  private unsub$ = new Subject<boolean>();
 
   protected loading = false;
   protected pacientId: string | null = null;
@@ -29,6 +30,7 @@ export default class CreateAndEditPacientsComponent {
     .pipe(
       map((params) => params.get('id')),
       filter((id) => !!id),
+      takeUntil(this.unsub$),
       tap((id) => (this.pacientId = id)),
       switchMap((id) => this.pacientService.pacient(id!))
     )
@@ -61,5 +63,10 @@ export default class CreateAndEditPacientsComponent {
     SwalertUtils.swalertSuccessWithoutOptions('Parabéns', 'Paciente cadastrado com sucesso').then((confirm) => {
       if (confirm) this.router.navigate(['pacients']);
     });
+  }
+
+  ngOnDestroy() {
+    this.unsub$.next(true);
+    this.unsub$.complete();
   }
 }
