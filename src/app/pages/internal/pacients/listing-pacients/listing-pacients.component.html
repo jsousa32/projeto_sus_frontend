@@ -1,11 +1,11 @@
-<div class="flex flex-col justify-between h-full rounded-3xl w-full bg-white/80 p-[1rem]">
+<div class="flex flex-col min-h-full rounded-3xl w-full bg-white/80 p-[1rem] gap-[3rem]">
   <div class="flex w-full justify-center">
     <h1 class="text-primary text-[1.75rem] sm:text-[2rem]">Pacientes</h1>
   </div>
-  <div class="flex flex-col h-[85%] gap-[5rem]">
+  <div class="flex flex-col gap-[5rem]">
     <div class="flex justify-center">
       <div class="flex flex-col gap-[1rem] md:flex-row w-full items-center justify-evenly">
-        <app-input-text class="w-full md:w-8/12 xl:8/12" id="filter" label="Filtrar" [formControl]="filter" />
+        <app-input-text class="w-full md:w-8/12 xl:w-8/12" id="filter" label="Filtrar" [formControl]="filter" />
         <app-buttons
           class="w-full md:w-4/12 xl:w-2/12"
           *ngIf="isAdmin || isDoctor"
@@ -17,18 +17,16 @@
         />
       </div>
     </div>
-    <div class="custom-table flex-shrink-0" *ngIf="pacients() as pacients">
+    <div class="custom-table" *ngIf="pacients() as pacients">
       <p-table
         [value]="pacients.content"
         [paginator]="true"
         [rows]="5"
         [showCurrentPageReport]="true"
-        [responsive]="true"
-        [scrollable]="true"
-        scrollHeight="350px"
         (onLazyLoad)="lazyLoad($event)"
         currentPageReportTemplate="Mostrando {first} de {last} no total {totalRecords} pacientes"
         [rowsPerPageOptions]="[5, 15, 50]"
+        [tableStyle]="{ 'min-width': '50rem', 'width': '100%' }"
         [totalRecords]="pacients.totalElements"
       >
         <ng-template pTemplate="header">

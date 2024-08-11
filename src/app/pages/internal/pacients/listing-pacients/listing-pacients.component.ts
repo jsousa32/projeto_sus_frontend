@@ -4,6 +4,7 @@ import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 import { MenuItem } from 'primeng/api';
 import { MenuModule } from 'primeng/menu';
+import { ScrollerModule } from 'primeng/scroller';
 import { TableLazyLoadEvent, TableModule } from 'primeng/table';
 import { debounceTime, distinctUntilChanged, finalize } from 'rxjs';
 import { PacientPage } from '../../../../core/models/pacient.model.dto';
@@ -30,6 +31,7 @@ import { InputTextComponent } from '../../../../shared/inputs/input-text/input-t
     RouterLink,
     MenuModule,
     TelephonePipe,
+    ScrollerModule,
   ],
   templateUrl: './listing-pacients.component.html',
   styleUrl: './listing-pacients.component.scss',
@@ -41,7 +43,7 @@ export default class ListingPacientsComponent implements OnInit {
   protected loading = false;
   protected pacients = signal<Page<PacientPage> | null>(null);
   protected permissions = (StorageUtils.find('userSession') as UserSession).permissions;
-  protected isAdmin = PermissionsUtils.isAdmin(this.permissions)
+  protected isAdmin = PermissionsUtils.isAdmin(this.permissions);
   protected isDoctor = PermissionsUtils.isDoctor(this.permissions);
   protected filter = new FormControl('');
   protected pacientId = '';
@@ -57,7 +59,10 @@ export default class ListingPacientsComponent implements OnInit {
       label: 'Desativar',
       icon: 'ph-trash',
       disabled: !this.isAdmin,
-      command: () => { this.loading = true; this.disable(); },
+      command: () => {
+        this.loading = true;
+        this.disable();
+      },
     },
   ];
 
