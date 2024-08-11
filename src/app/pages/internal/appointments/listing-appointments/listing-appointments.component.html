@@ -1,4 +1,4 @@
-<div class="flex flex-col justify-between h-full rounded-3xl w-full bg-white/80 p-[1rem]">
+<div class="flex flex-col min-h-full rounded-3xl w-full bg-white/80 p-[1rem] gap-[3rem]">
   <div class="flex w-full justify-center">
     <h1 class="text-primary text-[1.75rem] sm:text-[2rem]">Consultas</h1>
   </div>
@@ -16,15 +16,13 @@
         />
       </div>
     </div>
-    <div class="custom-table flex-shrink-0" *ngIf="appointments() as appointments">
+    <div class="custom-table" *ngIf="appointments() as appointments">
       <p-table
         [value]="appointments.content"
         [paginator]="true"
         [rows]="5"
         [showCurrentPageReport]="true"
-        [responsive]="true"
-        [scrollable]="true"
-        scrollHeight="350px"
+        [tableStyle]="{ 'min-width': '50rem', 'width': '100%' }"
         currentPageReportTemplate="Mostrando {first} de {last} no total {totalRecords} consultas"
         [rowsPerPageOptions]="[5, 15, 50]"
         [totalRecords]="appointments.totalElements"

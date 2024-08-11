@@ -1,4 +1,4 @@
-<div class="flex flex-col justify-between h-full rounded-3xl w-full bg-white/80 p-[1rem]">
+<div class="flex flex-col min-h-full rounded-3xl w-full bg-white/80 p-[1rem] gap-[3rem]">
   <div class="flex w-full justify-center">
     <h1 class="text-primary text-[1.75rem] sm:text-[2rem]">Médicos</h1>
   </div>
@@ -17,18 +17,16 @@
         />
       </div>
     </div>
-    <div class="custom-table flex-shrink-0" *ngIf="doctors$ | async as doctors">
+    <div class="custom-table" *ngIf="doctors$ | async as doctors">
       <p-table
         [value]="doctors.content"
         [paginator]="true"
         [rows]="5"
         [showCurrentPageReport]="true"
-        [responsive]="true"
-        [scrollable]="true"
         (onLazyLoad)="lazyLoad($event)"
-        scrollHeight="350px"
         currentPageReportTemplate="Mostrando {first} de {last} no total {totalRecords} médicos"
         [totalRecords]="doctors.totalElements"
+        [tableStyle]="{ 'min-width': '50rem', 'width': '100%' }"
         [rowsPerPageOptions]="[5, 15, 50]"
       >
         <ng-template pTemplate="header">

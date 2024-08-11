@@ -14,21 +14,7 @@
     />
   </div>
   <div class="flex flex-col gap-[1.75rem] sm:flex-row sm:gap-[0.75rem]">
-    <app-input-mask
-      class="w-full"
-      id="crm"
-      [disabled]="readonly"
-      formControlName="crm"
-      label="Nº do CRM"
-      mask="999999"
-    />
-    <app-input-mask
-      class="w-full"
-      id="document"
-      [disabled]="readonly"
-      formControlName="document"
-      label="Documento"
-      mask="999.999.999-99"
-    />
+    <app-input-mask class="w-full" id="crm" formControlName="crm" label="Nº do CRM" mask="999999" />
+    <app-input-mask class="w-full" id="document" formControlName="document" label="Documento" mask="999.999.999-99" />
   </div>
 </div>

@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject, Input } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { ControlContainer, ReactiveFormsModule } from '@angular/forms';
 import { InputMaskComponent } from '../../inputs/input-mask/input-mask.component';
 import { InputTextComponent } from '../../inputs/input-text/input-text.component';
@@ -17,7 +17,4 @@ import { InputTextComponent } from '../../inputs/input-text/input-text.component
   templateUrl: './doctor-form.component.html',
   styleUrl: './doctor-form.component.scss',
 })
-export class DoctorFormComponent {
-  @Input()
-  readonly: boolean = false;
-}
+export class DoctorFormComponent {}

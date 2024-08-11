@@ -27,7 +27,6 @@ export default class CreateAndEditAppointmentComponent {
   private activatedRoute = inject(ActivatedRoute);
   private router = inject(Router);
   private appointmentService = inject(AppointmentsService);
-  private datePipe = inject(DatePipe);
 
   protected isAdmin = PermissionsUtils.isAdmin((StorageUtils.find('userSession') as UserSession).permissions);
   protected appointmentId: string | null = null;
