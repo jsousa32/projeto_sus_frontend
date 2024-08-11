@@ -17,4 +17,7 @@
     <app-input-mask class="w-full" id="crm" formControlName="crm" label="Nº do CRM" mask="999999" />
     <app-input-mask class="w-full" id="document" formControlName="document" label="Documento" mask="999.999.999-99" />
   </div>
+  <div class="flex flex-col gap-[1.75rem]">
+    <app-single-select class="w-full" id="speciality" formControlName="speciality" label="Especialidade Médica" [options]="options" />
+  </div>
 </div>

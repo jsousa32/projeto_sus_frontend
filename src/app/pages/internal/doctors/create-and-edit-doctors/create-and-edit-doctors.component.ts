@@ -3,6 +3,7 @@ import { Component, inject } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { filter, finalize, map, switchMap, tap } from 'rxjs';
+import { Speciality } from '../../../../core/enums/speciality.enum';
 import { Doctor, DoctorEditableFields } from '../../../../core/models/doctors.model.dto';
 import { DoctorService } from '../../../../core/services/doctor.service';
 import { SwalertUtils } from '../../../../core/utils/swalert.utils';
@@ -39,6 +40,7 @@ export default class CreateDoctorsComponent {
     lastName: ['', [Validators.required]],
     email: ['', [Validators.required, Validators.email]],
     telephone: ['', [Validators.required]],
+    speciality: [{ value: Speciality.CARDIOLOGY, disabled: !!this.doctorId }, Validators.required],
     crm: [{ value: '', disabled: !!this.doctorId }, [Validators.required]],
     document: [{ value: '', disabled: !!this.doctorId }, [Validators.required]],
   });
