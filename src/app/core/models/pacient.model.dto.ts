@@ -9,6 +9,7 @@ export interface Pacient {
   telephone: string;
   document: string;
   susNumber: string;
+  blockAt: Date
 }
 
 export interface PacientPage extends Omit<Pacient, 'password'> {}
