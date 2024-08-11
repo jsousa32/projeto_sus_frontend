@@ -1,6 +1,6 @@
 import { CommonModule, DatePipe } from '@angular/common';
 import { Component, inject } from '@angular/core';
-import { ControlContainer, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { ControlContainer, FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
 import { filter, map } from 'rxjs';
 import { Options } from '../../../core/models/options.model.dto';
 import { UserSession } from '../../../core/models/user-session.model.dto';
@@ -61,10 +61,6 @@ export class AppointmentFormComponent {
       res.map((p) => ({ value: p.id, name: `${p.firstName.toUpperCase()} ${p.lastName.toUpperCase()}` } as Options))
     )
   );
-
-  get formGroup() {
-    return this.controlContainer.control as FormGroup;
-  }
 
   avaliableTimes(date: string) {
     this.appointmentService.avaliableTimes(this.doctorId.value!, date).subscribe((res) => {
