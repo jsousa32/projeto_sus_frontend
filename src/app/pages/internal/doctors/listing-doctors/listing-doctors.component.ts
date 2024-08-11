@@ -8,6 +8,7 @@ import { TableLazyLoadEvent, TableModule } from 'primeng/table';
 import { debounceTime, finalize, Observable, Subject, takeUntil } from 'rxjs';
 import { DoctorPage } from '../../../../core/models/doctors.model.dto';
 import { UserSession } from '../../../../core/models/user-session.model.dto';
+import { SpecialityPipe } from '../../../../core/pipes/speciality.pipe';
 import { TelephonePipe } from '../../../../core/pipes/telephone.pipe';
 import { DoctorService } from '../../../../core/services/doctor.service';
 import { CustomPageable } from '../../../../core/utils/custom-pageable.utils';
@@ -30,6 +31,7 @@ import { InputTextComponent } from '../../../../shared/inputs/input-text/input-t
     CommonModule,
     TelephonePipe,
     MenuModule,
+    SpecialityPipe,
   ],
   templateUrl: './listing-doctors.component.html',
   styleUrl: './listing-doctors.component.scss',
@@ -56,7 +58,10 @@ export default class ListingDoctorsComponent implements OnInit {
       label: 'Desativar',
       icon: 'ph-trash',
       disabled: !this.isAdmin,
-      command: () => { this.loading = true; this.disable(); },
+      command: () => {
+        this.loading = true;
+        this.disable();
+      },
     },
   ];
 

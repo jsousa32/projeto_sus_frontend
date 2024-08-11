@@ -4,6 +4,7 @@ import { ControlContainer, FormControl, FormGroup, ReactiveFormsModule, Validato
 import { filter, map } from 'rxjs';
 import { Options } from '../../../core/models/options.model.dto';
 import { UserSession } from '../../../core/models/user-session.model.dto';
+import { SpecialityPipe } from '../../../core/pipes/speciality.pipe';
 import { AppointmentsService } from '../../../core/services/appointments.service';
 import { DoctorService } from '../../../core/services/doctor.service';
 import { PacientService } from '../../../core/services/pacient.service';
@@ -42,7 +43,15 @@ export class AppointmentFormComponent {
   protected doctors$ = this.doctorService.allDoctorsUnpaged().pipe(
     map((res) => res.content),
     map((res) =>
-      res.map((d) => ({ value: d.id, name: `${d.firstName.toUpperCase()} ${d.lastName.toUpperCase()}` } as Options))
+      res.map(
+        (d) =>
+          ({
+            value: d.id,
+            name: `${d.firstName.toUpperCase()} ${d.lastName.toUpperCase()} (${SpecialityPipe.translation(
+              d.speciality
+            ).toUpperCase()})`,
+          } as Options)
+      )
     )
   );
 
