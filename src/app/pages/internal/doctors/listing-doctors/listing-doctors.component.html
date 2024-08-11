@@ -26,16 +26,17 @@
         (onLazyLoad)="lazyLoad($event)"
         currentPageReportTemplate="Mostrando {first} de {last} no total {totalRecords} médicos"
         [totalRecords]="doctors.totalElements"
-        [tableStyle]="{ 'min-width': '50rem', 'width': '100%' }"
+        [tableStyle]="{ 'min-width': '50rem', width: '100%' }"
         [rowsPerPageOptions]="[5, 15, 50]"
       >
         <ng-template pTemplate="header">
           <tr>
-            <th style="width: 5%" *ngIf="isAdmin"></th>
-            <th [ngStyle]="isAdmin ? { width: '30%' } : { width: '25%' }">Nome</th>
-            <th style="width: 25%">CRM</th>
-            <th style="width: 25%">Email</th>
-            <th style="width: 25%">Telefone</th>
+            <th *ngIf="isAdmin" style="width: 5%"></th>
+            <th [ngStyle]="isAdmin ? { width: '25%' } : { width: '50%' }">Nome</th>
+            <th [ngStyle]="isAdmin ? { width: '10%' } : { width: '20%' }">CRM</th>
+            <th [ngStyle]="isAdmin ? { width: '20%' } : { width: '20%' }">Especialidade</th>
+            <th *ngIf="isAdmin" style="width: 25%">Email</th>
+            <th *ngIf="isAdmin" style="width: 15%">Telefone</th>
           </tr>
         </ng-template>
         <ng-template pTemplate="body" let-doctors>
@@ -49,8 +50,9 @@
             </td>
             <td>{{ doctors.firstName + " " + doctors.lastName }}</td>
             <td>{{ doctors.crm }}</td>
-            <td>{{ doctors.email }}</td>
-            <td>{{ doctors.telephone | telephone }}</td>
+            <td>{{ doctors.crm }}</td>
+            <td *ngIf="isAdmin">{{ doctors.email }}</td>
+            <td *ngIf="isAdmin">{{ doctors.telephone | telephone }}</td>
           </tr>
         </ng-template>
         <ng-template pTemplate="emptymessage">
