@@ -21,7 +21,4 @@ import { InputTextComponent } from '../../inputs/input-text/input-text.component
 export class PacientFormComponent {
   @Input()
   hasPassword: boolean = true;
-
-  @Input()
-  readonly: boolean = false;
 }
