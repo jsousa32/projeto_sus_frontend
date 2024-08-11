@@ -44,7 +44,7 @@
             <td *ngIf="isAdmin">
               <i
                 class="flex icon ph-bold ph-list text-primary_three cursor-pointer"
-                (click)="doctorId = doctors.id; menu.toggle($event)"
+                (click)="doctorId = doctors.id; toggle(menu, $event)"
               ></i>
               <p-menu #menu [model]="items" [popup]="true" [appendTo]="'body'"></p-menu>
             </td>

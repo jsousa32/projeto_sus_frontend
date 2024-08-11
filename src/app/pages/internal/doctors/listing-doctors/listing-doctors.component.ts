@@ -3,9 +3,9 @@ import { Component, inject, OnInit } from '@angular/core';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 import { MenuItem } from 'primeng/api';
-import { MenuModule } from 'primeng/menu';
+import { Menu, MenuModule } from 'primeng/menu';
 import { TableLazyLoadEvent, TableModule } from 'primeng/table';
-import { debounceTime, finalize, Observable, Subject, takeUntil } from 'rxjs';
+import { debounceTime, filter, finalize, Observable, Subject, takeUntil } from 'rxjs';
 import { DoctorPage } from '../../../../core/models/doctors.model.dto';
 import { UserSession } from '../../../../core/models/user-session.model.dto';
 import { SpecialityPipe } from '../../../../core/pipes/speciality.pipe';
@@ -77,15 +77,26 @@ export default class ListingDoctorsComponent implements OnInit {
 
   disable() {
     SwalertUtils.swalertQuestion('Atenção', 'Você deseja mesmo desativar o médico?').then((result) => {
-      if (result.isConfirmed && !this.loading)
+      if (result.isConfirmed)
         this.doctorService
           .disable(this.doctorId)
-          .pipe(finalize(() => (this.loading = false)))
+          .pipe(
+            filter(() => this.loading),
+            finalize(() => (this.loading = false))
+          )
           .subscribe(() =>
             SwalertUtils.swalertSuccessWithoutOptions('Parabéns', 'Médico desativado com sucesso.').then(() =>
               this.lazyLoad(null)
             )
           );
     });
+  }
+
+  toggle(menu: Menu, event: MouseEvent) {
+    const menuItem = this.items.filter((res) => res.disabled == true);
+
+    menuItem.map((item) => (item.visible = false));
+
+    menu.toggle(event);
   }
 }
