@@ -1,0 +1,53 @@
+<div class="flex flex-col h-full rounded-3xl w-full bg-white/80 p-[1rem] gap-[2rem]">
+  <div class="flex w-full justify-center">
+    <h1 class="text-primary text-[1.5rem] sm:text-[2rem]">Editar Informações</h1>
+  </div>
+
+  <form [formGroup]="form" (ngSubmit)="update(); loading = true">
+    <div class="flex flex-col md:flex-row justify-center gap-[1.75rem]">
+      <div class="flex flex-col w-full md:w-[45%] gap-[1.75rem]">
+        <app-input-text id="firstName" label="Nome" formControlName="firstName" />
+        <app-input-text id="email" label="Email" formControlName="email" />
+        <app-input-mask *ngIf="isDoctor" id="crm" label="CRM" formControlName="crm" mask="999999" />
+        <app-input-mask
+          *ngIf="isPacient"
+          id="susNumber"
+          label="Nº do SUS"
+          formControlName="susNumber"
+          mask="999999999999999"
+        />
+      </div>
+      <div class="flex flex-col w-full md:w-[45%] gap-[1.75rem]">
+        <app-input-text id="lastName" label="Sobrenome" formControlName="lastName" />
+        <app-input-mask id="telephone" label="Telefone" formControlName="telephone" mask="(99) 9 9999-9999" />
+        <app-input-mask
+          *ngIf="isDoctor || isPacient"
+          id="document"
+          label="Documento"
+          formControlName="document"
+          mask="999.999.999-99"
+        />
+      </div>
+    </div>
+    <div *ngIf="isAdmin" class="flex justify-center mt-[1.75rem]">
+      <app-input-mask
+        class="w-full md:w-8/12"
+        id="document"
+        label="Documento"
+        formControlName="document"
+        mask="999.999.999-99"
+      />
+    </div>
+
+    <div class="flex w-full justify-center mt-[1.75rem]">
+      <app-buttons
+        class="w-full md:w-6/12"
+        [primary]="true"
+        [rounded]="true"
+        label="Atualizar"
+        type="submit"
+        [disabled]="form.invalid || loading"
+      />
+    </div>
+  </form>
+</div>

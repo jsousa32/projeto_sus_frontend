@@ -20,7 +20,9 @@ export class AuthService {
       })
       .pipe(
         take(1),
-        tap((res) => StorageUtils.add('userSession', res)),
+        tap((res) => {
+          StorageUtils.add('userSession', res);
+        }),
         catchError((err: HttpErrorResponse) => CatchErrorHandler.err(err))
       );
   }

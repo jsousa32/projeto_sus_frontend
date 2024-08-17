@@ -26,12 +26,17 @@ export const authGuard: CanActivateFn = (_, state) => {
     return router.createUrlTree(['email-confirmation']);
   }
 
-  if (accessToken && userSession.emailConfirmed && PermissionsUtils.isDoctor(userSession.permissions) && !state.url.match('pacients')) {
-    return router.createUrlTree(['pacients']);
-  }
+  const previousUrl = document.URL.includes('login')
 
-  if (accessToken && userSession.emailConfirmed && PermissionsUtils.isPacient(userSession.permissions) && !state.url.match('doctors')) {
-    return router.createUrlTree(['doctors']);
+  if (previousUrl) {
+
+    if (accessToken && userSession.emailConfirmed && PermissionsUtils.isDoctor(userSession.permissions) && !state.url.match('pacients')) {
+      return router.createUrlTree(['pacients']);
+    }
+
+    if (accessToken && userSession.emailConfirmed && PermissionsUtils.isPacient(userSession.permissions) && !state.url.match('doctors')) {
+      return router.createUrlTree(['doctors']);
+    }
   }
 
   return true;

@@ -51,6 +51,7 @@ export class Routes {
     public static SAVE = this.BASE;
     public static ALL_ADMINS = this.BASE + '/all';
     public static ADMIN = this.BASE;
+    public static ADMIN_RESUME = this.BASE + '/resume';
     public static UPDATE_ADMIN = this.BASE;
     public static DELETE_ADMIN = this.BASE;
   };

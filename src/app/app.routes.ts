@@ -110,6 +110,12 @@ export const routes: Routes = [
         loadComponent: () =>
           import('../app/pages/internal/appointments/create-and-edit-appointment/create-and-edit-appointment.component'),
       },
+      {
+        path: 'profile/:id',
+        data: { permissions: [Permissions.ADMIN, Permissions.PACIENT, Permissions.DOCTOR] },
+        loadComponent: () =>
+          import('../app/pages/internal/profile/profile.component'),
+      },
     ],
   },
 ];

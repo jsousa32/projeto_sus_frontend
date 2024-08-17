@@ -24,6 +24,7 @@ export class NavbarComponent {
     {
       label: 'Perfil',
       icon: 'ph-user',
+      routerLink: ['profile', this.userSession.id],
     },
     {
       label: 'Sair',

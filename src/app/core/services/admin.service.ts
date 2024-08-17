@@ -29,6 +29,17 @@ export class AdminService {
       .pipe(take(1));
   }
 
+  adminResume(id: string) {
+    return this.httpClient
+      .get<Admin>(Routes.RoutesAdmins.ADMIN_RESUME, {
+        params: new HttpParams().append('id', id),
+      })
+      .pipe(
+        take(1),
+        catchError((err) => CatchErrorHandler.err(err))
+      );
+  }
+
   admin(id: string) {
     return this.httpClient
       .get<Admin>(Routes.RoutesAdmins.ADMIN, {
