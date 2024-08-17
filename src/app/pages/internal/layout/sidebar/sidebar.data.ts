@@ -2,12 +2,12 @@ import { Permissions } from '../../../../core/enums/permissions.enum';
 import { Sidebar } from '../../../../core/models/sidebar.model.dto';
 
 export const items: Sidebar[] = [
-  {
-    label: 'Dashboard',
-    icon: 'ph-house',
-    router: 'dashboard',
-    permissions: [Permissions.ADMIN],
-  },
+  // {
+  //   label: 'Dashboard',
+  //   icon: 'ph-house',
+  //   router: 'dashboard',
+  //   permissions: [Permissions.ADMIN],
+  // },
   {
     label: 'Pacientes',
     icon: 'ph-users-three',

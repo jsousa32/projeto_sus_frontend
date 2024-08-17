@@ -53,12 +53,7 @@ export const routes: Routes = [
       {
         path: '',
         pathMatch: 'full',
-        redirectTo: 'dashboard',
-      },
-      {
-        path: 'dashboard',
-        data: { permissions: [Permissions.ADMIN] },
-        loadComponent: () => import('../app/pages/internal/dashboard/dashboard.component'),
+        redirectTo: 'pacients',
       },
       {
         path: 'pacients',

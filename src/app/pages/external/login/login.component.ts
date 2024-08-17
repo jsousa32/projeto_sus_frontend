@@ -39,6 +39,6 @@ export class LoginComponent {
     this.authService
       .login(this.forms.value.email!, this.forms.value.password!)
       .pipe(finalize(() => (this.loading = false)))
-      .subscribe(() => this.router.navigate(['dashboard']));
+      .subscribe(() => this.router.navigate(['pacients']));
   }
 }
